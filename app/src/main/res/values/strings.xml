@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">干货</string>
+
+    <string name="title_home">主页</string>
+    <string name="title_more">更多</string>
+    <string name="title_me">我</string>
+    <string name="home_search">搜索干货(日期数字有福利哦(｡◕∀◕｡))</string>
+    <string name="search_tip">搜索“12”试试(｡◕∀◕｡))</string>
+    <string name="menu_share">分享干货</string>
+    <string name="menu_copy_link">复制链接</string>
+    <string name="menu_open_with">用浏览器打开</string>
+    <string name="rv_with_footer_loading">加载中…</string>
+    <string name="rv_with_footer_empty">没有数据啦</string>
+    <string name="search_history">搜索历史</string>
+    <string name="search_clean">清除</string>
+    <string name="setting_title">设置</string>
+    <string name="setting_basic">基本设置</string>
+    <string name="setting_thumb_show">显示缩略图</string>
+    <string name="setting_thumb_quality">缩略图质量</string>
+    <string name="setting_thumb_quality_tip">提升质量返回生效，降低质量刷新列表生效</string>
+    <string name="setting_quality_hige">原图</string>
+    <string name="setting_more">更多</string>
+    <string name="setting_about_ugank">关于有干货</string>
+    <string name="setting_version">版本:</string>
+    <string name="setting_donate">捐赠开发者</string>
+    <string name="setting_feedback">反馈</string>
+    <string name="setting_clean_cache">清除缓存</string>
+    <string name="favorite_title">收藏</string>
+    <string name="welcome_ugank"><![CDATA[>> 欢迎进入 UGank]]></string>
+    <string name="shortcuts_search_disable">搜索（不可用）</string>
+    <string name="shortcuts_search_short">搜索</string>
+    <string name="shortcuts_search_long">搜索</string>
+    <string name="shortcuts_favorite_disable">收藏（不可用）</string>
+    <string name="shortcuts_favorite_short">收藏</string>
+    <string name="shortcuts_favorite_long">我的收藏</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

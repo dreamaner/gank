@@ -1,0 +1,356 @@
+package com.android.xgank.ui.fragments;
+
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.android.kit.utils.toast.ToastUtils;
+import com.android.mvp.base.SimpleRecAdapter;
+import com.android.mvp.mvp.XLazyFragment;
+import com.android.mvp.recycleview.RecyclerItemCallback;
+import com.android.mvp.recycleview.XRecyclerContentLayout;
+import com.android.mvp.recycleview.XRecyclerView;
+import com.android.mvp.router.Router;
+import com.android.xgank.R;
+import com.android.xgank.kit.DisplayUtils;
+import com.android.xgank.kit.MDTintUtil;
+import com.android.xgank.bean.GankResults;
+import com.android.xgank.presenter.HomePresenter;
+import com.android.xgank.ui.activitys.WebActivity;
+import com.android.xgank.ui.adapters.HomeAdapter;
+import com.github.florent37.picassopalette.PicassoPalette;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+import static com.android.xgank.ui.activitys.WebActivity.PARAM_DESC;
+import static com.android.xgank.ui.activitys.WebActivity.PARAM_URL;
+
+
+public class HomeFragment extends XLazyFragment<HomePresenter> {
+    @BindView(R.id.text)
+    TextView textView;
+    @BindView(R.id.vp_home_category)
+    XRecyclerContentLayout contentLayout;
+    @BindView(R.id.fab_home_random)
+    FloatingActionButton mFloatingActionButton;
+    @BindView(R.id.iv_home_banner)
+    ImageView ivHomeBanner;
+    @BindView(R.id.tl_home_toolbar)
+    Toolbar tlHomeToolbar;
+    @BindView(R.id.ll_home_search)
+    LinearLayout llHomeSearch;
+    @BindView(R.id.iv_home_collection)
+    AppCompatImageView ivHomeCollection;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout mCollapsingToolbar;
+    @BindView(R.id.appBar)
+    AppBarLayout mAppBarLayout;
+    Unbinder unbinder;
+
+    private boolean isBannerBig; // banner 是否是大图
+    private boolean isBannerAniming; // banner 放大缩小的动画是否正在执行
+    private HomeAdapter adapter;
+    private ObjectAnimator mAnimator;
+    protected static final int MAX_PAGE = 10;
+    private CollapsingToolbarLayoutState state; // CollapsingToolbarLayout 折叠状态
+
+    @Override
+    public boolean canBack() {
+        return false;
+    }
+
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED, // 完全展开
+        COLLAPSED, // 折叠
+        INTERNEDIATE // 中间状态
+    }
+
+    public static HomeFragment getInstance() {
+        HomeFragment homeFragment = new HomeFragment();
+        return homeFragment;
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+           initImmersionBar();
+           getP().loadData(getType(), 1);
+           initAdapter();
+           getP().getBanner(false);
+           getP().cacheRandomImg();
+           setToolbarHeight();
+           setFabDynamicState();
+    }
+
+    public void initView(){
+
+    }
+    public void setToolbarHeight(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 4.4 以上版本
+            // 设置 Toolbar 高度为 80dp，适配状态栏
+            ViewGroup.LayoutParams layoutParams = tlHomeToolbar.getLayoutParams();
+            layoutParams.height = DisplayUtils.dp2px(80, getActivity());
+            tlHomeToolbar.setLayoutParams(layoutParams);
+        }
+    }
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    public HomePresenter newP() {
+        return new HomePresenter();
+    }
+
+    public void setLayoutManager(XRecyclerView recyclerView) {
+        recyclerView.verticalLayoutManager(context);
+    }
+
+    private void initAdapter() {
+
+        setLayoutManager(contentLayout.getRecyclerView());
+        contentLayout.getRecyclerView()
+                .setAdapter(getAdapter());
+        contentLayout.getRecyclerView()
+                .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
+                    @Override
+                    public void onRefresh() {
+                        getP().loadData(getType(), 1);
+                    }
+
+                    @Override
+                    public void onLoadMore(int page) {
+                        getP().loadData(getType(), page);
+                    }
+                });
+
+        contentLayout.getRecyclerView().useDefLoadMoreView();
+    }
+
+    /**
+     * 根据 CollapsingToolbarLayout 的折叠状态，设置 FloatingActionButton 的隐藏和显示
+     */
+    private void setFabDynamicState() {
+
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset == 0) {
+                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                        state = CollapsingToolbarLayoutState.EXPANDED; // 修改状态标记为展开
+                    }
+                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    if (state != CollapsingToolbarLayoutState.COLLAPSED) {
+                        mFloatingActionButton.hide();
+
+                        state = CollapsingToolbarLayoutState.COLLAPSED; // 修改状态标记为折叠
+                        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+                        layoutParams.height = DisplayUtils.dp2px(240, getActivity());
+                        mAppBarLayout.setLayoutParams(layoutParams);
+                        isBannerBig = false;
+                    }
+                } else {
+                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                        if (state == CollapsingToolbarLayoutState.COLLAPSED) {
+                            mFloatingActionButton.show();
+
+                        }
+                        state = CollapsingToolbarLayoutState.INTERNEDIATE; // 修改状态标记为中间
+                    }
+                }
+                showText(state);
+            }
+        });
+    }
+    public void showText(CollapsingToolbarLayoutState state){
+        switch (state){
+            case COLLAPSED:
+                textView.setText("All");
+                break;
+            case EXPANDED:
+                textView.setText("");
+                break;
+        }
+    }
+    public void showData(int page, GankResults model) {
+        if (page > 1) {
+            getAdapter().addData(model.getResults());
+        } else {
+            getAdapter().setData(model.getResults());
+        }
+
+        contentLayout.getRecyclerView().setPage(page, MAX_PAGE);
+
+        if (getAdapter().getItemCount() < 1) {
+            contentLayout.showEmpty();
+            return;
+        }
+    }
+
+    public String getType(){
+        return "all";
+    }
+
+    public SimpleRecAdapter getAdapter() {
+        if (adapter == null) {
+            adapter = new HomeAdapter(context);
+            adapter.setRecItemClick(new RecyclerItemCallback<GankResults.Item, HomeAdapter.ViewHolder>() {
+                @Override
+                public void onItemClick(int position, GankResults.Item model, int tag, HomeAdapter.ViewHolder holder) {
+                    super.onItemClick(position, model, tag, holder);
+                    switch (tag) {
+                        case HomeAdapter.TAG_VIEW:
+                            launch(context, model.getUrl(), model.getDesc());
+                            break;
+                    }
+                }
+            });
+        }
+        return adapter;
+    }
+
+    public static void launch(Activity activity, String url, String desc) {
+        Router.newIntent(activity)
+                .to(WebActivity.class)
+                .putString(PARAM_URL, url)
+                .putString(PARAM_DESC, desc)
+                .launch();
+    }
+
+    @OnClick({R.id.iv_home_banner,R.id.fab_home_random, R.id.ll_home_search, R.id.iv_home_collection})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fab_home_random:
+                getP().getBanner(true);
+                break;
+            case R.id.ll_home_search:
+                break;
+            case R.id.iv_home_collection:
+                break;
+            case R.id.iv_home_banner:
+                if (isBannerAniming) {
+                    return;
+                }
+                startBannerAnim();
+                break;
+        }
+    }
+
+    private void startBannerAnim() {
+        final CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        ValueAnimator animator;
+        if (isBannerBig) {
+            animator = ValueAnimator.ofInt(DisplayUtils.getScreenHeight(getActivity()), DisplayUtils.dp2px(240, getActivity()));
+        } else {
+            animator = ValueAnimator.ofInt(DisplayUtils.dp2px(240, getActivity()), DisplayUtils.getScreenHeight(getActivity()));
+        }
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                layoutParams.height = (int) valueAnimator.getAnimatedValue();
+                mAppBarLayout.setLayoutParams(layoutParams);
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isBannerBig = !isBannerBig;
+                isBannerAniming = false;
+            }
+        });
+        animator.start();
+        isBannerAniming = true;
+    }
+
+    public void setBanner(String imgUrl) {
+        Picasso.with(getActivity()).load(imgUrl)
+                .into(ivHomeBanner,
+                        PicassoPalette.with(imgUrl, ivHomeBanner)
+                                .intoCallBack(new PicassoPalette.CallBack() {
+                                    @Override
+                                    public void onPaletteLoaded(Palette palette) {
+                                        getP().setThemeColor(palette);
+                                    }
+                                }));
+    }
+
+    public void cacheImg(final String imgUrl) {
+        // 预加载 提前缓存好的欢迎图
+        Picasso.with(getActivity()).load(imgUrl).fetch(new Callback() {
+            @Override
+            public void onSuccess() {
+                getP().saveCacheImgUrl(imgUrl);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+
+    public void showBannerFail(String failMessage) {
+        ToastUtils.showLongToast(failMessage);
+    }
+
+    public void setAppBarLayoutColor(int appBarLayoutColor) {
+        mCollapsingToolbar.setContentScrimColor(appBarLayoutColor);
+        mAppBarLayout.setBackgroundColor(appBarLayoutColor);
+    }
+
+    public void setFabButtonColor(int color) {
+
+        MDTintUtil.setTint(mFloatingActionButton, color);
+    }
+
+    public void startBannerLoadingAnim() {
+        mFloatingActionButton.setImageResource(R.drawable.ic_loading);
+        mAnimator = ObjectAnimator.ofFloat(mFloatingActionButton, "rotation", 0, 360);
+        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mAnimator.setDuration(800);
+        mAnimator.setInterpolator(new LinearInterpolator());
+        mAnimator.start();
+    }
+
+    public void stopBannerLoadingAnim() {
+        mFloatingActionButton.setImageResource(R.drawable.ic_beauty);
+        mAnimator.cancel();
+        mFloatingActionButton.setRotation(0);
+    }
+
+    public void enableFabButton() {
+        mFloatingActionButton.setEnabled(true);
+    }
+
+    public void disEnableFabButton() {
+        mFloatingActionButton.setEnabled(false);
+    }
+}

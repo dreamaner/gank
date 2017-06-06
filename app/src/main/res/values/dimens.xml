@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="tab_text_size">14sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="line_height">1px</dimen>
+    <dimen name="item_title_textsize">18sp</dimen>
+    <dimen name="item_title_kid_textsize">10sp</dimen>
+    <dimen name="item_text_textsize">16sp</dimen>
+    <dimen name="item_text_kid_textsize">15sp</dimen>
+    <dimen name="item_title_message">12sp</dimen>
+    <dimen name="status_bar_height">0dp</dimen>
+</resources>
