@@ -31,6 +31,7 @@ import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
@@ -300,6 +301,7 @@ public class HomeFragment extends XLazyFragment<HomePresenter> {
                                         getP().setThemeColor(palette);
                                     }
                                 }));
+//        ConfigManage.INSTANCE.setBannerURL(imgUrl);
     }
 
     public void cacheImg(final String imgUrl) {

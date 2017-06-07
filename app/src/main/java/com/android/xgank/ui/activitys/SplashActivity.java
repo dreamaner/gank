@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 
 public class SplashActivity extends XActivity {
+
     @BindView(R.id.img_launcher_welcome)
     AppCompatImageView mImageView;
     private boolean isResume;
@@ -23,18 +24,16 @@ public class SplashActivity extends XActivity {
     @Override
     public boolean canBack() {
         return false;
-
     }
-
 
     @Override
     public void initData(Bundle bundle) {
         initImmersionBar();
         imgInit();
-
     }
 
     public void imgInit(){
+
         if (!ConfigManage.INSTANCE.isShowLauncherImg()) {
             goHomeActivity();
             return;
@@ -73,7 +72,7 @@ public class SplashActivity extends XActivity {
                                     }
                                     goHomeActivity();
                                 }
-                            }, 1200);
+                            }, 4000);
                         }
 
                         @Override
@@ -97,7 +96,6 @@ public class SplashActivity extends XActivity {
         super.onPause();
         isResume = false;
     }
-
 
     public void goHomeActivity() {
         Router.newIntent(this)

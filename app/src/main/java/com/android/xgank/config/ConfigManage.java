@@ -26,6 +26,7 @@ public enum ConfigManage {
     private String bannerURL;
     private boolean isShowLauncherImg = true;
     private boolean isProbabilityShowLauncherImg;
+    private boolean isFirstInstanceApp ;
 
     public void initConfig(Context context) {
         PrefsUtils prefsUtils =  PrefsUtils.getInstance(context,spName);
@@ -41,6 +42,14 @@ public enum ConfigManage {
         isProbabilityShowLauncherImg = prefsUtils.getBoolean(key_launcher_img_probability_show, true);
     }
 
+    public boolean isFirstComeInApp(){
+
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        isFirstInstanceApp = prefsUtils.getBoolean("isFirsrt",true);
+        prefsUtils.putBoolean("isFirst",false);
+        return isFirstInstanceApp;
+
+    }
     public boolean isListShowImg() {
         return isListShowImg;
     }

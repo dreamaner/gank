@@ -11,16 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="name">
-        <activity android:name=".ui.activitys.MainActivity"/>
-        <activity android:name=".ui.activitys.SplashActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.activitys.MainActivity" />
+        <activity android:name=".ui.activitys.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.activitys.WebActivity"/>
-
+        <activity android:name=".ui.activitys.WebActivity" />
+        <activity android:name=".ui.activitys.GankTypeListActivity"></activity>
     </application>
 
 </manifest>

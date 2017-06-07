@@ -13,6 +13,7 @@ import com.android.xgank.R;
 import com.android.xgank.config.ThemeManage;
 
 import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
 
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
