@@ -1,7 +1,7 @@
 package com.android.xgank.listener;
 
 
-import com.android.xgank.widget.MyScrollWebView;
+import com.android.xgank.ui.widget.MyScrollWebView;
 
 /**
  * ConfigManage

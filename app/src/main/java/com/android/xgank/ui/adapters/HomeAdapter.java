@@ -1,23 +1,29 @@
 package com.android.xgank.ui.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
+import com.android.kit.utils.check.FieldUtils;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.kit.KnifeKit;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.GankResults;
+import com.android.xgank.config.ConfigManage;
+import com.android.xgank.kit.ComUtil;
+import com.squareup.picasso.Picasso;
 
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -39,89 +45,61 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_home;
+        return R.layout.adapter_home_normal;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         final GankResults.Item item = data.get(position);
 
-        String type = item.getType();
-        switch (type) {
-            case Constant.VIDEO:
-                holder.rlMessage.setVisibility(View.VISIBLE);
-                holder.ivPart.setVisibility(View.GONE);
-                holder.ivVedio.setVisibility(View.VISIBLE);
-                holder.tvItem.setText(item.getDesc());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (getRecItemClick() != null) {
+        switch (item.getType()){
 
-                        }
-                    }
-                });
+            case Constant.VIDEO:
+
+                holder.ivPart.setVisibility(View.GONE);
+                holder.llItem.setVisibility(View.VISIBLE);
+                holder.ivItemImg.setImageResource(R.drawable.video_icon);
+
                 break;
             case Constant.PHOTO:
-                holder.rlMessage.setVisibility(View.GONE);
+                holder.llItem.setVisibility(View.GONE);
                 holder.ivPart.setVisibility(View.VISIBLE);
-                holder.ivVedio.setVisibility(View.GONE);
-
                 ILFactory.getLoader().loadNet(holder.ivPart, item.getUrl(), null);
-                holder.tvItem.setText("瞧瞧妹纸，扩展扩展视野......");
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (getRecItemClick() != null) {
-
-                        }
-                    }
-                });
                 break;
             default:
-                holder.rlMessage.setVisibility(View.VISIBLE);
+//               if (ConfigManage.INSTANCE.isListShowImg()) { // 列表显示图片
+                holder.llItem.setVisibility(View.VISIBLE);
                 holder.ivPart.setVisibility(View.GONE);
-                holder.ivVedio.setVisibility(View.GONE);
-                holder.tvItem.setText(item.getDesc());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (getRecItemClick() != null) {
-
-                        }
+                String quality = "";
+                if (item.getImages() != null && item.getImages().size() > 0) {
+                    switch (ConfigManage.INSTANCE.getThumbnailQuality()) {
+                        case 0: // 原图
+                            quality = "?imageView2/0/w/400";
+                            break;
+                        case 1: // 默认
+                            quality = "?imageView2/0/w/280";
+                            break;
+                        case 2: // 省流
+                            quality = "?imageView2/0/w/190";
+                            break;
                     }
-                });
+//                    Picasso.with(mContext).setIndicatorsEnabled(true);//显示指示器
+                    ILFactory.getLoader().loadNet(holder.ivItemImg,item.getImages().get(0)+quality,null);
+
+                } else { // 图片 URL 不存在
+//                    holder.ivItemImg.setVisibility(View.GONE);
+                    ILFactory.getLoader().loadResource(holder.ivItemImg,R.drawable.noimage,null);
+                }
+//            } else { // 列表不显示图片
+//                holder.ivItemImg.setVisibility(View.GONE);
+//            }
                 break;
         }
-        Uri uri = null;
-        switch (item.getType()) {
-            case Constant.ANDROID:
-                holder.ivType.setImageResource(R.mipmap.android_icon);
-                break;
-            case Constant.IOS:
-                holder.ivType.setImageResource(R.mipmap.ios_icon);
-                break;
-            case Constant.WEB:
-                holder.ivType.setImageResource(R.mipmap.js_icon);
-                break;
-            case Constant.EXPANDRES:
-                holder.ivType.setImageResource(R.mipmap.other_icon);
-                break;
-        }
-
-        String author = item.getWho();
-        if (author != null) {
-            holder.tvAuthor.setText(author);
-            holder.tvAuthor.setTextColor(Color.parseColor("#87000000"));
-        } else {
-            holder.tvAuthor.setText("");
-        }
-
-        holder.tvTime.setText(item.getCreatedAt());
-
-        holder.tvType.setText(type);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+         holder.tvItemTitle.setText(item.getDesc() == null?"unknow":item.getDesc());
+         holder.tvItemPublisher.setText(item.getWho() == null?"unknow":item.getWho());
+         holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDate(item.getPublishedAt()));
+         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getRecItemClick() != null) {
@@ -129,33 +107,28 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
                 }
             }
         });
-
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_type)
-        ImageView ivType;
-        @BindView(R.id.tv_type)
-        TextView tvType;
-        @BindView(R.id.iv_author)
-        ImageView ivAuthor;
-        @BindView(R.id.tv_author)
-        TextView tvAuthor;
-        @BindView(R.id.tv_time)
-        TextView tvTime;
-        @BindView(R.id.rl_message)
-        RelativeLayout rlMessage;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_part)
         ImageView ivPart;
-        @BindView(R.id.iv_vedio)
-        ImageView ivVedio;
-        @BindView(R.id.tv_item)
-        TextView tvItem;
+        @BindView(R.id.iv_item_img)
+        AppCompatImageView ivItemImg;
+        @BindView(R.id.title)
+        AppCompatTextView tvItemTitle;
+        @BindView(R.id.publisher)
+        AppCompatTextView tvItemPublisher;
+        @BindView(R.id.time)
+        AppCompatTextView tvItemTime;
+        @BindView(R.id.ll_item)
+        LinearLayout llItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
             KnifeKit.bind(this, itemView);
         }
     }
+
 }

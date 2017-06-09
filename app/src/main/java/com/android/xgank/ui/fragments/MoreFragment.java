@@ -41,10 +41,9 @@ public class MoreFragment extends XFragment<MorePresenter> {
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
+
     @BindView(R.id.more)
-    XRecyclerView more;
+    RecyclerView more;
     Unbinder unbinder;
 
     private List<MoreEntity> moreEntities  = new ArrayList<>();;
@@ -59,13 +58,12 @@ public class MoreFragment extends XFragment<MorePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
         ImmersionBar.with(getActivity())
                 .statusBarDarkFont(false)
                 .navigationBarColor(R.color.colorPrimary)
                 .init();
         setUpToolBar(true,toolbar,"更多");
-//        getP().getMoreData();
+        getP().getMoreData();
     }
 
     private OnItemDragListener dragListener=new OnItemDragListener() {
@@ -82,7 +80,8 @@ public class MoreFragment extends XFragment<MorePresenter> {
 
         @Override
         public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-//            getP().updateMoreData(moreEntities);
+            getP().updateMoreData(moreEntities);
+            moreAdapter.notifyDataSetChanged();
         }
     };
     @Override
@@ -106,15 +105,15 @@ public class MoreFragment extends XFragment<MorePresenter> {
         unbinder.unbind();
     }
 
-    public void setUpMoreData() {
+    public void setUpMoreData(List<MoreEntity> list) {
 
-        moreEntities = GankDataRepository.getInstance().addData();
-//        moreEntities.addAll(list);
 
+        moreEntities.addAll(list);
+        XLog.i("---",moreEntities.size());
         more.setLayoutManager(new GridLayoutManager(getContext(), 2));
         moreAdapter = new MoreAdapter(R.layout.gank_more_item_example, moreEntities, getContext());
-        moreAdapter.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.recycler_header,
-                (ViewGroup) more.getParent(), false));
+//        moreAdapter.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.recycler_header,
+//                (ViewGroup) more.getParent(), false));
         moreAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.recycler_footer,
                 (ViewGroup) more.getParent(), false));
 
@@ -129,11 +128,14 @@ public class MoreFragment extends XFragment<MorePresenter> {
         moreAdapter.enableDragItem(itemTouchHelper);
         moreAdapter.setOnItemDragListener(dragListener);
         more.setAdapter(moreAdapter);
-        moreAdapter.setOnItemClickListener((adapter, view, position) -> {
-            String mType = moreEntities.get(position).getType();
-            gotoTypeListActivity(mType);
+        moreAdapter.setOnItemClickListener((new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        String mType = moreEntities.get(position).getType();
+                        gotoTypeListActivity(mType);
+                    }
+                }));
 
-        });
     }
     public void gotoTypeListActivity(String type){
         Router.newIntent(getActivity())

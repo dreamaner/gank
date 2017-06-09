@@ -22,25 +22,34 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.kit.utils.toast.SnackbarUtils;
 import com.android.kit.utils.toast.ToastUtils;
+
+import com.android.kit.view.recycleview.BaseQuickAdapter;
+import com.android.kit.view.recycleview.entity.MultiItemEntity;
 import com.android.mvp.base.SimpleRecAdapter;
+import com.android.mvp.mvp.XFragment;
 import com.android.mvp.mvp.XLazyFragment;
 import com.android.mvp.recycleview.RecyclerItemCallback;
 import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
-import com.android.xgank.config.ConfigManage;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.presenter.HomePresenter;
 import com.android.xgank.ui.activitys.WebActivity;
+
+
 import com.android.xgank.ui.adapters.HomeAdapter;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,7 +59,7 @@ import static com.android.xgank.ui.activitys.WebActivity.PARAM_DESC;
 import static com.android.xgank.ui.activitys.WebActivity.PARAM_URL;
 
 
-public class HomeFragment extends XLazyFragment<HomePresenter> {
+public class HomeFragment extends XFragment<HomePresenter> {
     @BindView(R.id.text)
     TextView textView;
     @BindView(R.id.vp_home_category)
@@ -105,9 +114,6 @@ public class HomeFragment extends XLazyFragment<HomePresenter> {
            setFabDynamicState();
     }
 
-    public void initView(){
-
-    }
     public void setToolbarHeight(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -188,6 +194,7 @@ public class HomeFragment extends XLazyFragment<HomePresenter> {
                 showText(state);
             }
         });
+
     }
     public void showText(CollapsingToolbarLayoutState state){
         switch (state){
@@ -218,16 +225,18 @@ public class HomeFragment extends XLazyFragment<HomePresenter> {
         return "all";
     }
 
-    public SimpleRecAdapter getAdapter() {
+    public HomeAdapter getAdapter() {
         if (adapter == null) {
             adapter = new HomeAdapter(context);
             adapter.setRecItemClick(new RecyclerItemCallback<GankResults.Item, HomeAdapter.ViewHolder>() {
                 @Override
                 public void onItemClick(int position, GankResults.Item model, int tag, HomeAdapter.ViewHolder holder) {
                     super.onItemClick(position, model, tag, holder);
+
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
                             launch(context, model.getUrl(), model.getDesc());
+
                             break;
                     }
                 }
@@ -236,7 +245,7 @@ public class HomeFragment extends XLazyFragment<HomePresenter> {
         return adapter;
     }
 
-    public static void launch(Activity activity, String url, String desc) {
+    public  void launch(Activity activity, String url, String desc) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
                 .putString(PARAM_URL, url)

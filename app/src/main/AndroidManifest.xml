@@ -20,7 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activitys.WebActivity" />
-        <activity android:name=".ui.activitys.GankTypeListActivity"></activity>
+        <activity android:name=".ui.activitys.GankTypeListActivity" />
+        <activity android:name=".ui.activitys.SettingActivity" />
+        <activity android:name=".ui.activitys.FavActivity" />
+        <activity android:name=".ui.activitys.SearchActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.android.xgank.widget;
+package com.android.xgank.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

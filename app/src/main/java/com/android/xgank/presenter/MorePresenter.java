@@ -21,8 +21,8 @@ public class MorePresenter extends XPresent<MoreFragment> {
     }
 
     public void getMoreData(){
-//        GankDataRepository.getInstance().initMoreData();
-//        List<MoreEntity> list = GankDataRepository.getInstance().getMoreData();
-        getV().setUpMoreData();
+        GankDataRepository.getInstance().initMoreData();
+        List<MoreEntity> list = GankDataRepository.getInstance().getMoreData();
+        getV().setUpMoreData(list);
     }
 }

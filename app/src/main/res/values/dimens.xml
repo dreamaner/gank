@@ -8,4 +8,14 @@
     <dimen name="item_text_kid_textsize">15sp</dimen>
     <dimen name="item_title_message">12sp</dimen>
     <dimen name="status_bar_height">0dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="image_paddingSize">16dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="me_textSize">16sp</dimen>
+    <dimen name="small_tv_size">12sp</dimen>
+    <dimen name="view_size">1dp</dimen>
+    <dimen name="me_size">100dp</dimen>
+    <dimen name="card_ev">5dp</dimen>
+
 </resources>

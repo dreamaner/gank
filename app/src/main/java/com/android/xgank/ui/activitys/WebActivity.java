@@ -2,7 +2,6 @@ package com.android.xgank.ui.activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -14,15 +13,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.kit.Kits;
 import com.android.mvp.recycleview.XStateController;
 
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
-import com.android.xgank.listener.WebViewScrollListener;
-import com.android.xgank.widget.MyScrollWebView;
+import com.android.xgank.ui.widget.MyScrollWebView;
 
 
 import butterknife.BindView;
@@ -53,7 +50,6 @@ public class WebActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         url = getIntent().getStringExtra(PARAM_URL);
         desc = getIntent().getStringExtra(PARAM_DESC);
-
 
         setUpToolBar(true,toolbar,desc);
         initContentLayout();

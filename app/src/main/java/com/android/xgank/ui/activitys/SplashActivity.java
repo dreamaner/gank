@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 
+import com.android.kit.view.immersion.ImmersionBar;
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.router.Router;
 import com.android.xgank.config.ConfigManage;
@@ -28,7 +29,7 @@ public class SplashActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initImmersionBar();
+        ImmersionBar.with(this).transparentBar().init();
         imgInit();
     }
 

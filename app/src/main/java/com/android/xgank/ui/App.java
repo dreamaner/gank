@@ -12,6 +12,7 @@ import com.android.xgank.config.ConfigManage;
 import com.android.xgank.R;
 import com.android.xgank.config.ThemeManage;
 
+
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
@@ -40,6 +41,7 @@ public class App extends Application {
         ThemeManage.INSTANCE.initColorPrimary(getResources().getColor(R.color.colorPrimary));
         ConfigManage.INSTANCE.initConfig(this);
         LitePal.initialize(this);
+//        Stetho.initializeWithDefaults(this);
     }
 
     public static Context getContext(){
@@ -68,15 +70,7 @@ public class App extends Application {
 
             @Override
             public void configHttps(OkHttpClient.Builder builder) {
-//                builder.addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        Request request = chain.request().newBuilder()
-//                                .addHeader("productkey","1442374334440558399")
-//                                .build();
-//                        return chain.proceed(request);
-//                    }
-//                });
+//                builder.addNetworkInterceptor(new StethoInterceptor());
             }
 
             @Override

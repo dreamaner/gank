@@ -1,5 +1,6 @@
 package com.android.xgank.bean;
 
+import com.android.kit.view.recycleview.entity.MultiItemEntity;
 import com.android.xgank.model.BaseModel;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * Created by Dreamaner on 2017/5/15.
  */
 
-public class GankResults extends BaseModel {
+public class GankResults extends BaseModel{
 
     private List<Item> results;
 
@@ -38,6 +39,15 @@ public class GankResults extends BaseModel {
         private String url;
         private String used;
         private String who;
+        private List<String>  images;
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
 
         public String get_id() {
             return _id;
@@ -118,6 +128,7 @@ public class GankResults extends BaseModel {
         public void setWho(String who) {
             this.who = who;
         }
+
     }
 
 }
