@@ -10,5 +10,4 @@ public interface HomeFrgListener {
     void showToolbar();
     void hideBottomBar();
     void showBottomBar();
-    void setToolbarTitle(String title);
 }

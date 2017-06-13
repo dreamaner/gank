@@ -12,7 +12,7 @@
         android:id="@+id/iv_part"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="150dp"/>
 
     <LinearLayout
         android:id="@+id/ll_item"
@@ -60,7 +60,6 @@
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     app:srcCompat="@drawable/ic_item_author" />
 
                 <android.support.v7.widget.AppCompatTextView

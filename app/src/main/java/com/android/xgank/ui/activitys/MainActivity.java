@@ -11,12 +11,13 @@ import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.kit.FragmentUtils;
+import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.presenter.MainPresenter;
 
 import butterknife.BindView;
 
 
-public class MainActivity extends XActivity<MainPresenter> implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends XActivity<MainPresenter> implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFrgListener {
 
     @BindView(R.id.navigation)
     MyBottomNavigationView navigation;
@@ -59,5 +60,30 @@ public class MainActivity extends XActivity<MainPresenter> implements BottomNavi
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void hideToolbar() {
+
+    }
+
+    @Override
+    public void showToolbar() {
+
+    }
+
+    @Override
+    public void hideBottomBar() {
+        if (!navigation.isHidden()){
+            navigation.hide();
+        }
+
+    }
+
+    @Override
+    public void showBottomBar() {
+        if (navigation.isHidden()){
+            navigation.show();
+        }
     }
 }

@@ -1,16 +1,20 @@
 package com.android.xgank.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.DataSupport;
+
+import java.io.Serializable;
 
 /**
  * Created by yury on 2017/6/7.
  */
 
-public class MoreEntity extends DataSupport {
+public class MoreEntity extends DataSupport implements Serializable{
     private String type;
-    private int resId;
+    private String resId;
 
-    public MoreEntity(String type, int resId) {
+    public MoreEntity(String type, String resId) {
         this.type = type;
         this.resId = resId;
     }
@@ -23,13 +27,14 @@ public class MoreEntity extends DataSupport {
         this.type = type;
     }
 
-    public int getResId() {
+    public String getResId() {
         return resId;
     }
 
-    public void setResId(int resId) {
+    public void setResId(String resId) {
         this.resId = resId;
     }
+
 
 
     @Override

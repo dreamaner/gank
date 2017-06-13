@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.xgank">
 
+
     <application
         android:name=".ui.App"
         android:allowBackup="true"

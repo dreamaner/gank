@@ -68,7 +68,7 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
                 ILFactory.getLoader().loadNet(holder.ivPart, item.getUrl(), null);
                 break;
             default:
-//               if (ConfigManage.INSTANCE.isListShowImg()) { // 列表显示图片
+               if (ConfigManage.INSTANCE.isListShowImg()) { // 列表显示图片
                 holder.llItem.setVisibility(View.VISIBLE);
                 holder.ivPart.setVisibility(View.GONE);
                 String quality = "";
@@ -91,9 +91,9 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
 //                    holder.ivItemImg.setVisibility(View.GONE);
                     ILFactory.getLoader().loadResource(holder.ivItemImg,R.drawable.noimage,null);
                 }
-//            } else { // 列表不显示图片
-//                holder.ivItemImg.setVisibility(View.GONE);
-//            }
+            } else { // 列表不显示图片
+                holder.ivItemImg.setVisibility(View.GONE);
+            }
                 break;
         }
          holder.tvItemTitle.setText(item.getDesc() == null?"unknow":item.getDesc());

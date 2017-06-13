@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.kit.utils.system.AppUtils;
 import com.android.kit.utils.toast.SnackbarUtils;
 import com.android.kit.utils.toast.ToastUtils;
 
@@ -40,7 +42,10 @@ import com.android.xgank.R;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
+import com.android.xgank.listener.HomeFrgListener;
+import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.HomePresenter;
+import com.android.xgank.ui.App;
 import com.android.xgank.ui.activitys.WebActivity;
 
 
@@ -59,7 +64,7 @@ import static com.android.xgank.ui.activitys.WebActivity.PARAM_DESC;
 import static com.android.xgank.ui.activitys.WebActivity.PARAM_URL;
 
 
-public class HomeFragment extends XFragment<HomePresenter> {
+public class HomeFragment extends XFragment<HomePresenter>{
     @BindView(R.id.text)
     TextView textView;
     @BindView(R.id.vp_home_category)
@@ -80,6 +85,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
     AppBarLayout mAppBarLayout;
     Unbinder unbinder;
 
+    private HomeFrgListener homeFrgListener;
     private boolean isBannerBig; // banner 是否是大图
     private boolean isBannerAniming; // banner 放大缩小的动画是否正在执行
     private HomeAdapter adapter;
@@ -139,10 +145,13 @@ public class HomeFragment extends XFragment<HomePresenter> {
     }
 
     private void initAdapter() {
-
+        if (getActivity() instanceof HomeFrgListener){
+            homeFrgListener = (HomeFrgListener) getActivity();
+        }
         setLayoutManager(contentLayout.getRecyclerView());
         contentLayout.getRecyclerView()
                 .setAdapter(getAdapter());
+        contentLayout.getRecyclerView().addOnScrollListener(recyclerScrollListener);
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
@@ -364,4 +373,37 @@ public class HomeFragment extends XFragment<HomePresenter> {
     public void disEnableFabButton() {
         mFloatingActionButton.setEnabled(false);
     }
+
+    private RecyclerScrollListener recyclerScrollListener = new RecyclerScrollListener() {
+        @Override
+        public void hideToolBar() {
+            if (homeFrgListener != null)
+                homeFrgListener.hideToolbar();
+        }
+
+        @Override
+        public void showToolBar() {
+            if (homeFrgListener != null)
+                homeFrgListener.showToolbar();
+        }
+
+        @Override
+        public void hideBottomBar() {
+            if (homeFrgListener != null)
+                homeFrgListener.hideBottomBar();
+
+        }
+
+        @Override
+        public void showBottomBar() {
+            if (homeFrgListener != null)
+                homeFrgListener.showBottomBar();
+
+        }
+
+        @Override
+        public void firstVisibleItemPosition(int position) {
+
+        }
+    };
 }

@@ -2,9 +2,11 @@ package com.android.xgank.ui.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.base.SimpleRecAdapter;
@@ -79,7 +81,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     }
     public void setLayoutManager(XRecyclerView recyclerView) {
         if (type.equals(Constant.PHOTO))
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         else
             recyclerView.verticalLayoutManager(context);
     }

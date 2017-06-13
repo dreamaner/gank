@@ -1,11 +1,8 @@
 package com.android.xgank.config;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.android.kit.AppUtils;
-import com.android.kit.utils.cache.FileUtils;
-import com.android.kit.utils.check.FieldUtils;
+import com.android.kit.utils.system.AppUtils;
 import com.android.mvp.cache.PrefsUtils;
 
 /**
@@ -27,7 +24,7 @@ public enum ConfigManage {
     private boolean isShowLauncherImg = true;
     private boolean isProbabilityShowLauncherImg;
     private boolean isFirstInstanceApp ;
-
+    private String  photoHead ;
     public void initConfig(Context context) {
         PrefsUtils prefsUtils =  PrefsUtils.getInstance(context,spName);
         // 列表是否显示图片
@@ -41,7 +38,16 @@ public enum ConfigManage {
         // 启动页是否概率出现
         isProbabilityShowLauncherImg = prefsUtils.getBoolean(key_launcher_img_probability_show, true);
     }
+    public void setPhotoHead(String imgUrl){
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        if (!prefsUtils.getString("photoHead","").equals(imgUrl))
+            prefsUtils.putString("photoHead",imgUrl);
+    }
 
+    public String getPhotoHead(){
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        return prefsUtils.getString("photoHead",null);
+    }
     public boolean isFirstComeInApp(){
 
         PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);

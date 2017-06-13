@@ -127,6 +127,7 @@ public class HomePresenter extends XPresent<HomeFragment> {
                                 && meiziResult.getResults().size() > 0
                                 && meiziResult.getResults().get(0).getUrl() != null) {
                             getV().setBanner(meiziResult.getResults().get(0).getUrl());
+                            ConfigManage.INSTANCE.setPhotoHead(meiziResult.getResults().get(0).getUrl());
                         } else {
                             getV().showBannerFail("Banner 图加载失败。");
                         }

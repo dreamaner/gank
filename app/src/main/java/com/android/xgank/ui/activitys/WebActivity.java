@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.android.kit.view.likebutton.LikeButton;
 import com.android.mvp.kit.Kits;
 import com.android.mvp.recycleview.XStateController;
 
@@ -38,7 +39,8 @@ public class WebActivity extends XActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.contentLayout)
     XStateController contentLayout;
-
+    @BindView(R.id.fab_web_favorite)
+    LikeButton likeButton;
     String url;
     String desc;
 

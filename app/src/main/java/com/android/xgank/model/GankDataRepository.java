@@ -3,6 +3,7 @@ package com.android.xgank.model;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.android.kit.utils.operate.RandomUtils;
 import com.android.mvp.cache.PrefsUtils;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
@@ -22,24 +23,25 @@ import java.util.List;
 public class GankDataRepository {
 
     public static GankDataRepository INSTANCE;
-
     public static synchronized GankDataRepository getInstance() {
         if (INSTANCE == null){
             INSTANCE = new GankDataRepository();
         }
         return INSTANCE;
     }
+
     public void initMoreData(){
 
         if (getMoreData().size() == 0){
-            (new MoreEntity(Constant.ANDROID, R.drawable.android)).save();
-            (new MoreEntity(Constant.IOS,R.drawable.ios)).save();
-            (new MoreEntity(Constant.WEB,R.drawable.web)).save();
-            (new MoreEntity(Constant.PHOTO,R.drawable.phot)).save();
-            (new MoreEntity(Constant.EXPANDRES,R.drawable.expended)).save();
-            (new MoreEntity(Constant.RECOMMEND,R.drawable.recommend)).save();
-            (new MoreEntity(Constant.APP,R.drawable.app)).save();
-            (new MoreEntity(Constant.VIDEO,R.drawable.video)).save();
+
+            (new MoreEntity(Constant.ANDROID, String.valueOf(R.drawable.android_1))).save();
+            (new MoreEntity(Constant.IOS,String.valueOf(R.drawable.ios))).save();
+            (new MoreEntity(Constant.WEB,String.valueOf(R.drawable.web))).save();
+            (new MoreEntity(Constant.PHOTO,String.valueOf(R.drawable.phot))).save();
+            (new MoreEntity(Constant.EXPANDRES,String.valueOf(R.drawable.expended))).save();
+            (new MoreEntity(Constant.RECOMMEND,String.valueOf(R.drawable.recommend))).save();
+            (new MoreEntity(Constant.APP,String.valueOf(R.drawable.app))).save();
+            (new MoreEntity(Constant.VIDEO,String.valueOf(R.drawable.video))).save();
         }
     }
 
@@ -54,21 +56,9 @@ public class GankDataRepository {
 
     public List<MoreEntity> getMoreData() {
 
-        List<MoreEntity> moreData = DataSupport.limit(8).find(MoreEntity.class);
+        List<MoreEntity> moreData = DataSupport.findAll(MoreEntity.class);
 
         return moreData;
     }
 
-    public List addData(){
-        List<MoreEntity> list=new ArrayList<>();
-        list.add(new MoreEntity(Constant.ANDROID,R.drawable.android));
-        list.add(new MoreEntity(Constant.IOS,R.drawable.ios));
-        list.add(new MoreEntity(Constant.WEB,R.drawable.web));
-        list.add(new MoreEntity(Constant.PHOTO,R.drawable.phot));
-        list.add(new MoreEntity(Constant.EXPANDRES,R.drawable.expended));
-        list.add(new MoreEntity(Constant.RECOMMEND,R.drawable.recommend));
-        list.add(new MoreEntity(Constant.APP,R.drawable.app));
-        list.add(new MoreEntity(Constant.VIDEO,R.drawable.video));
-        return list;
-    }
 }

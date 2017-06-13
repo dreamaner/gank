@@ -36,7 +36,6 @@ public class OwnFragment extends XFragment<OwnPresenter> {
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
-
     @BindView(R.id.header_view)
     View headerView;
     @BindView(R.id.me_iv)

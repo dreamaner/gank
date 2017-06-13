@@ -3,7 +3,8 @@ package com.android.xgank.ui;
 import android.app.Application;
 import android.content.Context;
 
-import com.android.mvp.APP;
+import com.android.kit.utils.system.AppUtils;
+import com.android.mvp.AppInit;
 import com.android.mvp.net.NetError;
 import com.android.mvp.net.NetProvider;
 import com.android.mvp.net.RequestHandler;
@@ -36,7 +37,8 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         initXApi();
-        APP.parmConfig(true,true,"x-mvp","","---");
+        AppUtils.init(context);
+        AppInit.parmConfig(true,true,"x-mvp","","---");
         // 初始化主题色
         ThemeManage.INSTANCE.initColorPrimary(getResources().getColor(R.color.colorPrimary));
         ConfigManage.INSTANCE.initConfig(this);

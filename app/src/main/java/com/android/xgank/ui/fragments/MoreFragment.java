@@ -23,6 +23,8 @@ import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.MoreEntity;
+import com.android.xgank.listener.HomeFrgListener;
+import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.model.GankDataRepository;
 import com.android.xgank.presenter.MorePresenter;
 import com.android.xgank.ui.activitys.GankTypeListActivity;
@@ -45,7 +47,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
     @BindView(R.id.more)
     RecyclerView more;
     Unbinder unbinder;
-
+    private HomeFrgListener homeFrgListener;
     private List<MoreEntity> moreEntities  = new ArrayList<>();;
     private MoreAdapter moreAdapter;
     private ItemTouchHelper itemTouchHelper;
@@ -64,6 +66,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .init();
         setUpToolBar(true,toolbar,"更多");
         getP().getMoreData();
+
     }
 
     private OnItemDragListener dragListener=new OnItemDragListener() {
@@ -107,7 +110,9 @@ public class MoreFragment extends XFragment<MorePresenter> {
 
     public void setUpMoreData(List<MoreEntity> list) {
 
-
+        if (getActivity() instanceof HomeFrgListener){
+            homeFrgListener = (HomeFrgListener) getActivity();
+        }
         moreEntities.addAll(list);
         XLog.i("---",moreEntities.size());
         more.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -135,6 +140,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
                         gotoTypeListActivity(mType);
                     }
                 }));
+        more.addOnScrollListener(recyclerScrollListener);
 
     }
     public void gotoTypeListActivity(String type){
@@ -143,4 +149,33 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .putString("type",type)
                 .launch();
     }
+    private RecyclerScrollListener recyclerScrollListener = new RecyclerScrollListener() {
+        @Override
+        public void hideToolBar() {
+
+        }
+
+        @Override
+        public void showToolBar() {
+
+
+        }
+
+        @Override
+        public void hideBottomBar() {
+              if (homeFrgListener != null)
+                  homeFrgListener.hideBottomBar();
+        }
+
+        @Override
+        public void showBottomBar() {
+             if (homeFrgListener != null)
+                 homeFrgListener.showBottomBar();
+        }
+
+        @Override
+        public void firstVisibleItemPosition(int position) {
+
+        }
+    };
 }

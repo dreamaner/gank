@@ -20,9 +20,9 @@
     <string name="setting_thumb_quality_tip">提升质量返回生效，降低质量刷新列表生效</string>
     <string name="setting_quality_hige">原图</string>
     <string name="setting_more">更多</string>
-    <string name="setting_about_ugank">关于有干货</string>
+    <string name="setting_about_ugank">关于干货</string>
     <string name="setting_version">版本:</string>
-    <string name="setting_donate">捐赠开发者</string>
+    <string name="setting_donate">求打赏</string>
     <string name="setting_feedback">反馈</string>
     <string name="setting_clean_cache">清除缓存</string>
     <string name="favorite_title">收藏</string>
