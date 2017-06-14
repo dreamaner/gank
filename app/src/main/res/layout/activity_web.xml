@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_include" />
+    <include layout="@layout/include_toolbar" />
 
 
     <com.android.mvp.recycleview.XStateController
@@ -33,9 +33,9 @@
         android:id="@+id/fab_web_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:icon_size="50dp"
         android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        app:liked="true"
+        android:layout_margin="10dp"
         app:unlike_drawable="@drawable/ic_favorite_black_24dp"
         app:like_drawable="@drawable/ic_favorite_black_24dp_me"/>
 </android.support.design.widget.CoordinatorLayout>

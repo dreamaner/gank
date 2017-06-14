@@ -98,7 +98,7 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
         }
          holder.tvItemTitle.setText(item.getDesc() == null?"unknow":item.getDesc());
          holder.tvItemPublisher.setText(item.getWho() == null?"unknow":item.getWho());
-         holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDate(item.getPublishedAt()));
+         holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDate(item.getCreatedAt()));
          holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

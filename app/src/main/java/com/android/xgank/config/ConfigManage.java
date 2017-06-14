@@ -39,18 +39,18 @@ public enum ConfigManage {
         isProbabilityShowLauncherImg = prefsUtils.getBoolean(key_launcher_img_probability_show, true);
     }
     public void setPhotoHead(String imgUrl){
-        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
         if (!prefsUtils.getString("photoHead","").equals(imgUrl))
             prefsUtils.putString("photoHead",imgUrl);
     }
 
     public String getPhotoHead(){
-        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
         return prefsUtils.getString("photoHead",null);
     }
     public boolean isFirstComeInApp(){
 
-        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
         isFirstInstanceApp = prefsUtils.getBoolean("isFirsrt",true);
         prefsUtils.putBoolean("isFirst",false);
         return isFirstInstanceApp;
@@ -62,7 +62,7 @@ public enum ConfigManage {
 
     public void setListShowImg(boolean listShowImg) {
 
-        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getContext(),spName);
 
         prefsUtils.putBoolean(key_isListShowImg, listShowImg);
 
@@ -76,7 +76,7 @@ public enum ConfigManage {
 
     public void setThumbnailQuality(int thumbnailQuality) {
 
-        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getContext(),spName);
 
         prefsUtils.putInt(key_thumbnailQuality, thumbnailQuality);
 
@@ -90,7 +90,7 @@ public enum ConfigManage {
 
     public void setBannerURL(String bannerURL) {
 
-        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getContext(),spName);
 
         prefsUtils.putString(key_banner_url, bannerURL);
 
@@ -105,7 +105,7 @@ public enum ConfigManage {
 
     public void setShowLauncherImg(boolean showLauncherImg) {
 
-        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getContext(),spName);
 
         prefsUtils.putBoolean(key_launcher_img_show, showLauncherImg);
 
@@ -119,7 +119,7 @@ public enum ConfigManage {
 
     public void setProbabilityShowLauncherImg(boolean probabilityShowLauncherImg) {
 
-        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getAppContext(),spName);
+        PrefsUtils prefsUtils =  PrefsUtils.getInstance(AppUtils.getContext(),spName);
 
         prefsUtils.putBoolean(key_launcher_img_probability_show, probabilityShowLauncherImg);
 

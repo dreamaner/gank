@@ -23,17 +23,12 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.kit.utils.system.AppUtils;
-import com.android.kit.utils.toast.SnackbarUtils;
 import com.android.kit.utils.toast.ToastUtils;
 
-import com.android.kit.view.recycleview.BaseQuickAdapter;
-import com.android.kit.view.recycleview.entity.MultiItemEntity;
-import com.android.mvp.base.SimpleRecAdapter;
+
 import com.android.mvp.mvp.XFragment;
-import com.android.mvp.mvp.XLazyFragment;
+
 import com.android.mvp.recycleview.RecyclerItemCallback;
 import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
@@ -45,7 +40,7 @@ import com.android.xgank.bean.GankResults;
 import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.HomePresenter;
-import com.android.xgank.ui.App;
+
 import com.android.xgank.ui.activitys.WebActivity;
 
 
@@ -54,15 +49,9 @@ import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.android.xgank.ui.activitys.WebActivity.PARAM_DESC;
-import static com.android.xgank.ui.activitys.WebActivity.PARAM_URL;
-
 
 public class HomeFragment extends XFragment<HomePresenter>{
     @BindView(R.id.text)
@@ -244,7 +233,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
 
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
-                            launch(context, model.getUrl(), model.getDesc());
+                            launch(context, model);
 
                             break;
                     }
@@ -254,11 +243,10 @@ public class HomeFragment extends XFragment<HomePresenter>{
         return adapter;
     }
 
-    public  void launch(Activity activity, String url, String desc) {
+    public  void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putString(PARAM_URL, url)
-                .putString(PARAM_DESC, desc)
+                .putSerializable("item",item)
                 .launch();
     }
 

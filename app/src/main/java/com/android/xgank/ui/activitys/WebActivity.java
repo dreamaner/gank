@@ -14,13 +14,16 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.android.kit.view.likebutton.LikeButton;
+import com.android.kit.view.likebutton.OnLikeListener;
 import com.android.mvp.kit.Kits;
 import com.android.mvp.recycleview.XStateController;
 
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
-import com.android.xgank.ui.widget.MyScrollWebView;
+import com.android.xgank.bean.Favorite;
+import com.android.xgank.bean.GankResults;
+
 
 
 import butterknife.BindView;
@@ -29,7 +32,7 @@ import butterknife.BindView;
 /**
  * Created by Dreamaner on 2017/5/15.
  */
-public class WebActivity extends XActivity {
+public class WebActivity extends XActivity implements OnLikeListener{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -41,22 +44,23 @@ public class WebActivity extends XActivity {
     XStateController contentLayout;
     @BindView(R.id.fab_web_favorite)
     LikeButton likeButton;
-    String url;
-    String desc;
-
-    public static final String PARAM_URL = "url";
-    public static final String PARAM_DESC = "desc";
-
-
+    public String url;
+    public String desc;
+    public GankResults.Item item;
+    public Favorite fav;
     @Override
     public void initData(Bundle savedInstanceState) {
-        url = getIntent().getStringExtra(PARAM_URL);
-        desc = getIntent().getStringExtra(PARAM_DESC);
+
+        item = (GankResults.Item) getIntent().getSerializableExtra("item");
+        url = item.getUrl();
+        desc = item.getDesc();
+        
 
         setUpToolBar(true,toolbar,desc);
         initContentLayout();
         initRefreshLayout();
         initWebView();
+        likeButton.setOnLikeListener(this);
     }
 
     private void initContentLayout() {
@@ -214,14 +218,6 @@ public class WebActivity extends XActivity {
         }
     }
 
-    public static void launch(Activity activity, String url, String desc) {
-        Router.newIntent(activity)
-                .to(WebActivity.class)
-                .putString(PARAM_URL, url)
-                .putString(PARAM_DESC, desc)
-                .launch();
-    }
-
     @Override
     public int getOptionsMenuId() {
         return R.menu.menu_web;
@@ -235,5 +231,15 @@ public class WebActivity extends XActivity {
     @Override
     public Object newP() {
         return null;
+    }
+
+    @Override
+    public void liked(LikeButton likeButton) {
+
+    }
+
+    @Override
+    public void unLiked(LikeButton likeButton) {
+
     }
 }

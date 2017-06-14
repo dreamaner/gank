@@ -23,8 +23,7 @@ import com.android.xgank.ui.adapters.HomeAdapter;
 
 import butterknife.BindView;
 
-import static com.android.xgank.ui.activitys.WebActivity.PARAM_DESC;
-import static com.android.xgank.ui.activitys.WebActivity.PARAM_URL;
+
 
 public class GankTypeListActivity extends XActivity<GankTypePresenter> {
 
@@ -118,7 +117,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
                     super.onItemClick(position, model, tag, holder);
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
-                            launch(context, model.getUrl(), model.getDesc());
+                            launch(context, model);
                             break;
                     }
                 }
@@ -127,11 +126,10 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
         return adapter;
     }
 
-    public static void launch(Activity activity, String url, String desc) {
+    public static void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putString(PARAM_URL, url)
-                .putString(PARAM_DESC, desc)
+                .putSerializable("item",item)
                 .launch();
     }
 }

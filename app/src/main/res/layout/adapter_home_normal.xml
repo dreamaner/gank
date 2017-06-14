@@ -51,10 +51,10 @@
                 tools:text="主题换色，夜间模式夜间模式夜间模式夜间模式夜间模式夜间模式夜间模式夜间模式，省流量，这可能是最友好的Gank.io客户端了" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center|bottom"
-                android:paddingBottom="3dp"
+                android:gravity="left|bottom"
+                android:paddingBottom="2dp"
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.AppCompatImageView
@@ -74,7 +74,7 @@
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
                     app:srcCompat="@drawable/ic_item_time" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -82,11 +82,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
                     android:textColor="@color/colorTextSubTitle"
                     android:textSize="12sp"
-                    tools:text="2016-12-08" />
+                    tools:text="2017-6-15" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

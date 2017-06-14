@@ -3,6 +3,7 @@ package com.android.xgank.bean;
 import com.android.kit.view.recycleview.entity.MultiItemEntity;
 import com.android.xgank.model.BaseModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class GankResults extends BaseModel{
     }
 
 
-    public static class Item {
+    public static class Item implements Serializable{
 
         private String _id;
         private String _ns;

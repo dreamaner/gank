@@ -85,7 +85,7 @@ public class ComUtil {
     }
 
     public static String getFormatDate(String date){
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date1;
         try {
             date1 = dateFormat.parse(date);
@@ -93,7 +93,7 @@ public class ComUtil {
             e.printStackTrace();
             return "";
         }
-        dateFormat.applyPattern("yyyy/MM/dd");
+        dateFormat.applyPattern("yyyy-MM-dd");
         return dateFormat.format(date1);
     }
 
@@ -110,7 +110,7 @@ public class ComUtil {
     public static String getDate(String date){
         String[] t = date.split("T",2);
         String[] z = t[1].split("\\.",2);
-        XLog.i("x-",t[0]+"\t"+z[0]);
-        return t[0]+"\t"+z[0];
+        XLog.i("x-",t[0]+"\t\t"+z[0]);
+        return t[0]+"\t\t"+z[0];
     }
 }
