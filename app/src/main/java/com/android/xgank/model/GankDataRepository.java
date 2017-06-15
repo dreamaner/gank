@@ -50,6 +50,7 @@ public class GankDataRepository {
         DataSupport.deleteAll(MoreEntity.class);
 
         for (MoreEntity moreEntity : list) {
+            moreEntity.clearSavedState();
             moreEntity.save();
         }
     }

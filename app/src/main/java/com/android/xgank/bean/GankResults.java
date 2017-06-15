@@ -3,6 +3,8 @@ package com.android.xgank.bean;
 import com.android.kit.view.recycleview.entity.MultiItemEntity;
 import com.android.xgank.model.BaseModel;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class GankResults extends BaseModel{
         private String source;
         private String type;
         private String url;
-        private String used;
+        private boolean used;
         private String who;
         private List<String>  images;
 
@@ -114,11 +116,11 @@ public class GankResults extends BaseModel{
             this.url = url;
         }
 
-        public String getUsed() {
+        public boolean getUsed() {
             return used;
         }
 
-        public void setUsed(String used) {
+        public void setUsed(boolean used) {
             this.used = used;
         }
 

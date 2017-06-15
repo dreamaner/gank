@@ -68,4 +68,7 @@
     <string name="download">下载</string>
     <string name="goSetting">去设置</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

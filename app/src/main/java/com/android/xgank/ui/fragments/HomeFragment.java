@@ -234,7 +234,6 @@ public class HomeFragment extends XFragment<HomePresenter>{
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
                             launch(context, model);
-
                             break;
                     }
                 }

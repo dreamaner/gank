@@ -94,7 +94,6 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick({R.id.me_iv, R.id.login_bt, R.id.login_rl, R.id.me_fav_ll, R.id.me_nightTh_sw, R.id.me_nightTh_ll, R.id.me_setting_ll})

@@ -2,49 +2,46 @@ package com.android.xgank.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 /**
  * Created by yury on 2017/6/14.
  */
 
-public class Favorite extends DataSupport {
+public class Favorite extends DataSupport implements Serializable{
 
-    private String _id;
-    private String _ns;
+
+    /**
+     * _id : 593e60a9421aa92c769a8c65
+     * createdAt : 2017-06-12T17:36:41.29Z
+     * desc : 使用ReactNative开发的GitBook阅读器，可以查看在线的书籍信息，在线阅读和下载，目前仅适配了Android端，iOS待适配。
+     * images : ["http://img.gank.io/ff815faf-d555-435f-a733-f991d4636453"]
+     * publishedAt : 2017-06-15T13:55:57.947Z
+     * source : web
+     * type : 前端
+     * url : https://github.com/le0zh/gitbook-reader-rn/blob/master/README.md
+     * used : true
+     * who : null
+     */
+
+    private String gank_id;
     private String createdAt;
     private String desc;
     private String publishedAt;
     private String source;
     private String type;
     private String url;
-    private String used;
+    private boolean used;
     private String who;
     private List<String> images;
 
-    public List<String> getImages() {
-        return images;
+    public String getGank_id() {
+        return gank_id;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String get_ns() {
-        return _ns;
-    }
-
-    public void set_ns(String _ns) {
-        this._ns = _ns;
+    public void setGank_id(String gank_id) {
+        this.gank_id = gank_id;
     }
 
     public String getCreatedAt() {
@@ -95,11 +92,11 @@ public class Favorite extends DataSupport {
         this.url = url;
     }
 
-    public String getUsed() {
+    public boolean isUsed() {
         return used;
     }
 
-    public void setUsed(String used) {
+    public void setUsed(boolean used) {
         this.used = used;
     }
 
@@ -111,4 +108,11 @@ public class Favorite extends DataSupport {
         this.who = who;
     }
 
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 }

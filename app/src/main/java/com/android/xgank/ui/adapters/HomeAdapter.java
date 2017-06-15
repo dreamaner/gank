@@ -49,7 +49,7 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final GankResults.Item item = data.get(position);
 
@@ -99,14 +99,11 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
          holder.tvItemTitle.setText(item.getDesc() == null?"unknow":item.getDesc());
          holder.tvItemPublisher.setText(item.getWho() == null?"unknow":item.getWho());
          holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDate(item.getCreatedAt()));
-         holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getRecItemClick() != null) {
-                    getRecItemClick().onItemClick(position, item, TAG_VIEW, holder);
-                }
-            }
-        });
+         holder.itemView.setOnClickListener(v -> {
+             if (getRecItemClick() != null) {
+                 getRecItemClick().onItemClick(position, item, TAG_VIEW, holder);
+             }
+         });
     }
 
 

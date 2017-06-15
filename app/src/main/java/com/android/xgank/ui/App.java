@@ -12,6 +12,7 @@ import com.android.mvp.net.XApi;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.R;
 import com.android.xgank.config.ThemeManage;
+import com.facebook.stetho.Stetho;
 
 
 import org.litepal.LitePal;
@@ -43,7 +44,7 @@ public class App extends Application {
         ThemeManage.INSTANCE.initColorPrimary(getResources().getColor(R.color.colorPrimary));
         ConfigManage.INSTANCE.initConfig(this);
         LitePal.initialize(this);
-//        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
     }
 
     public static Context getContext(){

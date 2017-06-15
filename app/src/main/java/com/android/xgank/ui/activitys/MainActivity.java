@@ -12,12 +12,11 @@ import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.kit.FragmentUtils;
 import com.android.xgank.listener.HomeFrgListener;
-import com.android.xgank.presenter.MainPresenter;
 
 import butterknife.BindView;
 
 
-public class MainActivity extends XActivity<MainPresenter> implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFrgListener {
+public class MainActivity extends XActivity implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFrgListener {
 
     @BindView(R.id.navigation)
     MyBottomNavigationView navigation;
@@ -40,8 +39,8 @@ public class MainActivity extends XActivity<MainPresenter> implements BottomNavi
     }
 
     @Override
-    public MainPresenter newP() {
-        return new MainPresenter();
+    public Object newP() {
+        return null;
     }
 
 

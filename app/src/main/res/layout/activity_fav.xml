@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.android.xgank.ui.activitys.FavActivity">
-   <include layout="@layout/include_toolbar"/>
-    <com.android.mvp.recycleview.XRecyclerContentLayout
+    <include layout="@layout/include_toolbar"/>
+    <com.android.kit.view.tab.XTabLayout
         android:layout_width="match_parent"
-        android:id="@+id/recyclerview"
+        android:id="@+id/tab"
+        style="@style/MyCustomTabLayout"
+        android:layout_height="?attr/actionBarSize"
+        app:tabMode="scrollable"/>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/view_pager"
         android:layout_height="match_parent"/>
 </LinearLayout>

@@ -19,23 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <WebView
+            <com.android.xgank.ui.widget.ObservableWebView
                 android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-
         </android.support.v4.widget.SwipeRefreshLayout>
-
     </com.android.mvp.recycleview.XStateController>
-
-    <com.android.kit.view.likebutton.LikeButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_web_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon_size="50dp"
         android:layout_gravity="bottom|center"
-        android:layout_margin="10dp"
-        app:unlike_drawable="@drawable/ic_favorite_black_24dp"
-        app:like_drawable="@drawable/ic_favorite_black_24dp_me"/>
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_unfavorite"/>
 </android.support.design.widget.CoordinatorLayout>
