@@ -54,16 +54,14 @@ public class WebActivity extends XActivity<WebPresenter>{
     FloatingActionButton mFloatingActionButton;
     public String url;
     public String desc;
+
     public GankResults.Item item;
     public Favorite fav;
+    private int flag;
     public boolean isForResult;// 是否回传结果
     @Override
     public void initData(Bundle savedInstanceState) {
-
-        item = (GankResults.Item) getIntent().getSerializableExtra("item");
-        url = item.getUrl();
-        desc = item.getDesc();
-        
+        compareTo();
         getP().init();
         setUpToolBar(true,toolbar,desc);
         initContentLayout();
@@ -71,7 +69,19 @@ public class WebActivity extends XActivity<WebPresenter>{
         initWebView();
         getP().showFavState();
     }
+    public void compareTo(){
+        flag = getIntent().getIntExtra("flag",0);
+        if (flag == 1) {
+            item = (GankResults.Item) getIntent().getSerializableExtra("item");
+            url = item.getUrl();
+            desc = item.getDesc();
+        }else if (flag == 2){
+            fav = (Favorite) getIntent().getSerializableExtra("item");
+            url = fav.getUrl();
+            desc = fav.getDesc();
+        }
 
+    }
     private void initContentLayout() {
         contentLayout.loadingView(View.inflate(context, R.layout.loading, null));
     }
@@ -91,18 +101,20 @@ public class WebActivity extends XActivity<WebPresenter>{
 
     }
     public Favorite getFavorite(){
-        fav = new Favorite();
+        if (flag == 1){
+            fav = new Favorite();
 
-        fav.setGank_id(item.get_id());
-        fav.setImages(item.getImages());
-        fav.setCreatedAt(item.getCreatedAt());
-        fav.setDesc(item.getDesc());
-        fav.setPublishedAt(item.getPublishedAt());
-        fav.setSource(item.getSource());
-        fav.setType(item.getType());
-        fav.setUrl(item.getUrl());
-        fav.setUsed(item.getUsed());
-        fav.setWho(item.getWho());
+            fav.setGank_id(item.get_id());
+            fav.setImages(item.getImages());
+            fav.setCreatedAt(item.getCreatedAt());
+            fav.setDesc(item.getDesc());
+            fav.setPublishedAt(item.getPublishedAt());
+            fav.setSource(item.getSource());
+            fav.setType(item.getType());
+            fav.setUrl(item.getUrl());
+            fav.setUsed(item.getUsed());
+            fav.setWho(item.getWho());
+        }
 
         return fav;
     }

@@ -21,8 +21,6 @@ public class FavActivity extends XActivity<FavPresenter> {
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
     @BindView(R.id.tab)
     XTabLayout tab;
     @BindView(R.id.view_pager)
@@ -31,10 +29,10 @@ public class FavActivity extends XActivity<FavPresenter> {
     public String[] titles = {
             Constant.ANDROID,
             Constant.IOS,
-            Constant.WEB,
-            Constant.EXPANDRES,
             Constant.PHOTO,
             Constant.VIDEO,
+            Constant.WEB,
+            Constant.EXPANDRES,
             Constant.APP,
             Constant.RECOMMEND
     };
@@ -52,19 +50,19 @@ public class FavActivity extends XActivity<FavPresenter> {
 
         androidFragment = CategoryFragment.newInstance(titles[0]);
         iosFragment = CategoryFragment.newInstance(titles[1]);
-        webFragment = CategoryFragment.newInstance(titles[2]);
-        expandresFragment = CategoryFragment.newInstance(titles[3]);
-        photoFragment = CategoryFragment.newInstance(titles[4]);
-        videoFragment = CategoryFragment.newInstance(titles[5]);
+        webFragment = CategoryFragment.newInstance(titles[4]);
+        expandresFragment = CategoryFragment.newInstance(titles[5]);
+        photoFragment = CategoryFragment.newInstance(titles[2]);
+        videoFragment = CategoryFragment.newInstance(titles[3]);
         appFragment = CategoryFragment.newInstance(titles[6]);
         recommendFragment = CategoryFragment.newInstance(titles[7]);
 
         pagerAdapter.addFragment(androidFragment);
         pagerAdapter.addFragment(iosFragment);
-        pagerAdapter.addFragment(webFragment);
-        pagerAdapter.addFragment(expandresFragment);
         pagerAdapter.addFragment(photoFragment);
         pagerAdapter.addFragment(videoFragment);
+        pagerAdapter.addFragment(webFragment);
+        pagerAdapter.addFragment(expandresFragment);
         pagerAdapter.addFragment(appFragment);
         pagerAdapter.addFragment(recommendFragment);
 

@@ -246,6 +246,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
         Router.newIntent(activity)
                 .to(WebActivity.class)
                 .putSerializable("item",item)
+                .putInt("flag",1)
                 .launch();
     }
 

@@ -16,13 +16,9 @@ import com.android.xgank.ui.activitys.SettingActivity;
 
 public class SettingPresenter extends XPresent<SettingActivity> {
 
-
-
     private boolean mSwitchSettingInitState;
 
     private int mTvImageQualityContentInitState;
-
-
 
 
     public void init() throws Exception {

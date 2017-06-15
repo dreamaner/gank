@@ -2,12 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.android.xgank.ui.fragments.CategoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.android.mvp.recycleview.XRecyclerContentLayout
         android:layout_width="match_parent"
+        android:id="@+id/content"
+        app:x_emptyLayoutId="@layout/empty_view"
+        app:x_loadingLayoutId="@layout/loading"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        />
 
 </FrameLayout>
