@@ -130,6 +130,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
         Router.newIntent(activity)
                 .to(WebActivity.class)
                 .putSerializable("item",item)
+                .putInt("flag",1)
                 .launch();
     }
 }

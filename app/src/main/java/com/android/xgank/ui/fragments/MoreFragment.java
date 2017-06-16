@@ -46,7 +46,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
 
     @BindView(R.id.more)
     RecyclerView more;
-    Unbinder unbinder;
+
     private HomeFrgListener homeFrgListener;
     private List<MoreEntity> moreEntities  = new ArrayList<>();;
     private MoreAdapter moreAdapter;
@@ -100,12 +100,6 @@ public class MoreFragment extends XFragment<MorePresenter> {
     @Override
     public boolean canBack() {
         return false;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     public void setUpMoreData(List<MoreEntity> list) {

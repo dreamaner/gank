@@ -58,7 +58,7 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     LinearLayout meNightThLl;
     @BindView(R.id.me_setting_ll)
     LinearLayout meSettingLl;
-    Unbinder unbinder;
+
 
     public OwnFragment() {
         // Required empty public constructor

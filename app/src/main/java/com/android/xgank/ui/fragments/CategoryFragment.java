@@ -84,6 +84,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
 
         setLayoutManager(content.getRecyclerView());
         content.getRecyclerView().setAdapter(getAdapter());
+
 //        contentLayout.getRecyclerView().addOnScrollListener(recyclerScrollListener);
         content.getRecyclerView().setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
@@ -106,7 +107,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         } else {
             getAdapter().setData(list);
         }
-        if (list.size() < 5)
+        if (list.size() < 10)
             content.getRecyclerView().setPage(MAX_PAGE, MAX_PAGE);
         else
             content.getRecyclerView().setPage(page, MAX_PAGE);

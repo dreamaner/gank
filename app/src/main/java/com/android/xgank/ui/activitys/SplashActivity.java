@@ -73,7 +73,7 @@ public class SplashActivity extends XActivity {
                                     }
                                     goHomeActivity();
                                 }
-                            }, 4000);
+                            }, 2000);
                         }
 
                         @Override

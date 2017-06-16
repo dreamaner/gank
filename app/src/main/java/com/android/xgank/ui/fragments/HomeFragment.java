@@ -41,6 +41,7 @@ import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.HomePresenter;
 
+import com.android.xgank.ui.activitys.SearchActivity;
 import com.android.xgank.ui.activitys.WebActivity;
 
 
@@ -66,13 +67,10 @@ public class HomeFragment extends XFragment<HomePresenter>{
     Toolbar tlHomeToolbar;
     @BindView(R.id.ll_home_search)
     LinearLayout llHomeSearch;
-    @BindView(R.id.iv_home_collection)
-    AppCompatImageView ivHomeCollection;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingToolbar;
     @BindView(R.id.appBar)
     AppBarLayout mAppBarLayout;
-    Unbinder unbinder;
 
     private HomeFrgListener homeFrgListener;
     private boolean isBannerBig; // banner 是否是大图
@@ -250,15 +248,14 @@ public class HomeFragment extends XFragment<HomePresenter>{
                 .launch();
     }
 
-    @OnClick({R.id.iv_home_banner,R.id.fab_home_random, R.id.ll_home_search, R.id.iv_home_collection})
+    @OnClick({R.id.iv_home_banner,R.id.fab_home_random, R.id.ll_home_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab_home_random:
                 getP().getBanner(true);
                 break;
             case R.id.ll_home_search:
-                break;
-            case R.id.iv_home_collection:
+                goSearch();
                 break;
             case R.id.iv_home_banner:
                 if (isBannerAniming) {
@@ -268,7 +265,11 @@ public class HomeFragment extends XFragment<HomePresenter>{
                 break;
         }
     }
-
+    public void goSearch(){
+        Router.newIntent(getActivity())
+                .to(SearchActivity.class)
+                .launch();
+    }
     private void startBannerAnim() {
         final CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
         ValueAnimator animator;

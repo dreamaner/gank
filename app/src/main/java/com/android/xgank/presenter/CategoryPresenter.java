@@ -28,9 +28,9 @@ public class CategoryPresenter extends XPresent<CategoryFragment> {
 
         if (page == 1){
 
-             list = DataSupport.where(" type = ?", type).limit(page*5).find(Favorite.class);
+             list = DataSupport.where(" type = ?", type).limit(page*10).find(Favorite.class);
         }else{
-             list = DataSupport.where(" type = ?", type).limit(5).offset((page-1)*5).find(Favorite.class);
+             list = DataSupport.where(" type = ?", type).limit(10).offset((page-1)*10).find(Favorite.class);
         }
            getV().showData(list,page);
     }

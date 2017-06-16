@@ -25,6 +25,7 @@ import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
+import com.android.xgank.bean.SearchResult;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.widget.ObservableWebView;
 
@@ -57,6 +58,7 @@ public class WebActivity extends XActivity<WebPresenter>{
 
     public GankResults.Item item;
     public Favorite fav;
+    public SearchResult.Item search;
     private int flag;
     public boolean isForResult;// 是否回传结果
     @Override
@@ -64,7 +66,6 @@ public class WebActivity extends XActivity<WebPresenter>{
         compareTo();
         getP().init();
         setUpToolBar(true,toolbar,desc);
-        initContentLayout();
         initRefreshLayout();
         initWebView();
         getP().showFavState();
@@ -79,13 +80,13 @@ public class WebActivity extends XActivity<WebPresenter>{
             fav = (Favorite) getIntent().getSerializableExtra("item");
             url = fav.getUrl();
             desc = fav.getDesc();
+        }else if (flag == 3){
+            search = (SearchResult.Item)getIntent().getSerializableExtra("item");
+            url = search.getUrl();
+            desc = search.getDesc();
         }
 
     }
-    private void initContentLayout() {
-        contentLayout.loadingView(View.inflate(context, R.layout.loading, null));
-    }
-
     private void initRefreshLayout() {
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_light,
@@ -114,6 +115,16 @@ public class WebActivity extends XActivity<WebPresenter>{
             fav.setUrl(item.getUrl());
             fav.setUsed(item.getUsed());
             fav.setWho(item.getWho());
+        }else if ( flag == 3){
+            fav = new Favorite();
+
+            fav.setGank_id(search.getGanhuo_id());
+            fav.setWho(search.getWho());
+            fav.setUrl(search.getUrl());
+            fav.setType(search.getType());
+            fav.setDesc(search.getDesc());
+            fav.setCreatedAt(search.getPublishedAt());
+            fav.setPublishedAt(search.getPublishedAt());
         }
 
         return fav;
