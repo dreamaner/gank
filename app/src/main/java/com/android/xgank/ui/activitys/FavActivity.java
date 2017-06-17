@@ -1,5 +1,5 @@
 package com.android.xgank.ui.activitys;
-
+import butterknife.BindView;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -13,8 +13,8 @@ import com.android.xgank.presenter.FavPresenter;
 import com.android.xgank.ui.adapters.CategoryViewPagerAdapter;
 import com.android.xgank.ui.fragments.CategoryFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 
 
 public class FavActivity extends XActivity<FavPresenter> {

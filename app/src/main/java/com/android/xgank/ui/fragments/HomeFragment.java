@@ -34,6 +34,7 @@ import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
@@ -41,6 +42,7 @@ import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.HomePresenter;
 
+import com.android.xgank.ui.activitys.PhotoActivity;
 import com.android.xgank.ui.activitys.SearchActivity;
 import com.android.xgank.ui.activitys.WebActivity;
 
@@ -53,8 +55,9 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import java.util.ArrayList;
 
-public class HomeFragment extends XFragment<HomePresenter>{
+public class HomeFragment extends XFragment<HomePresenter> {
     @BindView(R.id.text)
     TextView textView;
     @BindView(R.id.vp_home_category)
@@ -71,7 +74,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
     CollapsingToolbarLayout mCollapsingToolbar;
     @BindView(R.id.appBar)
     AppBarLayout mAppBarLayout;
-
+    ArrayList<String> urls;
     private HomeFrgListener homeFrgListener;
     private boolean isBannerBig; // banner 是否是大图
     private boolean isBannerAniming; // banner 放大缩小的动画是否正在执行
@@ -98,16 +101,16 @@ public class HomeFragment extends XFragment<HomePresenter>{
 
     @Override
     public void initData(Bundle savedInstanceState) {
-           initImmersionBar();
-           getP().loadData(getType(), 1);
-           initAdapter();
-           getP().getBanner(false);
-           getP().cacheRandomImg();
-           setToolbarHeight();
-           setFabDynamicState();
+        initImmersionBar();
+        getP().loadData(getType(), 1);
+        initAdapter();
+        getP().getBanner(false);
+        getP().cacheRandomImg();
+        setToolbarHeight();
+        setFabDynamicState();
     }
 
-    public void setToolbarHeight(){
+    public void setToolbarHeight() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 4.4 以上版本
@@ -117,6 +120,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
             tlHomeToolbar.setLayoutParams(layoutParams);
         }
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -132,7 +136,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
     }
 
     private void initAdapter() {
-        if (getActivity() instanceof HomeFrgListener){
+        if (getActivity() instanceof HomeFrgListener) {
             homeFrgListener = (HomeFrgListener) getActivity();
         }
         setLayoutManager(contentLayout.getRecyclerView());
@@ -192,8 +196,9 @@ public class HomeFragment extends XFragment<HomePresenter>{
         });
 
     }
-    public void showText(CollapsingToolbarLayoutState state){
-        switch (state){
+
+    public void showText(CollapsingToolbarLayoutState state) {
+        switch (state) {
             case COLLAPSED:
                 textView.setText("All");
                 break;
@@ -202,6 +207,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
                 break;
         }
     }
+
     public void showData(int page, GankResults model) {
         if (page > 1) {
             getAdapter().addData(model.getResults());
@@ -217,7 +223,7 @@ public class HomeFragment extends XFragment<HomePresenter>{
         }
     }
 
-    public String getType(){
+    public String getType() {
         return "all";
     }
 
@@ -231,7 +237,10 @@ public class HomeFragment extends XFragment<HomePresenter>{
 
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
-                            launch(context, model);
+                            if (model.getType().equals(Constant.PHOTO))
+                                goPhoto(model,position);
+                            else
+                                launch(context, model);
                             break;
                     }
                 }
@@ -240,15 +249,15 @@ public class HomeFragment extends XFragment<HomePresenter>{
         return adapter;
     }
 
-    public  void launch(Activity activity, GankResults.Item item) {
+    public void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putSerializable("item",item)
-                .putInt("flag",1)
+                .putSerializable("item", item)
+                .putInt("flag", 1)
                 .launch();
     }
 
-    @OnClick({R.id.iv_home_banner,R.id.fab_home_random, R.id.ll_home_search})
+    @OnClick({R.id.iv_home_banner, R.id.fab_home_random, R.id.ll_home_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab_home_random:
@@ -265,11 +274,26 @@ public class HomeFragment extends XFragment<HomePresenter>{
                 break;
         }
     }
-    public void goSearch(){
+
+    public void goSearch() {
         Router.newIntent(getActivity())
                 .to(SearchActivity.class)
                 .launch();
     }
+
+
+    public void goPhoto(GankResults.Item item,int position){
+        if (urls == null){
+            urls = new ArrayList<>();
+        }
+        urls.add(item.getUrl());
+        Router.newIntent(getActivity())
+            .to(PhotoActivity.class)
+            .putStringArrayList("urls",urls)
+            .putInt("position",1)
+            .launch();
+    }
+
     private void startBannerAnim() {
         final CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
         ValueAnimator animator;

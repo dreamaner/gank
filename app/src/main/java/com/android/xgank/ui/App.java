@@ -3,6 +3,7 @@ package com.android.xgank.ui;
 import android.app.Application;
 import android.content.Context;
 
+
 import com.android.kit.utils.system.AppUtils;
 import com.android.mvp.AppInit;
 import com.android.mvp.net.NetError;
@@ -45,6 +46,7 @@ public class App extends Application {
         ConfigManage.INSTANCE.initConfig(this);
         LitePal.initialize(this);
         Stetho.initializeWithDefaults(this);
+        //DebugDB.getAddressLog();
     }
 
     public static Context getContext(){
@@ -56,7 +58,6 @@ public class App extends Application {
         if (instance == null){
 
             instance = new App();
-
         }
 
         return instance;

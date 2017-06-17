@@ -77,7 +77,7 @@ public class OwnFragment extends XFragment<OwnPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true,toolbar,"我");
+        setUpToolBar(true, toolbar, "我");
     }
 
     @Override
@@ -118,13 +118,13 @@ public class OwnFragment extends XFragment<OwnPresenter> {
         }
     }
 
-    public void goSetting(){
+    public void goSetting() {
         Router.newIntent(getActivity())
                 .to(SettingActivity.class)
                 .launch();
     }
 
-    public void goFav(){
+    public void goFav() {
         Router.newIntent(getActivity())
                 .to(FavActivity.class)
                 .launch();

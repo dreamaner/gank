@@ -12,36 +12,29 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.android.kit.utils.toast.Toasty;
-import com.android.kit.view.likebutton.LikeButton;
-import com.android.kit.view.likebutton.OnLikeListener;
-import com.android.kit.view.widget.MyFloatingActionButton;
+import com.android.kit.view.photoview.PhotoView;
+import com.android.mvp.imageloader.GlideLoader;
+import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.kit.Kits;
-import com.android.mvp.recycleview.XStateController;
-
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
-
+import com.android.mvp.recycleview.XStateController;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.widget.ObservableWebView;
 
-
-import org.litepal.crud.DataSupport;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-
-
 /**
  * Created by Dreamaner on 2017/5/15.
  */
-public class WebActivity extends XActivity<WebPresenter>{
+public class WebActivity extends XActivity<WebPresenter> {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -59,8 +52,10 @@ public class WebActivity extends XActivity<WebPresenter>{
     public GankResults.Item item;
     public Favorite fav;
     public SearchResult.Item search;
+
     private int flag;
     public boolean isForResult;// 是否回传结果
+
     @Override
     public void initData(Bundle savedInstanceState) {
         compareTo();
@@ -69,40 +64,39 @@ public class WebActivity extends XActivity<WebPresenter>{
         initRefreshLayout();
         initWebView();
         getP().showFavState();
+
     }
-    public void compareTo(){
-        flag = getIntent().getIntExtra("flag",0);
+
+    public void compareTo() {
+        flag = getIntent().getIntExtra("flag", 0);
         if (flag == 1) {
             item = (GankResults.Item) getIntent().getSerializableExtra("item");
             url = item.getUrl();
             desc = item.getDesc();
-        }else if (flag == 2){
+        } else if (flag == 2) {
             fav = (Favorite) getIntent().getSerializableExtra("item");
             url = fav.getUrl();
             desc = fav.getDesc();
-        }else if (flag == 3){
-            search = (SearchResult.Item)getIntent().getSerializableExtra("item");
+        } else if (flag == 3) {
+            search = (SearchResult.Item) getIntent().getSerializableExtra("item");
             url = search.getUrl();
             desc = search.getDesc();
         }
-
     }
+
     private void initRefreshLayout() {
         swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_light,
-                android.R.color.holo_red_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_green_light);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                webView.loadUrl(url);
-            }
+            android.R.color.holo_blue_light,
+            android.R.color.holo_red_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            webView.loadUrl(url);
         });
-
     }
-    public Favorite getFavorite(){
-        if (flag == 1){
+
+    public Favorite getFavorite() {
+        if (flag == 1) {
             fav = new Favorite();
 
             fav.setGank_id(item.get_id());
@@ -115,7 +109,7 @@ public class WebActivity extends XActivity<WebPresenter>{
             fav.setUrl(item.getUrl());
             fav.setUsed(item.getUsed());
             fav.setWho(item.getWho());
-        }else if ( flag == 3){
+        } else if (flag == 3) {
             fav = new Favorite();
 
             fav.setGank_id(search.getGanhuo_id());
@@ -129,10 +123,12 @@ public class WebActivity extends XActivity<WebPresenter>{
 
         return fav;
     }
+
     @OnClick(R.id.fab_web_favorite)
-    public void favorite(){
-           getP().favoriteGank();
+    public void favorite() {
+        getP().favoriteGank();
     }
+
     public void setFavoriteState(boolean isFavorite) {
         if (isFavorite) {
             mFloatingActionButton.setImageResource(R.drawable.ic_favorite);
@@ -141,27 +137,30 @@ public class WebActivity extends XActivity<WebPresenter>{
         }
         isForResult = !isFavorite;
     }
-    public void showTips(String msg){
 
-        switch (msg){
+    public void showTips(String msg) {
+
+        switch (msg) {
             case "收藏成功":
-                Toasty.success(this,msg).show();
+                Toasty.success(this, msg).show();
                 break;
             case "收藏失败":
-                Toasty.error(this,msg).show();
+                Toasty.error(this, msg).show();
                 break;
             case "取消收藏":
-                Toasty.info(this,msg).show();
+                Toasty.info(this, msg).show();
                 break;
             case "取消收藏失败":
-                Toasty.error(this,msg).show();
+                Toasty.error(this, msg).show();
                 break;
         }
     }
+
     public void hideFavoriteFab() {
         mFloatingActionButton.setVisibility(View.GONE);
         webView.setOnScrollChangedCallback(null);
     }
+
     private void initWebView() {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -169,13 +168,10 @@ public class WebActivity extends XActivity<WebPresenter>{
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
                     swipeRefreshLayout.setRefreshing(false);
-                    if (contentLayout != null)
-                        contentLayout.showContent();
-                    if (webView != null)
-                        url = webView.getUrl();
+                    if (contentLayout != null) contentLayout.showContent();
+                    if (webView != null) url = webView.getUrl();
                 } else {
-                    if (contentLayout != null)
-                        contentLayout.showLoading();
+                    if (contentLayout != null) contentLayout.showLoading();
                 }
             }
         });
@@ -197,55 +193,23 @@ public class WebActivity extends XActivity<WebPresenter>{
         webSettings.setUseWideViewPort(true); // 将图片调整到适合WebView的大小
         webSettings.setLoadWithOverviewMode(true); // 自适应屏幕
 
+
         webView.loadUrl(url);
-        webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
-            @Override
-            public void onScroll(int dx, int dy) {
-                if (dy > 0)
-                    mFloatingActionButton.hide();
-                else
-                    mFloatingActionButton.show();
+        webView.setOnScrollChangedCallback((dx, dy) -> {
+            if (dy > 0) {
+                mFloatingActionButton.hide();
+            } else {
+                mFloatingActionButton.show();
             }
         });
-//        webView.setScrollListener(new WebViewScrollListener() {
-//            @Override
-//            public void hideToolbar() {
-//                new Handler().postDelayed(() -> {
-//                    toolbar.hide();
-////                    hideSystemUI();
-//                }, 500);
-//
-//
-//            }
-//
-//            @Override
-//            public void showToolbar() {
-//                new Handler().postDelayed(() -> {
-////                    showSystemUI();
-//                    toolbar.show();
-//                }, 500);
-//            }
-//        });
+
     }
 
-    private void hideSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
-    }
-
-    private void showSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
     @Override
     public boolean canBack() {
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -263,6 +227,7 @@ public class WebActivity extends XActivity<WebPresenter>{
             case R.id.action_open_in_browser:
                 Kits.openInBrowser(this, webView.getUrl());
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -321,5 +286,6 @@ public class WebActivity extends XActivity<WebPresenter>{
     public WebPresenter newP() {
         return new WebPresenter();
     }
+
 
 }

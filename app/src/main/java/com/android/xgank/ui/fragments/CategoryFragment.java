@@ -4,9 +4,8 @@ package com.android.xgank.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.android.kit.utils.io.IOUtils;
 
 import com.android.mvp.mvp.XLazyFragment;
 import com.android.mvp.recycleview.RecyclerItemCallback;
@@ -14,11 +13,15 @@ import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
-import com.android.xgank.bean.Favorite;
 
+import com.android.xgank.bean.Constant;
+import com.android.xgank.bean.Favorite;
+import com.android.xgank.bean.SearchResult;
 import com.android.xgank.presenter.CategoryPresenter;
+import com.android.xgank.ui.activitys.PhotoActivity;
 import com.android.xgank.ui.activitys.WebActivity;
 import com.android.xgank.ui.adapters.CatrgoryListAdapter;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +40,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
 
     public String mCategoryName;
     private CatrgoryListAdapter adapter;
+    public ArrayList<String> urls;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -58,6 +62,8 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         mCategoryName = bundle.getString(CATEGORY_NAME);
         getP().loadData(getType(),1);
         initAdapter();
+        if (urls == null)
+            urls =new ArrayList<>();
     }
 
     @Override
@@ -100,7 +106,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
 
         content.getRecyclerView().useDefLoadMoreView();
     }
-    public void showData(List<Favorite> list,int page) {
+    public void showData(List<Favorite> list, int page) {
 
         if (page > 1) {
             getAdapter().addData(list);
@@ -122,6 +128,17 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         return mCategoryName;
     }
 
+    public void goPhoto(List<Favorite> items,int position){
+        urls.clear();
+        for (Favorite item:items){
+            urls.add(item.getUrl());
+        }
+        Router.newIntent(getActivity())
+            .to(PhotoActivity.class)
+            .putStringArrayList("urls",urls)
+            .putInt("position",position)
+            .launch();
+    }
     public CatrgoryListAdapter getAdapter() {
         if (adapter == null) {
             adapter = new CatrgoryListAdapter(context);
@@ -132,7 +149,10 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
 
                     switch (tag) {
                         case CatrgoryListAdapter.TAG_VIEW:
-                            launch(context, model);
+                            if (model.getType().equals(Constant.PHOTO))
+                                goPhoto(adapter.getDataSource(),position);
+                            else
+                                launch(context, model);
                             break;
                     }
                 }
@@ -147,6 +167,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
                 .putSerializable("item",item)
                 .putInt("flag",2)
                 .launch();
+
     }
 
 }

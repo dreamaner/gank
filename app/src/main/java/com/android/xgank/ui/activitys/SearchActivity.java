@@ -24,6 +24,8 @@ import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
+import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.History;
 import com.android.xgank.bean.SearchResult;
 import com.android.xgank.presenter.SearchPresenter;
@@ -34,6 +36,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,7 +66,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
 
     public HistoryAdapter historyAdapter;
     public SearchAdapter searchAdapter;
-
+    public ArrayList<String> urls;
     @Override
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbarSearch, "");
@@ -74,7 +77,8 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         edSearch.setOnEditorActionListener(this);
         initSearchAdapter();
         initHistoryAdapter();
-
+        if (urls == null)
+            urls = new ArrayList<>();
     }
 
     @Override
@@ -144,6 +148,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
             contentLayout.showEmpty();
             return;
         }
+
     }
 
     public HistoryAdapter getHistoryAdapter() {
@@ -180,7 +185,10 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
 
                     switch (tag) {
                         case SearchAdapter.TAG_VIEW:
-                            launch(context, model);
+                            if (model.getType().equals(Constant.PHOTO))
+                                goPhoto(searchAdapter.getDataSource(),position);
+                            else
+                                launch(context, model);
                             break;
                     }
                 }
@@ -188,7 +196,17 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         }
         return searchAdapter;
     }
-
+    public void goPhoto(List<SearchResult.Item> items,int position){
+        urls.clear();
+        for (SearchResult.Item item:items){
+            urls.add(item.getUrl());
+        }
+        Router.newIntent(this)
+            .to(PhotoActivity.class)
+            .putStringArrayList("urls",urls)
+            .putInt("position",position)
+            .launch();
+    }
     public void setContentLayoutInVisible() {
         contentLayout.setVisibility(View.GONE);
     }
@@ -226,7 +244,6 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         ivEditClear.setVisibility(View.GONE);
         getP().queryHistory();
     }
-
     @OnClick(R.id.iv_search)
     public void onIvSearchClicked() {
         if (!CheckUtils.isEmpty(getKey())){
@@ -236,7 +253,6 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         } else{
             Toasty.warning(this,"不要输入空数据哟").show();
         }
-
     }
 
     @OnClick(R.id.tv_search_clean)
