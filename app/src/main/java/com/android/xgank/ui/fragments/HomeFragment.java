@@ -108,6 +108,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
         getP().cacheRandomImg();
         setToolbarHeight();
         setFabDynamicState();
+        if (urls == null)
+            urls = new ArrayList<>();
     }
 
     public void setToolbarHeight() {
@@ -283,15 +285,15 @@ public class HomeFragment extends XFragment<HomePresenter> {
 
 
     public void goPhoto(GankResults.Item item,int position){
-        if (urls == null){
-            urls = new ArrayList<>();
-        }
+        urls.clear();
         urls.add(item.getUrl());
         Router.newIntent(getActivity())
-            .to(PhotoActivity.class)
-            .putStringArrayList("urls",urls)
-            .putInt("position",1)
-            .launch();
+                .to(PhotoActivity.class)
+                .putStringArrayList("urls",urls)
+                .putInt("position",0)
+                .putInt("flag", 1)
+                .putSerializable("item", item)
+                .launch();
     }
 
     private void startBannerAnim() {

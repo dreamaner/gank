@@ -5,6 +5,8 @@ import android.graphics.Point;
 import android.view.WindowManager;
 
 
+import com.android.kit.utils.system.AppUtils;
+import com.android.kit.utils.system.DateUtils;
 import com.android.mvp.log.XLog;
 import com.android.xgank.bean.Constant;
 
@@ -12,6 +14,7 @@ import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -112,5 +115,36 @@ public class ComUtil {
         String[] z = t[1].split("\\.",2);
         XLog.i("x-",t[0]+"\t\t"+z[0]);
         return t[0]+"\t\t"+z[0];
+    }
+    public static String getDateByPublishTime(String date) throws ParseException {
+        String[] t = date.split("T",2);
+        String[] z = t[1].split("\\.",2);
+        String publishTime = t[0]+"\t\t"+z[0];
+        long publishMills = DateToMills(publishTime);
+        long currentMills = System.currentTimeMillis();
+        long result = currentMills - publishMills;
+        long mills = result/1000;
+        long minute = result/1000/60;
+        long hour = result/1000/60/60;
+        long day = result/1000/60/60/24;
+        if (minute <= 10 ){
+            return "刚刚";
+        }else if (minute > 10&& minute <= 30){
+            return minute+"分钟前";
+        }else if (minute > 30 && minute <= 60)
+            return "半小时前";
+        else if (hour > 1 && hour < 24)
+            return hour+"天前";
+        else if (day >= 1&&day <=3)
+            return day + "天前";
+        else if (day > 3)
+            return publishTime;
+        return "";
+    }
+    public static long DateToMills(String date) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd\t\tHH:mm:ss").parse(date));
+        System.out.println("日期[2016-12-31 12:30:45 123]对应毫秒：" + calendar.getTimeInMillis());
+        return calendar.getTimeInMillis();
     }
 }

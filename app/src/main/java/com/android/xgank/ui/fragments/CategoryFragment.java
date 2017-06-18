@@ -137,6 +137,8 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
             .putInt("position",position)
+                .putInt("flag", 2)
+                .putSerializable("item", items.get(position))
             .launch();
     }
     public CatrgoryListAdapter getAdapter() {

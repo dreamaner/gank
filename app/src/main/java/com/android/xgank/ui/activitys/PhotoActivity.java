@@ -1,15 +1,20 @@
 package com.android.xgank.ui.activitys;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.android.kit.utils.other.IntentUtils;
+import com.android.kit.utils.system.AndroidUtils;
 import com.android.kit.utils.toast.Toasty;
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
@@ -17,11 +22,12 @@ import com.android.xgank.R;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
+import com.android.xgank.presenter.PhotoPresenter;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.adapters.PhotoAdapter;
 import java.util.ArrayList;
 
-public class PhotoActivity extends XActivity<WebPresenter> {
+public class PhotoActivity extends XActivity<PhotoPresenter> {
 
     @BindView(R.id.photo_vp)
     ViewPager photoVp;
@@ -47,7 +53,8 @@ public class PhotoActivity extends XActivity<WebPresenter> {
         setUpToolBar(true, toolbar, "图片详情");
         initIntentData();
         initView();
-        //getP().init();
+        getP().init();
+        getP().showFavState();
     }
 
     @Override
@@ -56,16 +63,20 @@ public class PhotoActivity extends XActivity<WebPresenter> {
     }
 
     @Override
-    public WebPresenter newP() {
-        return new WebPresenter();
+    public PhotoPresenter newP() {
+        return new PhotoPresenter();
     }
 
     private void initIntentData() {
         Intent intent = getIntent();
         mDatas = intent.getStringArrayListExtra("urls");
         curPos = intent.getIntExtra("position", 0);
+        flag = intent.getIntExtra("flag",0);
     }
+    public void hideFavoriteFab() {
+        mFloatingActionButton.setVisibility(View.GONE);
 
+    }
     private void initView() {
         photoAdapter = new PhotoAdapter(this, mDatas);
         photoVp.setAdapter(photoAdapter);
@@ -80,8 +91,11 @@ public class PhotoActivity extends XActivity<WebPresenter> {
 
             @Override
             public void onPageSelected(int position) {
+                getP().init();
                 gankPhotoPosTv.setText(
                     String.valueOf(position + 1) + "/" + String.valueOf(mDatas.size()));
+                getP().showFavState();
+
             }
 
             @Override
@@ -92,6 +106,7 @@ public class PhotoActivity extends XActivity<WebPresenter> {
     }
     public Favorite getFavorite() {
         if (flag == 1) {
+            item = (GankResults.Item) getIntent().getSerializableExtra("item");
             fav = new Favorite();
 
             fav.setGank_id(item.get_id());
@@ -101,19 +116,23 @@ public class PhotoActivity extends XActivity<WebPresenter> {
             fav.setPublishedAt(item.getPublishedAt());
             fav.setSource(item.getSource());
             fav.setType(item.getType());
-            fav.setUrl(item.getUrl());
+            fav.setUrl(mDatas.get(photoVp.getCurrentItem()));
             fav.setUsed(item.getUsed());
             fav.setWho(item.getWho());
         } else if (flag == 3) {
+            search = (SearchResult.Item) getIntent().getSerializableExtra("search");
             fav = new Favorite();
 
             fav.setGank_id(search.getGanhuo_id());
             fav.setWho(search.getWho());
-            fav.setUrl(search.getUrl());
+            fav.setUrl(mDatas.get(photoVp.getCurrentItem()));
             fav.setType(search.getType());
             fav.setDesc(search.getDesc());
             fav.setCreatedAt(search.getPublishedAt());
             fav.setPublishedAt(search.getPublishedAt());
+        }else {
+            fav = (Favorite) getIntent().getSerializableExtra("fav");
+            fav.setUrl(mDatas.get(photoVp.getCurrentItem()));
         }
 
         return fav;
@@ -137,7 +156,9 @@ public class PhotoActivity extends XActivity<WebPresenter> {
     }
 
     public void shareTo() {
-
+        Uri uri = Uri.parse(mDatas.get(photoVp.getCurrentItem()));
+        Intent intent =IntentUtils.getShareImageIntent("图片",uri);
+        startActivity(intent);
     }
 
     @Override

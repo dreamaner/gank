@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.kit.utils.check.FieldUtils;
+import com.android.kit.utils.operate.RandomUtils;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.kit.KnifeKit;
@@ -20,6 +23,7 @@ import com.android.xgank.config.ConfigManage;
 import com.android.xgank.kit.ComUtil;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,6 +67,11 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
 
                 break;
             case Constant.PHOTO:
+                LinearLayout.LayoutParams linearParams =
+                    (LinearLayout.LayoutParams) holder.ivItemImg.getLayoutParams();
+                linearParams.height = RandomUtils.getRandom(500,800);
+                linearParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                holder.ivPart.setLayoutParams(linearParams);
                 holder.llItem.setVisibility(View.GONE);
                 holder.ivPart.setVisibility(View.VISIBLE);
                 ILFactory.getLoader().loadNet(holder.ivPart, item.getUrl(), null);
@@ -98,8 +107,12 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
         }
          holder.tvItemTitle.setText(item.getDesc() == null?"unknow":item.getDesc());
          holder.tvItemPublisher.setText(item.getWho() == null?"unknow":item.getWho());
-         holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDate(item.getPublishedAt()));
-         holder.itemView.setOnClickListener(v -> {
+        try {
+            holder.tvItemTime.setText(item.getPublishedAt() == null?"unknow":ComUtil.getDateByPublishTime(item.getPublishedAt()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.itemView.setOnClickListener(v -> {
              if (getRecItemClick() != null) {
                  getRecItemClick().onItemClick(position, item, TAG_VIEW, holder);
              }

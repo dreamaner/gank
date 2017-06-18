@@ -132,6 +132,8 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
             .putInt("position",position)
+                .putInt("flag", 1)
+                .putSerializable("item", items.get(position))
             .launch();
     }
     @Override

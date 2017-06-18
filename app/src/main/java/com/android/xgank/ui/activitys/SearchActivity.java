@@ -204,7 +204,8 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         Router.newIntent(this)
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
-            .putInt("position",position)
+            .putInt("position",position).putInt("flag", 3)
+                .putSerializable("search",items.get(position))
             .launch();
     }
     public void setContentLayoutInVisible() {
