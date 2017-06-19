@@ -13,7 +13,7 @@
         </shape>
     </item>
     <!-- 前景 -->
-    <item android:bottom="2dp"> <!-- 阴影厚度 -->
+    <item android:bottom="1dp"> <!-- 阴影厚度 -->
         <shape android:shape="rectangle">
             <solid android:color="#fff" /> <!-- 前景颜色 -->
             <corners android:radius="0dp" /> <!-- 前景圆角 -->

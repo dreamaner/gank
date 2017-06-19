@@ -87,7 +87,8 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     }
     public void setLayoutManager(XRecyclerView recyclerView) {
         if (type.equals(Constant.PHOTO))
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            recyclerView.verticalStaggeredLayoutManager(2);
+            //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         else
             recyclerView.verticalLayoutManager(context);
     }

@@ -108,7 +108,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
             homeFrgListener = (HomeFrgListener) getActivity();
         }
         moreEntities.addAll(list);
-        XLog.i("---",moreEntities.size());
+
         more.setLayoutManager(new GridLayoutManager(getContext(), 2));
         moreAdapter = new MoreAdapter(R.layout.gank_more_item_example, moreEntities, getContext());
 //        moreAdapter.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.recycler_header,

@@ -1,5 +1,6 @@
 package com.android.xgank.presenter;
 
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XPresent;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.ui.activitys.PhotoActivity;
@@ -19,7 +20,7 @@ public class PhotoPresenter extends XPresent<PhotoActivity>{
     public void init(){
 
         mFavoriteData = getV().getFavorite();
-
+        XLog.i("---gank_id---",mFavoriteData.getGank_id());
     }
 
     public void favoriteGank() {
@@ -62,6 +63,8 @@ public class PhotoPresenter extends XPresent<PhotoActivity>{
         List<Favorite> favorites = DataSupport.where("gank_id = ?", mFavoriteData.getGank_id()).find(Favorite.class);
         mIsFavorite = favorites.size() > 0;
         getV().setFavoriteState(mIsFavorite);
+        XLog.i("---gank_id---",mIsFavorite+"");
+
 
     }
 }

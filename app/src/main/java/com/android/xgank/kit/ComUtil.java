@@ -138,7 +138,7 @@ public class ComUtil {
         else if (day >= 1&&day <=3)
             return day + "天前";
         else if (day > 3)
-            return publishTime;
+            return DateUtils.getMd(publishMills);
         return "";
     }
     public static long DateToMills(String date) throws ParseException {

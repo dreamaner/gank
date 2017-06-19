@@ -6,13 +6,16 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.kit.utils.check.FieldUtils;
 import com.android.kit.utils.operate.RandomUtils;
+import com.android.kit.utils.screen.ScreenUtils;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.kit.KnifeKit;
@@ -21,6 +24,9 @@ import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.kit.ComUtil;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -35,11 +41,14 @@ import butterknife.ButterKnife;
  */
 
 public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.ViewHolder> {
+    private SparseArray heightArray;
 
     public static final int TAG_VIEW = 0;
 
     public HomeAdapter(Context context) {
         super(context);
+        heightArray = new SparseArray();
+
     }
 
     @Override
@@ -67,14 +76,11 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
 
                 break;
             case Constant.PHOTO:
-                LinearLayout.LayoutParams linearParams =
-                    (LinearLayout.LayoutParams) holder.ivItemImg.getLayoutParams();
-                linearParams.height = RandomUtils.getRandom(500,800);
-                linearParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                holder.ivPart.setLayoutParams(linearParams);
-                holder.llItem.setVisibility(View.GONE);
                 holder.ivPart.setVisibility(View.VISIBLE);
-                ILFactory.getLoader().loadNet(holder.ivPart, item.getUrl(), null);
+
+                holder.llItem.setVisibility(View.GONE);
+
+                setPhotos(holder,item,holder.ivPart);
                 break;
             default:
                if (ConfigManage.INSTANCE.isListShowImg()) { // 列表显示图片
@@ -140,5 +146,34 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
             KnifeKit.bind(this, itemView);
         }
     }
+    private void setPhotos(HomeAdapter.ViewHolder helper, GankResults.Item item, ImageView photoIv){
+
+        int position=helper.getLayoutPosition();
+        if (heightArray.get(position)==null){
+            Glide.with(context)
+                .load(item.getUrl())
+                .into(new SimpleTarget() {
+                    @Override
+                    public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
+                        LinearLayout.LayoutParams layoutParams=
+                            (LinearLayout.LayoutParams) photoIv.getLayoutParams();
+                        int height=RandomUtils.getRandom(500,800);
+                        layoutParams.height=height;
+                        photoIv.setLayoutParams(layoutParams);
+                        heightArray.put(position,height);
+                    }
+
+                });
+        }else{
+            int height= (int) heightArray.get(position);
+            LinearLayout.LayoutParams layoutParams=
+                (LinearLayout.LayoutParams) photoIv.getLayoutParams();
+            layoutParams.height=height;
+            photoIv.setLayoutParams(layoutParams);
+        }
+        ILFactory.getLoader().loadNet(photoIv,item.getUrl(),null);
+
+    }
+
 
 }

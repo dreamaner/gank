@@ -17,6 +17,7 @@ import com.android.kit.utils.other.IntentUtils;
 import com.android.kit.utils.system.AndroidUtils;
 import com.android.kit.utils.toast.Toasty;
 import com.android.kit.view.widget.MyToolbar;
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Favorite;
@@ -25,6 +26,7 @@ import com.android.xgank.bean.SearchResult;
 import com.android.xgank.presenter.PhotoPresenter;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.adapters.PhotoAdapter;
+import com.android.xgank.ui.fragments.HomeFragment;
 import java.util.ArrayList;
 
 public class PhotoActivity extends XActivity<PhotoPresenter> {
@@ -91,6 +93,8 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
 
             @Override
             public void onPageSelected(int position) {
+                XLog.i("---",photoVp.getCurrentItem()+"");
+                XLog.i("---",mDatas.size()+"");
                 getP().init();
                 gankPhotoPosTv.setText(
                     String.valueOf(position + 1) + "/" + String.valueOf(mDatas.size()));
@@ -105,8 +109,9 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
         });
     }
     public Favorite getFavorite() {
+
         if (flag == 1) {
-            item = (GankResults.Item) getIntent().getSerializableExtra("item");
+            item = HomeFragment.getInstance().getAdapter().getDataSource().get(photoVp.getCurrentItem());
             fav = new Favorite();
 
             fav.setGank_id(item.get_id());
