@@ -2,6 +2,7 @@ package com.android.xgank.config;
 
 import android.content.Context;
 
+import android.graphics.Color;
 import com.android.kit.utils.system.AppUtils;
 import com.android.mvp.cache.PrefsUtils;
 
@@ -24,6 +25,7 @@ public enum ConfigManage {
     private boolean isShowLauncherImg = true;
     private boolean isProbabilityShowLauncherImg;
     private boolean isFirstInstanceApp ;
+    private int themeColor;
     private String  photoHead ;
     public void initConfig(Context context) {
         PrefsUtils prefsUtils =  PrefsUtils.getInstance(context,spName);
@@ -48,13 +50,20 @@ public enum ConfigManage {
         PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
         return prefsUtils.getString("photoHead",null);
     }
-    public boolean isFirstComeInApp(){
+    public void setThemeColor(int color){
 
         PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
-        isFirstInstanceApp = prefsUtils.getBoolean("isFirsrt",true);
-        prefsUtils.putBoolean("isFirst",false);
-        return isFirstInstanceApp;
 
+        prefsUtils.putInt("themeColor",color);
+
+    }
+
+    public int getThemeColor(){
+
+        PrefsUtils prefsUtils = PrefsUtils.getInstance(AppUtils.getContext(),spName);
+        themeColor = prefsUtils.getInt("themeColor",ThemeManage.INSTANCE.getColorPrimary());
+
+        return themeColor;
     }
     public boolean isListShowImg() {
         return isListShowImg;

@@ -18,6 +18,7 @@ import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.GankResults;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.GankTypePresenter;
 import com.android.xgank.ui.adapters.HomeAdapter;
@@ -50,6 +51,8 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
          initAdapter();
 
          getP().loadData(type,1);
+
+        mToolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
     public void showData(){
         it = getIntent();

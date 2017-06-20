@@ -28,7 +28,7 @@ public class FragmentUtils {
     private Context context;
     public static FragmentUtils instance;
     public FragmentUtils(AppCompatActivity activity){
-        this.context=activity;
+        this.context = activity;
         mManager=activity.getSupportFragmentManager();
         actionBar=activity.getSupportActionBar();
     }
@@ -66,14 +66,9 @@ public class FragmentUtils {
             default:
                 return;
         }
-        mTransaction.commit();
+        mTransaction.commitAllowingStateLoss();
     }
-    public static FragmentUtils getInstance(AppCompatActivity activity){
-          if (instance == null){
-              instance = new FragmentUtils(activity) ;
-          }
-          return instance;
-    }
+
     private void hideFragments(FragmentTransaction mTransaction) {
         if (homeFragment!=null) mTransaction.hide(homeFragment);
         if (moreFragment!=null) mTransaction.hide(moreFragment);

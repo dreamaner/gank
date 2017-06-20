@@ -15,6 +15,7 @@ import com.android.kit.view.dialog.MaterialDialog;
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.kit.AlipayZeroSdk;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.presenter.SettingPresenter;
@@ -87,6 +88,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         } catch (Exception e) {
             e.printStackTrace();
         }
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.android.xgank.R;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.presenter.PhotoPresenter;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.adapters.PhotoAdapter;
@@ -57,6 +58,7 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
         initView();
         getP().init();
         getP().showFavState();
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override

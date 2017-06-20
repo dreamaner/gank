@@ -9,6 +9,7 @@ import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.presenter.FavPresenter;
 import com.android.xgank.ui.adapters.CategoryViewPagerAdapter;
 import com.android.xgank.ui.fragments.CategoryFragment;
@@ -75,6 +76,7 @@ public class FavActivity extends XActivity<FavPresenter> {
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbar, "我的收藏");
         initAdapter();
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override

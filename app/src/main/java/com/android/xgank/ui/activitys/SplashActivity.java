@@ -31,6 +31,7 @@ public class SplashActivity extends XActivity {
     public void initData(Bundle bundle) {
         ImmersionBar.with(this).transparentBar().init();
         imgInit();
+
     }
 
     public void imgInit(){

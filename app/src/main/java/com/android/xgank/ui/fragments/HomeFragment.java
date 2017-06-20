@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import com.android.kit.utils.toast.ToastUtils;
 
-
+import com.android.mvp.event.BusProvider;
 import com.android.mvp.mvp.XFragment;
 
 import com.android.mvp.recycleview.RecyclerItemCallback;
@@ -35,6 +35,7 @@ import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
+import com.android.xgank.bean.ThemeEvent;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
@@ -328,13 +329,10 @@ public class HomeFragment extends XFragment<HomePresenter> {
         Picasso.with(getActivity()).load(imgUrl)
                 .into(ivHomeBanner,
                         PicassoPalette.with(imgUrl, ivHomeBanner)
-                                .intoCallBack(new PicassoPalette.CallBack() {
-                                    @Override
-                                    public void onPaletteLoaded(Palette palette) {
-                                        getP().setThemeColor(palette);
-                                    }
+                                .intoCallBack(palette -> {
+                                    getP().setThemeColor(palette);
+                                    BusProvider.getBus().post(new ThemeEvent());
                                 }));
-//        ConfigManage.INSTANCE.setBannerURL(imgUrl);
     }
 
     public void cacheImg(final String imgUrl) {

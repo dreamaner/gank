@@ -10,12 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
         app:cardBackgroundColor="@color/colorCardViewBackground"
-        app:cardCornerRadius="0dp">
+        app:cardCornerRadius="0dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
 
             <LinearLayout
@@ -24,23 +26,27 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/image_paddingSize"
-                    android:src="@drawable/ic_favorite_black_24dp_me" />
+                    android:src="@drawable/ic_favorite_black_24dp_me"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        >
 
                         <TextView
                             android:layout_width="match_parent"
@@ -48,13 +54,15 @@
                             android:layout_centerInParent="true"
                             android:text="@string/favorite_tv"
                             android:textColor="@color/colorTextViewBlack"
-                            android:textSize="@dimen/me_textSize" />
+                            android:textSize="@dimen/me_textSize"
+                            />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/view_size"
                             android:layout_alignParentBottom="true"
-                            android:background="@color/colorViewGroupBackground" />
+                            android:background="@color/colorViewGroupBackground"
+                            />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -66,45 +74,62 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/image_paddingSize"
-                    android:src="@drawable/ic_brightness_2_black_24dp" />
+                    android:id="@+id/theme"
+                    android:src="@drawable/theme"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        >
 
                         <TextView
+                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
                             android:text="@string/theme_tv"
                             android:textColor="@color/colorTextViewBlack"
-                            android:textSize="@dimen/me_textSize" />
+                            android:textSize="@dimen/me_textSize"
+                            />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/view_size"
                             android:layout_alignParentBottom="true"
-                            android:background="@color/colorViewGroupBackground" />
+                            android:background="@color/colorViewGroupBackground"
+                            />
 
-                        <Switch
-                            android:clickable="false"
-                            android:id="@+id/me_nightTh_sw"
+                        <TextView
+                            android:id="@+id/theme_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/textView2"
+                            android:layout_toStartOf="@+id/imageView2"
+                            android:background="@drawable/theme_text_bg"
+                            />
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="11dp"
+                            android:src="@drawable/ic_right"
+                            android:layout_alignTop="@+id/theme_text"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/image_paddingSize"
                             />
                     </RelativeLayout>
 
@@ -117,22 +142,27 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/image_paddingSize"
-                    android:src="@drawable/ic_settings_black_24dp" />
+                    android:id="@+id/setting"
+                    android:src="@drawable/ic_settings_black_24dp"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        >
 
                         <TextView
                             android:layout_width="match_parent"
@@ -140,7 +170,8 @@
                             android:layout_centerInParent="true"
                             android:text="@string/setting_tv"
                             android:textColor="@color/colorTextViewBlack"
-                            android:textSize="@dimen/me_textSize" />
+                            android:textSize="@dimen/me_textSize"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

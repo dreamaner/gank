@@ -3,10 +3,13 @@ package com.android.xgank.presenter;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 
+import com.android.mvp.event.BusProvider;
 import com.android.mvp.mvp.XPresent;
 import com.android.mvp.net.ApiSubscriber;
 import com.android.mvp.net.NetError;
 import com.android.mvp.net.XApi;
+import com.android.xgank.R;
+import com.android.xgank.bean.ThemeEvent;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.config.ThemeManage;
 import com.android.xgank.bean.GankResults;
@@ -44,9 +47,11 @@ public class HomePresenter extends XPresent<HomeFragment> {
 
     public void setThemeColor(@Nullable Palette palette) {
         if (palette != null) {
-            int colorPrimary = ThemeManage.INSTANCE.getColorPrimary();
-            // 把从调色板上获取的主题色保存在内存中
+
+            ConfigManage.INSTANCE.setThemeColor(palette.getDarkMutedColor(R.color.colorPrimary));
+            int colorPrimary = ConfigManage.INSTANCE.getThemeColor();
             ThemeManage.INSTANCE.setColorPrimary(palette.getDarkVibrantColor(colorPrimary));
+
             // 设置 AppBarLayout 的背景色
             getV().setAppBarLayoutColor(colorPrimary);
             // 设置 FabButton 的背景色
@@ -54,6 +59,8 @@ public class HomePresenter extends XPresent<HomeFragment> {
             // 停止 FabButton 加载中动画
             getV().enableFabButton();
             getV().stopBannerLoadingAnim();
+            // 把从调色板上获取的主题色保存在内存中
+
         }
     }
 

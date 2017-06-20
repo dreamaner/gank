@@ -28,6 +28,7 @@ import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.History;
 import com.android.xgank.bean.SearchResult;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.presenter.SearchPresenter;
 import com.android.xgank.ui.adapters.HistoryAdapter;
 import com.android.xgank.ui.adapters.SearchAdapter;
@@ -77,6 +78,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         edSearch.setOnEditorActionListener(this);
         initSearchAdapter();
         initHistoryAdapter();
+        toolbarSearch.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
         if (urls == null)
             urls = new ArrayList<>();
     }

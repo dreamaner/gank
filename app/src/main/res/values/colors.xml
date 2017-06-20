@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ff1976d2</color>
     <color name="colorPrimaryDark">#ff1976d2</color>
-    <color name="colorAccent">#fffbc02d</color>
+    <color name="colorAccent">#ff1976d2</color>
 
     <color name="colorViewGroupBackground">#fff5f5f5</color>
     <color name="colorActivityBackground" >#FAFAFA</color>

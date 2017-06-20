@@ -1,6 +1,7 @@
 package com.android.xgank.ui.activitys;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -16,18 +17,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.android.kit.utils.toast.Toasty;
-import com.android.kit.view.photoview.PhotoView;
-import com.android.mvp.imageloader.GlideLoader;
-import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.kit.Kits;
-import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.recycleview.XStateController;
 import com.android.xgank.R;
-import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
+import com.android.xgank.config.ConfigManage;
+import com.android.xgank.config.ThemeManage;
+import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.presenter.WebPresenter;
 import com.android.xgank.ui.widget.ObservableWebView;
 
@@ -46,12 +45,16 @@ public class WebActivity extends XActivity<WebPresenter> {
     XStateController contentLayout;
     @BindView(R.id.fab_web_favorite)
     FloatingActionButton mFloatingActionButton;
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
+
     public String url;
     public String desc;
 
     public GankResults.Item item;
     public Favorite fav;
     public SearchResult.Item search;
+
 
     private int flag;
     public boolean isForResult;// 是否回传结果
@@ -60,11 +63,13 @@ public class WebActivity extends XActivity<WebPresenter> {
     public void initData(Bundle savedInstanceState) {
         compareTo();
         getP().init();
-        setUpToolBar(true,toolbar,desc);
+        setUpToolBar(true, toolbar, desc);
         initRefreshLayout();
         initWebView();
         getP().showFavState();
-
+        //setImmersionBar(ConfigManage.INSTANCE.getThemeColor());
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+        MDTintUtil.setTint(mFloatingActionButton, ConfigManage.INSTANCE.getThemeColor());
     }
 
     public void compareTo() {
@@ -85,10 +90,8 @@ public class WebActivity extends XActivity<WebPresenter> {
     }
 
     private void initRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeResources(
-            android.R.color.holo_blue_light,
-            android.R.color.holo_red_light,
-            android.R.color.holo_orange_light,
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
+            android.R.color.holo_red_light, android.R.color.holo_orange_light,
             android.R.color.holo_green_light);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             webView.loadUrl(url);
@@ -193,7 +196,6 @@ public class WebActivity extends XActivity<WebPresenter> {
         webSettings.setUseWideViewPort(true); // 将图片调整到适合WebView的大小
         webSettings.setLoadWithOverviewMode(true); // 自适应屏幕
 
-
         webView.loadUrl(url);
         webView.setOnScrollChangedCallback((dx, dy) -> {
             if (dy > 0) {
@@ -202,14 +204,12 @@ public class WebActivity extends XActivity<WebPresenter> {
                 mFloatingActionButton.show();
             }
         });
-
     }
 
     @Override
     public boolean canBack() {
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -227,7 +227,6 @@ public class WebActivity extends XActivity<WebPresenter> {
             case R.id.action_open_in_browser:
                 Kits.openInBrowser(this, webView.getUrl());
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }

@@ -3,7 +3,7 @@ package com.android.xgank.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,26 +16,28 @@ import com.android.kit.view.recycleview.BaseQuickAdapter;
 import com.android.kit.view.recycleview.callback.ItemDragAndSwipeCallback;
 import com.android.kit.view.recycleview.listener.OnItemDragListener;
 import com.android.kit.view.widget.MyToolbar;
-import com.android.mvp.log.XLog;
+import com.android.mvp.event.BusProvider;
+
 import com.android.mvp.mvp.XFragment;
-import com.android.mvp.mvp.XLazyFragment;
-import com.android.mvp.recycleview.XRecyclerView;
+
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.MoreEntity;
+import com.android.xgank.bean.ThemeEvent;
+import com.android.xgank.config.ConfigManage;
 import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.listener.RecyclerScrollListener;
-import com.android.xgank.model.GankDataRepository;
+
 import com.android.xgank.presenter.MorePresenter;
 import com.android.xgank.ui.activitys.GankTypeListActivity;
 import com.android.xgank.ui.adapters.MoreAdapter;
 
+import io.reactivex.functions.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 
 
 public class MoreFragment extends XFragment<MorePresenter> {
@@ -66,9 +68,20 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .init();
         setUpToolBar(true,toolbar,"更多");
         getP().getMoreData();
-
+        initBar();
+        rxBusHandle();
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+    public void rxBusHandle(){
+
+        BusProvider.getBus().toFlowable(ThemeEvent.class)
+            .subscribe(
+                themeEvent -> toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor()));
+    }
     private OnItemDragListener dragListener=new OnItemDragListener() {
 
 
@@ -102,6 +115,9 @@ public class MoreFragment extends XFragment<MorePresenter> {
         return false;
     }
 
+    public void initBar(){
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+    }
     public void setUpMoreData(List<MoreEntity> list) {
 
         if (getActivity() instanceof HomeFrgListener){

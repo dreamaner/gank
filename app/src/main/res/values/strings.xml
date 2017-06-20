@@ -35,7 +35,13 @@
   <string name="shortcuts_favorite_long">我的收藏</string>
 
   <string name="favorite_tv">我的收藏</string>
-  <string name="theme_tv">夜间模式</string>
+  <string name="theme_tv">主题模式</string>
+  <string name="theme_color">主题色</string>
+  <string name="theme_custom">自定义</string>
+  <string name="theme_back">返回</string>
+  <string name="theme_done">确定</string>
+  <string name="theme_cancle">取消</string>
+  <string name="theme_presets">预先布置</string>
   <string name="setting_tv">设置</string>
   <string name="login_register">登录/注册</string>
   <string name="name_test">mask浩</string>

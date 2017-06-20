@@ -1,8 +1,6 @@
 package com.android.xgank.ui.fragments;
 
-
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,28 +9,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import com.android.kit.view.image.CircleImageView;
-import com.android.kit.view.widget.MyToolbar;
-import com.android.mvp.mvp.XFragment;
-import com.android.mvp.router.Router;
-import com.android.xgank.R;
-import com.android.xgank.presenter.OwnPresenter;
-import com.android.xgank.ui.activitys.FavActivity;
-import com.android.xgank.ui.activitys.SettingActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.android.kit.view.dialog.color.ColorChooserDialog;
+import com.android.kit.view.dialog.util.DialogUtils;
+import com.android.kit.view.image.CircleImageView;
+import com.android.kit.view.widget.MyToolbar;
+import com.android.mvp.event.BusProvider;
+import com.android.mvp.mvp.XFragment;
+import com.android.mvp.router.Router;
+import com.android.xgank.R;
+import com.android.xgank.bean.ThemeEvent;
+import com.android.xgank.config.ConfigManage;
+import com.android.xgank.presenter.OwnPresenter;
+import com.android.xgank.ui.activitys.FavActivity;
+import com.android.xgank.ui.activitys.MainActivity;
+import com.android.xgank.ui.activitys.SettingActivity;
+import io.reactivex.functions.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class OwnFragment extends XFragment<OwnPresenter> {
-
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
@@ -48,17 +49,23 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     Button loginBt;
     @BindView(R.id.login_rl)
     RelativeLayout loginRl;
-    @BindView(R.id.imageView)
-    ImageView imageView;
     @BindView(R.id.me_fav_ll)
     LinearLayout meFavLl;
-    @BindView(R.id.me_nightTh_sw)
-    Switch meNightThSw;
+
     @BindView(R.id.me_nightTh_ll)
     LinearLayout meNightThLl;
     @BindView(R.id.me_setting_ll)
     LinearLayout meSettingLl;
-
+    @BindView(R.id.fav)
+    ImageView fav;
+    @BindView(R.id.theme)
+    ImageView theme;
+    @BindView(R.id.theme_text)
+    TextView themeText;
+    @BindView(R.id.setting)
+    ImageView setting;
+    Unbinder unbinder;
+    private int primaryPreselect;
 
     public OwnFragment() {
         // Required empty public constructor
@@ -78,6 +85,13 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbar, "我");
+        primaryPreselect = DialogUtils.resolveColor(getActivity(), R.attr.colorPrimary);
+        initBar();
+        rxBusHandle();
+    }
+
+    public void initBar() {
+        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override
@@ -90,13 +104,16 @@ public class OwnFragment extends XFragment<OwnPresenter> {
         return new OwnPresenter();
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
-    @OnClick({R.id.me_iv, R.id.login_bt, R.id.login_rl, R.id.me_fav_ll, R.id.me_nightTh_sw, R.id.me_nightTh_ll, R.id.me_setting_ll})
+    @OnClick({
+        R.id.me_iv, R.id.login_bt, R.id.login_rl, R.id.me_fav_ll, R.id.me_nightTh_ll,
+        R.id.me_setting_ll
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.me_iv:
@@ -108,9 +125,9 @@ public class OwnFragment extends XFragment<OwnPresenter> {
             case R.id.me_fav_ll:
                 goFav();
                 break;
-            case R.id.me_nightTh_sw:
-                break;
+
             case R.id.me_nightTh_ll:
+                showThemeDialog();
                 break;
             case R.id.me_setting_ll:
                 goSetting();
@@ -118,15 +135,50 @@ public class OwnFragment extends XFragment<OwnPresenter> {
         }
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    public void rxBusHandle() {
+
+        BusProvider.getBus()
+            .toFlowable(ThemeEvent.class)
+            .subscribe(themeEvent -> {
+                toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+                //fav.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+                //setting.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+                themeText.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+                //theme.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+            });
+    }
+
     public void goSetting() {
-        Router.newIntent(getActivity())
-                .to(SettingActivity.class)
-                .launch();
+        Router.newIntent(getActivity()).to(SettingActivity.class).launch();
     }
 
     public void goFav() {
-        Router.newIntent(getActivity())
-                .to(FavActivity.class)
-                .launch();
+        Router.newIntent(getActivity()).to(FavActivity.class).launch();
+    }
+
+    public void showThemeDialog() {
+        new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.theme_color).titleSub(
+            R.string.theme_color)
+            .preselect(primaryPreselect)
+            .backButton(R.string.theme_back)
+            .doneButton(R.string.theme_done)
+            .customButton(R.string.theme_custom)
+            .cancelButton(R.string.theme_cancle)
+            .presetsButton(R.string.theme_presets)
+            .show();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }
