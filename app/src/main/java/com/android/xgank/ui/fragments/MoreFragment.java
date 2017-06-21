@@ -68,20 +68,9 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .init();
         setUpToolBar(true,toolbar,"更多");
         getP().getMoreData();
-        initBar();
-        rxBusHandle();
+
     }
 
-    @Override
-    public boolean useEventBus() {
-        return true;
-    }
-    public void rxBusHandle(){
-
-        BusProvider.getBus().toFlowable(ThemeEvent.class)
-            .subscribe(
-                themeEvent -> toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor()));
-    }
     private OnItemDragListener dragListener=new OnItemDragListener() {
 
 
@@ -115,9 +104,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
         return false;
     }
 
-    public void initBar(){
-        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-    }
+
     public void setUpMoreData(List<MoreEntity> list) {
 
         if (getActivity() instanceof HomeFrgListener){

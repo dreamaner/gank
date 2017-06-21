@@ -67,9 +67,10 @@ public class WebActivity extends XActivity<WebPresenter> {
         initRefreshLayout();
         initWebView();
         getP().showFavState();
+        //initImmersionBar();
         //setImmersionBar(ConfigManage.INSTANCE.getThemeColor());
-        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-        MDTintUtil.setTint(mFloatingActionButton, ConfigManage.INSTANCE.getThemeColor());
+        //toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+        MDTintUtil.setTint(mFloatingActionButton, ThemeManage.INSTANCE.getColorPrimary());
     }
 
     public void compareTo() {

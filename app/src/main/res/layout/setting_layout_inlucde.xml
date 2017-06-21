@@ -283,11 +283,13 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/appCompatTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/check_update"
                             android:textColor="@color/colorTextEnable"
-                            android:textSize="15sp"/>
+                            android:textSize="15sp"
+                            />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_setting_version_name"

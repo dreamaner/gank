@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 
-import android.support.v7.widget.StaggeredGridLayoutManager;
-
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.mvp.XActivity;
@@ -18,8 +16,6 @@ import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.GankResults;
-import com.android.xgank.config.ConfigManage;
-import com.android.xgank.listener.RecyclerScrollListener;
 import com.android.xgank.presenter.GankTypePresenter;
 import com.android.xgank.ui.adapters.HomeAdapter;
 
@@ -42,6 +38,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     private Intent it;
     private String type;
     private HomeAdapter adapter;
+    public ArrayList<String> ids;
     @Override
     public void initData(Bundle savedInstanceState) {
          showData();
@@ -52,7 +49,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
 
          getP().loadData(type,1);
 
-        mToolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+        //mToolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
     public void showData(){
         it = getIntent();
@@ -61,6 +58,9 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
         if (urls == null){
             urls = new ArrayList<>();
         }
+
+        if (ids == null)
+            ids = new ArrayList<>();
     }
     @Override
     public int getLayoutId() {
@@ -72,7 +72,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
 
         contentLayout.getRecyclerView()
                 .setAdapter(getAdapter());
-        contentLayout.getRecyclerView().addOnScrollListener(listener);
+        //contentLayout.getRecyclerView().addOnScrollListener(listener);
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
@@ -99,45 +99,23 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     public GankTypePresenter newP() {
         return new GankTypePresenter();
     }
-    private RecyclerScrollListener listener=new RecyclerScrollListener() {
-        @Override
-        public void hideToolBar() {
-            if (mToolbar.isShow())
-                mToolbar.hide();
-        }
 
-        @Override
-        public void showToolBar() {
-            if (!mToolbar.isShow())
-                mToolbar.show();
-        }
-
-        @Override
-        public void hideBottomBar() {
-
-        }
-
-        @Override
-        public void showBottomBar() {
-
-        }
-
-        @Override
-        public void firstVisibleItemPosition(int position) {
-
-        }
-    };
     public void goPhoto(List<GankResults.Item> items,int position){
         urls.clear();
         for (GankResults.Item item:items){
              urls.add(item.getUrl());
         }
+        ids.clear();
+        for (GankResults.Item item:items){
+            ids.add(item.get_id());
+        }
         Router.newIntent(this)
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
+            .putStringArrayList("ids",ids)
             .putInt("position",position)
-                .putInt("flag", 1)
-                .putSerializable("item", items.get(position))
+            .putInt("flag", 1)
+            .putSerializable("item", items.get(position))
             .launch();
     }
     @Override

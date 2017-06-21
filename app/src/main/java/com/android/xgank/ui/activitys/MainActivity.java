@@ -1,5 +1,6 @@
 package com.android.xgank.ui.activitys;
 
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 
 import android.support.design.widget.BottomNavigationView;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.android.kit.view.widget.MyBottomNavigationView;
 import com.android.mvp.event.BusProvider;
 import com.android.mvp.event.IBus;
 import com.android.mvp.event.RxBusImpl;
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
@@ -30,6 +33,9 @@ import com.android.xgank.listener.HomeFrgListener;
 import butterknife.BindView;
 import com.android.xgank.ui.fragments.MoreFragment;
 import com.android.xgank.ui.fragments.OwnFragment;
+
+import static android.R.attr.breadCrumbShortTitle;
+import static android.R.attr.resource;
 
 public class MainActivity extends XActivity implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFrgListener,ColorChooserDialog.ColorCallback{
 
@@ -51,6 +57,9 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
          fragmentUtil = new FragmentUtils(this);
          navigation.setOnNavigationItemSelectedListener(this);
          fragmentUtil.initFragment(Constant.HOME);
+
+        //ColorStateList csl = (ColorStateList) getResources()
+        //csl.
     }
 
     @Override
@@ -63,6 +72,24 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
         return null;
     }
 
+    private long firstTime = 0;
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        switch(keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime > 2000) {                                         //如果两次按键时间间隔大于2秒，则不退出
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    firstTime = secondTime;//更新firstTime
+                    return true;
+                } else {                                                    //两次按键小于2秒时，退出应用
+                    System.exit(0);
+                }
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -106,11 +133,10 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
         }
     }
 
+
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
-        ConfigManage.INSTANCE.setThemeColor(selectedColor);
-        OwnFragment.getInstance().initBar();
-        MoreFragment.getInstance().initBar();
+        ThemeManage.INSTANCE.setColorPrimary(selectedColor);
     }
 
     @Override

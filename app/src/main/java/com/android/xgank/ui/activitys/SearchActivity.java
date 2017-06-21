@@ -68,6 +68,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
     public HistoryAdapter historyAdapter;
     public SearchAdapter searchAdapter;
     public ArrayList<String> urls;
+    public ArrayList<String> ids;
     @Override
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbarSearch, "");
@@ -78,9 +79,11 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         edSearch.setOnEditorActionListener(this);
         initSearchAdapter();
         initHistoryAdapter();
-        toolbarSearch.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+        //toolbarSearch.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
         if (urls == null)
             urls = new ArrayList<>();
+        if (ids == null)
+            ids = new ArrayList<>();
     }
 
     @Override
@@ -112,6 +115,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         recyclerSearchHistory.setLayoutManager(manager);
         recyclerSearchHistory.setAdapter(getHistoryAdapter());
     }
+
     public void initSearchAdapter(){
         setLayoutManager(contentLayout.getRecyclerView());
         contentLayout.getRecyclerView()
@@ -133,9 +137,11 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
 
 
     }
+
     public void showHistoryData(List<History> list) {
         getHistoryAdapter().setData(list);
     }
+
     public void showSearchData(List<SearchResult.Item> list, int page) {
 
         if (page > 1) {
@@ -198,18 +204,26 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         }
         return searchAdapter;
     }
+
     public void goPhoto(List<SearchResult.Item> items,int position){
         urls.clear();
         for (SearchResult.Item item:items){
             urls.add(item.getUrl());
         }
+        ids.clear();
+        for (SearchResult.Item item:items){
+            ids.add(item.getGanhuo_id());
+        }
         Router.newIntent(this)
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
-            .putInt("position",position).putInt("flag", 3)
-                .putSerializable("search",items.get(position))
+            .putStringArrayList("ids",ids)
+            .putInt("position",position)
+            .putInt("flag", 3)
+            .putSerializable("search",items.get(position))
             .launch();
     }
+
     public void setContentLayoutInVisible() {
         contentLayout.setVisibility(View.GONE);
     }
@@ -233,6 +247,7 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
     public void setIvEditClearInVisible(){
         ivEditClear.setVisibility(View.GONE);
     }
+
     public void launch(Activity activity, SearchResult.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)

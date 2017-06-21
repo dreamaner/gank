@@ -76,7 +76,6 @@ public class FavActivity extends XActivity<FavPresenter> {
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbar, "我的收藏");
         initAdapter();
-        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override

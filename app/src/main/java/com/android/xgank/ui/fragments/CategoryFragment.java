@@ -41,6 +41,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
     public String mCategoryName;
     private CatrgoryListAdapter adapter;
     public ArrayList<String> urls;
+    public ArrayList<String> ids;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -64,6 +65,10 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         initAdapter();
         if (urls == null)
             urls =new ArrayList<>();
+
+        if (ids == null){
+            ids = new ArrayList<>();
+        }
     }
 
     @Override
@@ -133,12 +138,17 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         for (Favorite item:items){
             urls.add(item.getUrl());
         }
+        ids.clear();
+        for (Favorite item:items){
+            ids.add(item.getGank_id());
+        }
         Router.newIntent(getActivity())
             .to(PhotoActivity.class)
             .putStringArrayList("urls",urls)
+            .putStringArrayList("ids",ids)
             .putInt("position",position)
-                .putInt("flag", 2)
-                .putSerializable("item", items.get(position))
+            .putInt("flag", 2)
+            .putSerializable("item", items.get(position))
             .launch();
     }
     public CatrgoryListAdapter getAdapter() {

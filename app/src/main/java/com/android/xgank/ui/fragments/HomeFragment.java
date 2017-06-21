@@ -75,7 +75,10 @@ public class HomeFragment extends XFragment<HomePresenter> {
     CollapsingToolbarLayout mCollapsingToolbar;
     @BindView(R.id.appBar)
     AppBarLayout mAppBarLayout;
-    ArrayList<String> urls;
+    //照片路径的集合
+    private ArrayList<String> urls;
+    //照片ID的集合
+    private ArrayList<String> ids;
     private HomeFrgListener homeFrgListener;
     private boolean isBannerBig; // banner 是否是大图
     private boolean isBannerAniming; // banner 放大缩小的动画是否正在执行
@@ -111,6 +114,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
         setFabDynamicState();
         if (urls == null)
             urls = new ArrayList<>();
+        if (ids == null)
+            ids = new ArrayList<>();
     }
 
     public void setToolbarHeight() {
@@ -287,12 +292,15 @@ public class HomeFragment extends XFragment<HomePresenter> {
 
     public void goPhoto(GankResults.Item item,int position){
         urls.clear();
+        ids.clear();
+        ids.add(item.get_id());
         urls.add(item.getUrl());
         Router.newIntent(getActivity())
                 .to(PhotoActivity.class)
                 .putStringArrayList("urls",urls)
                 .putInt("position",0)
                 .putInt("flag", 1)
+                .putStringArrayList("ids",ids)
                 .putSerializable("item", item)
                 .launch();
     }

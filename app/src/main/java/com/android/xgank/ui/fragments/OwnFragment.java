@@ -86,12 +86,7 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbar, "我");
         primaryPreselect = DialogUtils.resolveColor(getActivity(), R.attr.colorPrimary);
-        initBar();
-        rxBusHandle();
-    }
 
-    public void initBar() {
-        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override
@@ -133,24 +128,6 @@ public class OwnFragment extends XFragment<OwnPresenter> {
                 goSetting();
                 break;
         }
-    }
-
-    @Override
-    public boolean useEventBus() {
-        return true;
-    }
-
-    public void rxBusHandle() {
-
-        BusProvider.getBus()
-            .toFlowable(ThemeEvent.class)
-            .subscribe(themeEvent -> {
-                toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-                //fav.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-                //setting.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-                themeText.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-                //theme.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-            });
     }
 
     public void goSetting() {

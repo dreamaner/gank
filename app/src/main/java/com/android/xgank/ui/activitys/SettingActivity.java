@@ -88,7 +88,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         } catch (Exception e) {
             e.printStackTrace();
         }
-        toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
+        //toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
     }
 
     @Override
