@@ -148,7 +148,7 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
             .putStringArrayList("ids",ids)
             .putInt("position",position)
             .putInt("flag", 2)
-            .putSerializable("item", items.get(position))
+            .putSerializable("fav", items.get(position))
             .launch();
     }
     public CatrgoryListAdapter getAdapter() {

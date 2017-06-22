@@ -1,5 +1,6 @@
 package com.android.xgank.ui.activitys;
 
+import android.Manifest;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -33,6 +34,7 @@ import com.android.xgank.listener.HomeFrgListener;
 import butterknife.BindView;
 import com.android.xgank.ui.fragments.MoreFragment;
 import com.android.xgank.ui.fragments.OwnFragment;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import static android.R.attr.breadCrumbShortTitle;
 import static android.R.attr.resource;
@@ -58,8 +60,9 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
          navigation.setOnNavigationItemSelectedListener(this);
          fragmentUtil.initFragment(Constant.HOME);
 
-        //ColorStateList csl = (ColorStateList) getResources()
-        //csl.
+        getRxPermissions()
+            .request(Manifest.permission.CAMERA)
+            .subscribe();
     }
 
     @Override
@@ -90,6 +93,8 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
         }
         return super.onKeyUp(keyCode, event);
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

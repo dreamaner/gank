@@ -89,7 +89,7 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
         ids = intent.getStringArrayListExtra("ids");
         curPos = intent.getIntExtra("position", 0);
         flag = intent.getIntExtra("flag",0);
-        ID = ids.get(photoVp.getCurrentItem());
+
     }
     public void hideFavoriteFab() {
         mFloatingActionButton.setVisibility(View.GONE);
@@ -126,10 +126,13 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
     }
     public Favorite getFavorite() {
         curPos = photoVp.getCurrentItem();
+        ID = ids.get(photoVp.getCurrentItem());
         if (flag == 1) {
             item = (GankResults.Item) getIntent().getSerializableExtra("item");
 
             fav = new Favorite();
+
+            fav.setType(item.getType());
 
             fav.setGank_id(ids.get(curPos));
 
@@ -140,12 +143,16 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
 
             fav = new Favorite();
 
+            fav.setType(search.getType());
+
             fav.setGank_id(ids.get(curPos));
 
             fav.setUrl(mDatas.get(curPos));
 
         }else {
             fav = (Favorite) getIntent().getSerializableExtra("fav");
+
+            fav.setType(fav.getType());
 
             fav.setGank_id(ids.get(curPos));
 
