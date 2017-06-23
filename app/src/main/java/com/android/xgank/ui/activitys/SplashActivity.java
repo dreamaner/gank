@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 
 import com.android.kit.view.immersion.ImmersionBar;
+import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.router.Router;
 import com.android.xgank.config.ConfigManage;
@@ -58,6 +59,7 @@ public class SplashActivity extends XActivity {
     }
 
     public void loadImg(String url) {
+        //ILFactory.getLoader().loadNet(this,url,new );
         try {
             Picasso.with(this)
                     .load(url)
@@ -65,15 +67,12 @@ public class SplashActivity extends XActivity {
                         @Override
                         public void onSuccess() {
                             Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!isResume) {
-                                        finish();
-                                        return;
-                                    }
-                                    goHomeActivity();
+                            handler.postDelayed(() -> {
+                                if (!isResume) {
+                                    finish();
+                                    return;
                                 }
+                                goHomeActivity();
                             }, 2000);
                         }
 

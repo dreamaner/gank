@@ -16,6 +16,7 @@ import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.config.ConfigManage;
+import com.android.xgank.config.ThemeManage;
 import com.android.xgank.kit.AlipayZeroSdk;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.presenter.SettingPresenter;
@@ -23,7 +24,7 @@ import com.android.xgank.presenter.SettingPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+import com.android.xgank.ui.widget.AboutDialog;
 
 public class SettingActivity extends XActivity<SettingPresenter> implements CompoundButton.OnCheckedChangeListener {
 
@@ -46,7 +47,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
     @BindView(R.id.tv_is_show_launcher_img_content)
     AppCompatTextView tvIsShowLauncherImgContent;
     @BindView(R.id.switch_setting_show_launcher_img)
-    SwitchCompat switchSettingShowLauncherImg;
+    SwitchCompat showLauncherImg;
     @BindView(R.id.ll_is_show_launcher_img)
     LinearLayout llIsShowLauncherImg;
     @BindView(R.id.tv_is_always_show_launcher_img_title)
@@ -54,7 +55,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
     @BindView(R.id.tv_is_always_show_launcher_img_content)
     AppCompatTextView tvIsAlwaysShowLauncherImgContent;
     @BindView(R.id.switch_setting_always_show_launcher_img)
-    SwitchCompat switchSettingAlwaysShowLauncherImg;
+    SwitchCompat alwaysShowLauncherImg;
     @BindView(R.id.ll_is_always_show_launcher_img)
     LinearLayout llIsAlwaysShowLauncherImg;
     @BindView(R.id.ll_setting_about)
@@ -80,8 +81,8 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
     public void initData(Bundle savedInstanceState) {
         setUpToolBar(true, toolbar, "设置");
         switchSetting.setOnCheckedChangeListener(this);
-        switchSettingShowLauncherImg.setOnCheckedChangeListener(this);
-        switchSettingAlwaysShowLauncherImg.setOnCheckedChangeListener(this);
+        showLauncherImg.setOnCheckedChangeListener(this);
+        alwaysShowLauncherImg.setOnCheckedChangeListener(this);
 
         try {
             getP().init();
@@ -127,13 +128,11 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
                 break;
 
             case R.id.ll_is_show_launcher_img:
-                switchSettingShowLauncherImg.setChecked(!switchSettingShowLauncherImg.isChecked());
+                showLauncherImg.setChecked(!showLauncherImg.isChecked());
                 break;
 
-
             case R.id.ll_is_always_show_launcher_img:
-                switchSettingAlwaysShowLauncherImg.setChecked(!switchSettingAlwaysShowLauncherImg.isChecked());
-
+                alwaysShowLauncherImg.setChecked(!alwaysShowLauncherImg.isChecked());
                 break;
         }
     }
@@ -145,51 +144,52 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
 
 
     public void changeIsShowLauncherImgSwitchState(boolean isChecked) {
-        switchSettingShowLauncherImg.setChecked(isChecked);
+        showLauncherImg.setChecked(isChecked);
     }
 
-
     public void changeIsAlwaysShowLauncherImgSwitchState(boolean isChecked) {
-        switchSettingAlwaysShowLauncherImg.setChecked(isChecked);
+        alwaysShowLauncherImg.setChecked(isChecked);
     }
 
     public void setSwitchCompatsColor(int color) {
         MDTintUtil.setTint(switchSetting, color);
-        MDTintUtil.setTint(switchSettingShowLauncherImg, color);
-        MDTintUtil.setTint(switchSettingAlwaysShowLauncherImg, color);
+        MDTintUtil.setTint(showLauncherImg, color);
+        MDTintUtil.setTint(alwaysShowLauncherImg, color);
     }
 
 
     public void setAppVersionNameInTv(String versionName) {
-        tvSettingVersionName.setText("版本: " + versionName);
+        tvSettingVersionName.setText(R.string.setting_version + versionName);
     }
 
 
     public void setImageQualityChooseUnEnable() {
-        switchSetting.setClickable(false);
+        llSettingImageQuality.setClickable(false);
         tvSettingImageQualityTip.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
         tvSettingImageQualityTitle.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
         tvSettingImageQualityContent.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
     }
 
     public void setImageQualityChooseEnable() {
-        switchSetting.setClickable(true);
+        llSettingImageQuality.setClickable(true);
         tvSettingImageQualityTip.setTextColor(getResources().getColor(R.color.colorTextEnable));
         tvSettingImageQualityTitle.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
         tvSettingImageQualityContent.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
     }
 
 
-    public void setLauncherImgProbabilityUnEnable() {
-        switchSettingShowLauncherImg.setClickable(false);
-        switchSettingAlwaysShowLauncherImg.setClickable(false);
+    public void setLauncherImgUnEnable() {
+
+        llIsAlwaysShowLauncherImg.setClickable(false);
+        alwaysShowLauncherImg.setClickable(false);
         tvIsAlwaysShowLauncherImgTitle.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
         tvIsAlwaysShowLauncherImgContent.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
     }
 
-    public void setLauncherImgProbabilityEnable() {
-        switchSettingShowLauncherImg.setClickable(true);
-        switchSettingAlwaysShowLauncherImg.setClickable(true);
+    public void setLauncherImgEnable() {
+
+        llIsAlwaysShowLauncherImg.setClickable(true);
+        alwaysShowLauncherImg.setClickable(true);
         tvIsAlwaysShowLauncherImgTitle.setTextColor(getResources().getColor(R.color.colorTextEnable));
         tvIsAlwaysShowLauncherImgContent.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
     }
@@ -226,7 +226,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
 
 
     public void setShowLauncherTip(String tip) {
-        tvIsAlwaysShowLauncherImgContent.setText(tip);
+        tvIsShowLauncherImgContent.setText(tip);
     }
 
 
@@ -270,11 +270,11 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
     }
     @OnClick(R.id.ll_setting_about)
     public void about() {
-//        new AboutDialog(this, getP().getColorPrimary()).show();
+        new AboutDialog(this, getP().getColorPrimary()).show();
     }
     @OnClick(R.id.ll_setting_issues)
     public void issues(){
-        Uri uri = Uri.parse("https://github.com/dreamaner/gank/issues");
+        Uri uri = Uri.parse(String.valueOf(R.string.setting_github_issues));
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }

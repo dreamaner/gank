@@ -43,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/margin_top"
-                android:layout_toEndOf="@+id/me_iv"
-                android:text="@string/name_test" />
+                android:layout_toEndOf="@+id/me_iv"/>
         </RelativeLayout>
 
         <RelativeLayout

@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.view.WindowManager;
 
-
-import com.android.kit.utils.system.AppUtils;
-import com.android.kit.utils.system.DateUtils;
+import com.android.kit.utils.operate.DateUtils;
 import com.android.mvp.log.XLog;
 import com.android.xgank.bean.Constant;
 

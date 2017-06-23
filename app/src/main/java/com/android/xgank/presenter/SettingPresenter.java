@@ -22,6 +22,7 @@ public class SettingPresenter extends XPresent<SettingActivity> {
 
 
     public void init() throws Exception {
+
         getV().showCacheSize(CacheUtils.getTotalCacheSize(getV().getBaseContext()));
         // 设置 View 界面的主题色
         getV().setSwitchCompatsColor(ThemeManage.INSTANCE.getColorPrimary());
@@ -31,7 +32,7 @@ public class SettingPresenter extends XPresent<SettingActivity> {
         getV().changeIsAlwaysShowLauncherImgSwitchState(ConfigManage.INSTANCE.isProbabilityShowLauncherImg());
 
         setImageQualityChooseIsEnable(ConfigManage.INSTANCE.isListShowImg());
-        setIsLauncherAlwaysShowImgEnable(ConfigManage.INSTANCE.isShowLauncherImg());
+        setIsLauncherShowImgEnable(ConfigManage.INSTANCE.isShowLauncherImg());
 
         getV().setAppVersionNameInTv(PackageUtils.getAppVersionName(App.getInstance()));
         setThumbnailQuality(ConfigManage.INSTANCE.getThumbnailQuality());
@@ -57,7 +58,7 @@ public class SettingPresenter extends XPresent<SettingActivity> {
 
     public void saveIsLauncherShowImg(boolean isLauncherShowImg) {
         ConfigManage.INSTANCE.setShowLauncherImg(isLauncherShowImg);
-        setIsLauncherAlwaysShowImgEnable(isLauncherShowImg);
+        setIsLauncherShowImgEnable(isLauncherShowImg);
         if (isLauncherShowImg) {
             getV().setShowLauncherTip("没有妹子太寂寞");
         } else {
@@ -75,11 +76,11 @@ public class SettingPresenter extends XPresent<SettingActivity> {
         }
     }
 
-    private void setIsLauncherAlwaysShowImgEnable(boolean isEnable) {
+    private void setIsLauncherShowImgEnable(boolean isEnable) {
         if (isEnable) {
-            getV().setLauncherImgProbabilityEnable();
+            getV().setLauncherImgEnable();
         } else {
-            getV().setLauncherImgProbabilityUnEnable();
+            getV().setLauncherImgUnEnable();
         }
     }
 

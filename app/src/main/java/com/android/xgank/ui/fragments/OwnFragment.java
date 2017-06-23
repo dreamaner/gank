@@ -22,6 +22,7 @@ import com.android.mvp.event.BusProvider;
 import com.android.mvp.mvp.XFragment;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.ThemeEvent;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.presenter.OwnPresenter;
@@ -64,7 +65,6 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     TextView themeText;
     @BindView(R.id.setting)
     ImageView setting;
-    Unbinder unbinder;
     private int primaryPreselect;
 
     public OwnFragment() {
@@ -84,7 +84,7 @@ public class OwnFragment extends XFragment<OwnPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true, toolbar, "我");
+        setUpToolBar(true, toolbar, String.valueOf(R.string.own_fragment_toolbar_title));
         primaryPreselect = DialogUtils.resolveColor(getActivity(), R.attr.colorPrimary);
 
     }
@@ -97,12 +97,6 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     @Override
     public OwnPresenter newP() {
         return new OwnPresenter();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick({
@@ -150,12 +144,4 @@ public class OwnFragment extends XFragment<OwnPresenter> {
             .show();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }

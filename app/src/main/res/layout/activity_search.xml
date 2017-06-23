@@ -112,7 +112,7 @@
            android:layout_width="match_parent"
            android:id="@+id/contentLayout"
            android:visibility="gone"
-           app:x_loadingLayoutId="@layout/loading"
+           app:x_loadingLayoutId="@layout/loading_view"
            app:x_emptyLayoutId="@layout/empty_view"
            android:layout_height="match_parent"/>
 </LinearLayout>

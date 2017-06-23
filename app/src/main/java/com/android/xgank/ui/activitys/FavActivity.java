@@ -14,10 +14,6 @@ import com.android.xgank.presenter.FavPresenter;
 import com.android.xgank.ui.adapters.CategoryViewPagerAdapter;
 import com.android.xgank.ui.fragments.CategoryFragment;
 
-
-
-
-
 public class FavActivity extends XActivity<FavPresenter> {
 
     @BindView(R.id.toolbar)

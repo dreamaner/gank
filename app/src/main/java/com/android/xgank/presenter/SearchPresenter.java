@@ -1,7 +1,7 @@
 package com.android.xgank.presenter;
 
-import com.android.kit.utils.system.DateUtils;
-import com.android.kit.utils.system.KeyguardLockUtils;
+
+import com.android.kit.utils.operate.DateUtils;
 import com.android.mvp.mvp.XPresent;
 import com.android.mvp.net.ApiSubscriber;
 import com.android.mvp.net.NetError;

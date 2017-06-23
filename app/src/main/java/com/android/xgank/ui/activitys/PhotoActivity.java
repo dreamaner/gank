@@ -22,6 +22,7 @@ import com.android.kit.utils.system.AndroidUtils;
 import com.android.kit.utils.toast.SnackbarUtils;
 import com.android.kit.utils.toast.ToastUtils;
 import com.android.kit.utils.toast.Toasty;
+import com.android.kit.view.banner.XBanner;
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;

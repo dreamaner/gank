@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.v7.widget.AppCompatImageView
-    android:id="@+id/img_launcher_welcome"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="centerCrop"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center|bottom"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:gravity="center"-->
-        <!--android:textStyle="bold"-->
-        <!--android:text="@string/welcome_ugank"-->
+  <android.support.v7.widget.AppCompatImageView
+      android:id="@+id/img_launcher_welcome"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center|bottom"
+      android:layout_marginBottom="20dp"
+      android:gravity="center"
+      android:textStyle="bold"
+      android:text="@string/welcome_gank"
+      android:textColor="@android:color/white"/>
+</FrameLayout>

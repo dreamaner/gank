@@ -139,7 +139,7 @@
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="启动页妹子图"
+                            android:text="@string/setting_lanuch_photo"
                             android:textColor="@color/colorTextEnable"
                             android:textSize="15sp"/>
 
@@ -147,7 +147,7 @@
                             android:id="@+id/tv_is_show_launcher_img_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="基佬怎么会需要妹子"
+                            android:text="@string/setting_lanuch_photo_tip"
                             android:textColor="@color/colorTextEnableGary"
                             android:textSize="12sp"/>
                     </LinearLayout>
@@ -182,7 +182,7 @@
                             android:id="@+id/tv_is_always_show_launcher_img_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="概率出现"
+                            android:text="@string/setting_probability_photo"
                             android:textColor="@color/colorTextEnable"
                             android:textSize="15sp"/>
 
@@ -190,7 +190,7 @@
                             android:id="@+id/tv_is_always_show_launcher_img_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="我每次都要幸临，没毛病"
+                            android:text="@string/setting_probability_photo_tip"
                             android:textColor="@color/colorTextEnableGary"
                             android:textSize="12sp"/>
                     </LinearLayout>
@@ -421,7 +421,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="https://github.com/dreamaner/gank/issues"
+                            android:text="@string/setting_github_issues"
                             android:textColor="@color/colorTextEnableGary"
                             android:textSize="12sp"/>
                     </LinearLayout>

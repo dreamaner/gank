@@ -22,6 +22,7 @@ import com.android.mvp.mvp.XFragment;
 
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.MoreEntity;
 import com.android.xgank.bean.ThemeEvent;
 import com.android.xgank.config.ConfigManage;
@@ -66,7 +67,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .statusBarDarkFont(false)
                 .navigationBarColor(R.color.colorPrimary)
                 .init();
-        setUpToolBar(true,toolbar,"更多");
+        setUpToolBar(true,toolbar, String.valueOf(R.string.more_fragment_toolbar_title));
         getP().getMoreData();
 
     }
@@ -143,7 +144,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
     public void gotoTypeListActivity(String type){
         Router.newIntent(getActivity())
                 .to(GankTypeListActivity.class)
-                .putString("type",type)
+                .putString(String.valueOf(R.string.intent_to_type_list_put_string),type)
                 .launch();
     }
     private RecyclerScrollListener recyclerScrollListener = new RecyclerScrollListener() {

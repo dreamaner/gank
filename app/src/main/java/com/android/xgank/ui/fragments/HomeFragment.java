@@ -208,10 +208,10 @@ public class HomeFragment extends XFragment<HomePresenter> {
     public void showText(CollapsingToolbarLayoutState state) {
         switch (state) {
             case COLLAPSED:
-                textView.setText("All");
+                textView.setText(R.string.collapsed_next_tip);
                 break;
             case EXPANDED:
-                textView.setText("");
+                textView.setText(R.string.expanded_next_tip);
                 break;
         }
     }
@@ -232,7 +232,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
     }
 
     public String getType() {
-        return "all";
+        return String.valueOf(R.string.gank_all_type);
     }
 
     public HomeAdapter getAdapter() {
@@ -260,8 +260,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
     public void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putSerializable("item", item)
-                .putInt("flag", 1)
+                .putSerializable(String.valueOf(R.string.intent_to_web_put_item), item)
+                .putInt(String.valueOf(R.string.intent_to_web_put_flag), 1)
                 .launch();
     }
 
@@ -297,11 +297,11 @@ public class HomeFragment extends XFragment<HomePresenter> {
         urls.add(item.getUrl());
         Router.newIntent(getActivity())
                 .to(PhotoActivity.class)
-                .putStringArrayList("urls",urls)
-                .putInt("position",0)
-                .putInt("flag", 1)
-                .putStringArrayList("ids",ids)
-                .putSerializable("item", item)
+                .putStringArrayList(String.valueOf(R.string.intent_to_photo_put_urls_string_array),urls)
+                .putInt(String.valueOf(R.string.intent_to_photo_position),0)
+                .putInt(String.valueOf(R.string.intent_to_photo_put_flag), 1)
+                .putStringArrayList(String.valueOf(R.string.intent_to_photo_put_ids_string_array),ids)
+                .putSerializable(String.valueOf(R.string.intent_to_photo_put_item), item)
                 .launch();
     }
 
@@ -314,12 +314,9 @@ public class HomeFragment extends XFragment<HomePresenter> {
             animator = ValueAnimator.ofInt(DisplayUtils.dp2px(240, getActivity()), DisplayUtils.getScreenHeight(getActivity()));
         }
         animator.setDuration(1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                layoutParams.height = (int) valueAnimator.getAnimatedValue();
-                mAppBarLayout.setLayoutParams(layoutParams);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            layoutParams.height = (int) valueAnimator.getAnimatedValue();
+            mAppBarLayout.setLayoutParams(layoutParams);
         });
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -374,7 +371,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
 
     public void startBannerLoadingAnim() {
         mFloatingActionButton.setImageResource(R.drawable.ic_loading);
-        mAnimator = ObjectAnimator.ofFloat(mFloatingActionButton, "rotation", 0, 360);
+        mAnimator = ObjectAnimator.ofFloat(mFloatingActionButton,
+            String.valueOf(R.string.animation_ratotion), 0, 360);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setDuration(800);
         mAnimator.setInterpolator(new LinearInterpolator());

@@ -1,32 +1,76 @@
 <resources>
   <string name="app_name">干货</string>
+  <!--splash_activity_layout-->
+  <string name="welcome_gank"><![CDATA[>> 欢迎进入 Gank]]></string>
 
+  <!--main_activity-->
+  <string name="exit_system">再按一次退出系统</string>
+
+  <!--menu_navigation_layout-->
   <string name="title_home">主页</string>
   <string name="title_more">更多</string>
   <string name="title_me">我</string>
+
+  <!--home_fragment-->
+  <string name="collapsed_next_tip">All</string>
+  <string name="gank_all_type">all</string>
+  <string name="expanded_next_tip"></string>
+  <string name="intent_to_web_put_item">item</string>
+  <string name="intent_to_web_put_flag">flag</string>
+  <string name="intent_to_photo_put_flag">flag</string>
+  <string name="intent_to_photo_put_item">item</string>
+  <string name="intent_to_photo_put_ids_string_array">ids</string>
+  <string name="intent_to_photo_position">0</string>
+  <string name="intent_to_photo_put_urls_string_array">urls</string>
+  <string name="animation_ratotion">ratotion</string>
+  <!--home_fragment_layout-->
   <string name="home_search">搜索你想要的内容(试试日期数字和福利^^)</string>
+
+  <!--more_fragment-->
+  <string name="more_fragment_toolbar_title">更多</string>
+  <string name="intent_to_type_list_put_string">type</string>
+
+  <!--own_fragment_layout-->
+  <string name="favorite_tv">我的收藏</string>
+  <string name="theme_tv">主题模式</string>
+  <string name="setting_tv">设置</string>
+  <!--own_fragment-->
+  <string name="own_fragment_toolbar_title">我</string>
+  <string name="theme_color">主题色</string>
+  <string name="theme_custom">自定义</string>
+  <string name="theme_back">返回</string>
+  <string name="theme_done">确定</string>
+  <string name="theme_cancle">取消</string>
+  <string name="theme_presets">预先布置</string>
+
+  <!--search_activity_layout-->
   <string name="search_tip">输入搜索数据(日期数字有福利哦)</string>
+  <string name="search_history">搜索历史</string>
+  <string name="search_clean">清除</string>
+  <!--webview_activity_layout-->
   <string name="menu_share">分享干货</string>
   <string name="menu_copy_link">复制链接</string>
   <string name="menu_open_with">用浏览器打开</string>
-  <string name="rv_with_footer_loading">加载中…</string>
-  <string name="rv_with_footer_empty">没有数据啦</string>
-  <string name="search_history">搜索历史</string>
-  <string name="search_clean">清除</string>
+  <!--setting_layout-->
   <string name="setting_title">设置</string>
   <string name="setting_basic">基本设置</string>
   <string name="setting_thumb_show">显示缩略图</string>
   <string name="setting_thumb_quality">缩略图质量</string>
-  <string name="setting_thumb_quality_tip">提升质量返回生效，降低质量刷新列表生效</string>
+  <string name="setting_thumb_quality_tip">选择缩略图的显示质量,返回生效</string>
+  <string name="setting_lanuch_photo">显示启动页(妹子)</string>
+  <string name="setting_lanuch_photo_tip">萌萌的妹子不要错过哟</string>
+  <string name="setting_probability_photo">概率出现</string>
+  <string name="setting_probability_photo_tip">每次都想看呢O(∩_∩)O哈哈~</string>
+  <string name="setting_github_issues">https://github.com/dreamaner/gank/issues</string>
   <string name="setting_quality_hige">原图</string>
   <string name="setting_more">更多</string>
   <string name="setting_about_ugank">关于干货</string>
-  <string name="setting_version">版本:1.0</string>
+  <string name="setting_version">版本:</string>
   <string name="setting_donate">求打赏</string>
   <string name="setting_feedback">反馈</string>
   <string name="setting_clean_cache">清除缓存</string>
   <string name="favorite_title">收藏</string>
-  <string name="welcome_ugank"><![CDATA[>> 欢迎进入 UGank]]></string>
+
   <string name="shortcuts_search_disable">搜索（不可用）</string>
   <string name="shortcuts_search_short">搜索</string>
   <string name="shortcuts_search_long">搜索</string>
@@ -34,17 +78,7 @@
   <string name="shortcuts_favorite_short">收藏</string>
   <string name="shortcuts_favorite_long">我的收藏</string>
 
-  <string name="favorite_tv">我的收藏</string>
-  <string name="theme_tv">主题模式</string>
-  <string name="theme_color">主题色</string>
-  <string name="theme_custom">自定义</string>
-  <string name="theme_back">返回</string>
-  <string name="theme_done">确定</string>
-  <string name="theme_cancle">取消</string>
-  <string name="theme_presets">预先布置</string>
-  <string name="setting_tv">设置</string>
   <string name="login_register">登录/注册</string>
-  <string name="name_test">mask浩</string>
   <string name="inputAccount">请输入邮箱</string>
   <string name="inputPassword">请输入密码</string>
   <string name="register">注册</string>
@@ -74,7 +108,5 @@
   <string name="download">下载</string>
   <string name="goSetting">去设置</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
