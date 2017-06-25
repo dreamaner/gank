@@ -15,6 +15,7 @@ import com.android.kit.view.dialog.MaterialDialog;
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.config.ThemeManage;
 import com.android.xgank.kit.AlipayZeroSdk;
@@ -79,7 +80,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true, toolbar, "设置");
+        setUpToolBar(true, toolbar, Constant.TOOLBAR_SETTING_ACTIVITY);
         switchSetting.setOnCheckedChangeListener(this);
         showLauncherImg.setOnCheckedChangeListener(this);
         alwaysShowLauncherImg.setOnCheckedChangeListener(this);

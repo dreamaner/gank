@@ -216,11 +216,11 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         }
         Router.newIntent(this)
             .to(PhotoActivity.class)
-            .putStringArrayList("urls",urls)
-            .putStringArrayList("ids",ids)
-            .putInt("position",position)
-            .putInt("flag", 3)
-            .putSerializable("search",items.get(position))
+            .putStringArrayList(Constant.INTENT_FLAG_URLS,urls)
+            .putStringArrayList(Constant.INTENT_FLAG_IDS,ids)
+            .putInt(Constant.INTENT_FLAG_POSITION,position)
+            .putInt(Constant.INTENT_FLAG, 3)
+            .putSerializable(Constant.INTENT_FLAG_SEARCH,items.get(position))
             .launch();
     }
 

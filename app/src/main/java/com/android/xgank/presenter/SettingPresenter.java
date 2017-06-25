@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.kit.utils.cache.CacheUtils;
 import com.android.kit.utils.io.PackageUtils;
 import com.android.mvp.mvp.XPresent;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.config.ThemeManage;
 import com.android.xgank.ui.App;
@@ -60,9 +61,9 @@ public class SettingPresenter extends XPresent<SettingActivity> {
         ConfigManage.INSTANCE.setShowLauncherImg(isLauncherShowImg);
         setIsLauncherShowImgEnable(isLauncherShowImg);
         if (isLauncherShowImg) {
-            getV().setShowLauncherTip("没有妹子太寂寞");
+            getV().setShowLauncherTip(Constant.SHOW_LANUCH_PHOTO_TIP);
         } else {
-            getV().setShowLauncherTip("基佬怎么会需要妹子");
+            getV().setShowLauncherTip(Constant.DISMISS_LANUCH_PHOTO_TIP);
         }
     }
 
@@ -70,9 +71,9 @@ public class SettingPresenter extends XPresent<SettingActivity> {
     public void saveIsLauncherAlwaysShowImg(boolean isLauncherAlwaysShowImg) {
         ConfigManage.INSTANCE.setProbabilityShowLauncherImg(isLauncherAlwaysShowImg);
         if (isLauncherAlwaysShowImg) {
-            getV().setAlwaysShowLauncherTip("偶尔来个惊喜就行");
+            getV().setAlwaysShowLauncherTip(Constant.PROBABILITY_SHOW);
         } else {
-            getV().setAlwaysShowLauncherTip("我每次都要幸临，没毛病");
+            getV().setAlwaysShowLauncherTip(Constant.NOT_PROBABILITY_SHOW);
         }
     }
 

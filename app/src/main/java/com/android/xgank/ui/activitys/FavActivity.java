@@ -70,7 +70,7 @@ public class FavActivity extends XActivity<FavPresenter> {
     }
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true, toolbar, "我的收藏");
+        setUpToolBar(true, toolbar, Constant.TOOLBAR_FAV_ACTIVITY);
         initAdapter();
     }
 

@@ -21,6 +21,7 @@ import com.android.mvp.kit.Kits;
 import com.android.mvp.mvp.XActivity;
 import com.android.mvp.recycleview.XStateController;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
@@ -67,24 +68,21 @@ public class WebActivity extends XActivity<WebPresenter> {
         initRefreshLayout();
         initWebView();
         getP().showFavState();
-        //initImmersionBar();
-        //setImmersionBar(ConfigManage.INSTANCE.getThemeColor());
-        //toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
         MDTintUtil.setTint(mFloatingActionButton, ThemeManage.INSTANCE.getColorPrimary());
     }
 
     public void compareTo() {
-        flag = getIntent().getIntExtra("flag", 0);
+        flag = getIntent().getIntExtra(Constant.INTENT_FLAG, 0);
         if (flag == 1) {
-            item = (GankResults.Item) getIntent().getSerializableExtra("item");
+            item = (GankResults.Item) getIntent().getSerializableExtra(Constant.INTENT_FLAG_ITEM);
             url = item.getUrl();
             desc = item.getDesc();
         } else if (flag == 2) {
-            fav = (Favorite) getIntent().getSerializableExtra("item");
+            fav = (Favorite) getIntent().getSerializableExtra(Constant.INTENT_FLAG_ITEM);
             url = fav.getUrl();
             desc = fav.getDesc();
         } else if (flag == 3) {
-            search = (SearchResult.Item) getIntent().getSerializableExtra("item");
+            search = (SearchResult.Item) getIntent().getSerializableExtra(Constant.INTENT_FLAG_ITEM);
             url = search.getUrl();
             desc = search.getDesc();
         }
@@ -145,16 +143,16 @@ public class WebActivity extends XActivity<WebPresenter> {
     public void showTips(String msg) {
 
         switch (msg) {
-            case "收藏成功":
+            case Constant.FAV_SUCCESS:
                 Toasty.success(this, msg).show();
                 break;
-            case "收藏失败":
+            case Constant.FAV_DEFEAT:
                 Toasty.error(this, msg).show();
                 break;
-            case "取消收藏":
+            case Constant.UNFAV_SUCCESS:
                 Toasty.info(this, msg).show();
                 break;
-            case "取消收藏失败":
+            case Constant.UNFAV_DEFEAT:
                 Toasty.error(this, msg).show();
                 break;
         }

@@ -27,6 +27,7 @@ import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.bean.GankResults;
 import com.android.xgank.bean.SearchResult;
@@ -66,7 +67,7 @@ public class PhotoActivity extends XActivity<PhotoPresenter> {
     public String ID;
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true, toolbar, "图片详情");
+        setUpToolBar(true, toolbar, Constant.TOOLBAR_PHOTO_ACTIVITY);
 
         initIntentData();
         initView();

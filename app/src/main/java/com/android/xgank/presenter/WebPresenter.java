@@ -2,6 +2,7 @@ package com.android.xgank.presenter;
 
 import com.android.mvp.mvp.XPresent;
 
+import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.Favorite;
 import com.android.xgank.ui.activitys.WebActivity;
 
@@ -35,9 +36,9 @@ public class WebPresenter extends XPresent<WebActivity> {
         mFavoriteData.clearSavedState();
         mIsFavorite = result < 1;
         if (!mIsFavorite)
-            getV().showTips("取消收藏");
+            getV().showTips(Constant.UNFAV_SUCCESS);
          else
-            getV().showTips("取消收藏失败");
+            getV().showTips(Constant.UNFAV_DEFEAT);
         getV().setFavoriteState(mIsFavorite);
 
     }
@@ -47,9 +48,9 @@ public class WebPresenter extends XPresent<WebActivity> {
         mIsFavorite =  mFavoriteData.save();
 
         if (mIsFavorite)
-            getV().showTips("收藏成功");
+            getV().showTips(Constant.FAV_SUCCESS);
          else
-            getV().showTips("收藏失败");
+            getV().showTips(Constant.UNFAV_SUCCESS);
         getV().setFavoriteState(mIsFavorite);
 
     }

@@ -3,6 +3,7 @@ package com.android.xgank.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 
 import com.android.kit.utils.io.IOUtils;
@@ -144,11 +145,11 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
         }
         Router.newIntent(getActivity())
             .to(PhotoActivity.class)
-            .putStringArrayList("urls",urls)
-            .putStringArrayList("ids",ids)
-            .putInt("position",position)
-            .putInt("flag", 2)
-            .putSerializable("fav", items.get(position))
+            .putStringArrayList(Constant.INTENT_FLAG_URLS,urls)
+            .putStringArrayList(Constant.INTENT_FLAG_IDS,ids)
+            .putInt(Constant.INTENT_FLAG_POSITION,position)
+            .putInt(Constant.INTENT_FLAG, 2)
+            .putSerializable(Constant.INTENT_FLAG_FAV, items.get(position))
             .launch();
     }
     public CatrgoryListAdapter getAdapter() {
@@ -176,8 +177,8 @@ public class CategoryFragment extends XLazyFragment<CategoryPresenter> {
     public  void launch(Activity activity, Favorite item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putSerializable("item",item)
-                .putInt("flag",2)
+                .putSerializable(Constant.INTENT_FLAG_ITEM,item)
+                .putInt(Constant.INTENT_FLAG,2)
                 .launch();
 
     }

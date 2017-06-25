@@ -67,7 +67,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
                 .statusBarDarkFont(false)
                 .navigationBarColor(R.color.colorPrimary)
                 .init();
-        setUpToolBar(true,toolbar, String.valueOf(R.string.more_fragment_toolbar_title));
+        setUpToolBar(true,toolbar, Constant.TOOLBAR_MORE_FRAGMENT);
         getP().getMoreData();
 
     }
@@ -144,7 +144,7 @@ public class MoreFragment extends XFragment<MorePresenter> {
     public void gotoTypeListActivity(String type){
         Router.newIntent(getActivity())
                 .to(GankTypeListActivity.class)
-                .putString(String.valueOf(R.string.intent_to_type_list_put_string),type)
+                .putString(Constant.INTENT_FLAG_TYPE,type)
                 .launch();
     }
     private RecyclerScrollListener recyclerScrollListener = new RecyclerScrollListener() {

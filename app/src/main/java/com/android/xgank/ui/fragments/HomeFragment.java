@@ -1,6 +1,4 @@
 package com.android.xgank.ui.fragments;
-
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -13,9 +11,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +50,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+
 import java.util.ArrayList;
 
 public class HomeFragment extends XFragment<HomePresenter> {
@@ -172,35 +167,32 @@ public class HomeFragment extends XFragment<HomePresenter> {
      */
     private void setFabDynamicState() {
 
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
 
-                if (verticalOffset == 0) {
-                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
-                        state = CollapsingToolbarLayoutState.EXPANDED; // 修改状态标记为展开
-                    }
-                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-                    if (state != CollapsingToolbarLayoutState.COLLAPSED) {
-                        mFloatingActionButton.hide();
-
-                        state = CollapsingToolbarLayoutState.COLLAPSED; // 修改状态标记为折叠
-                        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
-                        layoutParams.height = DisplayUtils.dp2px(240, getActivity());
-                        mAppBarLayout.setLayoutParams(layoutParams);
-                        isBannerBig = false;
-                    }
-                } else {
-                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-                        if (state == CollapsingToolbarLayoutState.COLLAPSED) {
-                            mFloatingActionButton.show();
-
-                        }
-                        state = CollapsingToolbarLayoutState.INTERNEDIATE; // 修改状态标记为中间
-                    }
+            if (verticalOffset == 0) {
+                if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                    state = CollapsingToolbarLayoutState.EXPANDED; // 修改状态标记为展开
                 }
-                showText(state);
+            } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                if (state != CollapsingToolbarLayoutState.COLLAPSED) {
+                    mFloatingActionButton.hide();
+
+                    state = CollapsingToolbarLayoutState.COLLAPSED; // 修改状态标记为折叠
+                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+                    layoutParams.height = DisplayUtils.dp2px(240, getActivity());
+                    mAppBarLayout.setLayoutParams(layoutParams);
+                    isBannerBig = false;
+                }
+            } else {
+                if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                    if (state == CollapsingToolbarLayoutState.COLLAPSED) {
+                        mFloatingActionButton.show();
+
+                    }
+                    state = CollapsingToolbarLayoutState.INTERNEDIATE; // 修改状态标记为中间
+                }
             }
+            showText(state);
         });
 
     }
@@ -232,7 +224,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
     }
 
     public String getType() {
-        return String.valueOf(R.string.gank_all_type);
+        return "all";
     }
 
     public HomeAdapter getAdapter() {
@@ -260,8 +252,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
     public void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putSerializable(String.valueOf(R.string.intent_to_web_put_item), item)
-                .putInt(String.valueOf(R.string.intent_to_web_put_flag), 1)
+                .putSerializable(Constant.INTENT_FLAG_ITEM, item)
+                .putInt(Constant.INTENT_FLAG, 1)
                 .launch();
     }
 
@@ -297,11 +289,11 @@ public class HomeFragment extends XFragment<HomePresenter> {
         urls.add(item.getUrl());
         Router.newIntent(getActivity())
                 .to(PhotoActivity.class)
-                .putStringArrayList(String.valueOf(R.string.intent_to_photo_put_urls_string_array),urls)
-                .putInt(String.valueOf(R.string.intent_to_photo_position),0)
-                .putInt(String.valueOf(R.string.intent_to_photo_put_flag), 1)
-                .putStringArrayList(String.valueOf(R.string.intent_to_photo_put_ids_string_array),ids)
-                .putSerializable(String.valueOf(R.string.intent_to_photo_put_item), item)
+                .putStringArrayList(Constant.INTENT_FLAG_URLS,urls)
+                .putInt(Constant.INTENT_FLAG_POSITION,0)
+                .putInt(Constant.INTENT_FLAG, 1)
+                .putStringArrayList(Constant.INTENT_FLAG_IDS,ids)
+                .putSerializable(Constant.INTENT_FLAG_ITEM, item)
                 .launch();
     }
 
@@ -370,9 +362,8 @@ public class HomeFragment extends XFragment<HomePresenter> {
     }
 
     public void startBannerLoadingAnim() {
-        mFloatingActionButton.setImageResource(R.drawable.ic_loading);
-        mAnimator = ObjectAnimator.ofFloat(mFloatingActionButton,
-            String.valueOf(R.string.animation_ratotion), 0, 360);
+        mFloatingActionButton.setImageResource(R.drawable.loading);
+        mAnimator = ObjectAnimator.ofFloat(mFloatingActionButton, "rotation", 0, 360);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setDuration(800);
         mAnimator.setInterpolator(new LinearInterpolator());

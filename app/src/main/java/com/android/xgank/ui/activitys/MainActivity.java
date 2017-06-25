@@ -60,9 +60,6 @@ public class MainActivity extends XActivity implements BottomNavigationView.OnNa
          navigation.setOnNavigationItemSelectedListener(this);
          fragmentUtil.initFragment(Constant.HOME);
 
-        getRxPermissions()
-            .request(Manifest.permission.CAMERA)
-            .subscribe();
     }
 
     @Override

@@ -84,7 +84,7 @@ public class OwnFragment extends XFragment<OwnPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setUpToolBar(true, toolbar, String.valueOf(R.string.own_fragment_toolbar_title));
+        setUpToolBar(true, toolbar, Constant.TOOLBAR_OWN_FRAGMENT);
         primaryPreselect = DialogUtils.resolveColor(getActivity(), R.attr.colorPrimary);
 
     }

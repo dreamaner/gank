@@ -3,7 +3,6 @@
     <dbname value="x-gank"></dbname>
     <version value="6"></version>
     <list>
-
         <mapping class="com.android.xgank.bean.MoreEntity"/>
         <mapping class="com.android.xgank.bean.Favorite"/>
         <mapping class="com.android.xgank.bean.History"/>

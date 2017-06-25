@@ -19,6 +19,8 @@ import com.android.xgank.bean.GankResults;
 import com.android.xgank.presenter.GankTypePresenter;
 import com.android.xgank.ui.adapters.HomeAdapter;
 
+import org.litepal.util.Const;
+
 import butterknife.BindView;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,7 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     }
     public void showData(){
         it = getIntent();
-        type = it.getStringExtra("type");
+        type = it.getStringExtra(Constant.INTENT_FLAG_TYPE);
 
         if (urls == null){
             urls = new ArrayList<>();
@@ -111,11 +113,11 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
         }
         Router.newIntent(this)
             .to(PhotoActivity.class)
-            .putStringArrayList("urls",urls)
-            .putStringArrayList("ids",ids)
-            .putInt("position",position)
-            .putInt("flag", 1)
-            .putSerializable("item", items.get(position))
+            .putStringArrayList(Constant.INTENT_FLAG_URLS,urls)
+            .putStringArrayList(Constant.INTENT_FLAG_IDS,ids)
+            .putInt(Constant.INTENT_FLAG_POSITION,position)
+            .putInt(Constant.INTENT_FLAG, 1)
+            .putSerializable(Constant.INTENT_FLAG_ITEM, items.get(position))
             .launch();
     }
     @Override
@@ -161,8 +163,8 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
     public static void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)
-                .putSerializable("item",item)
-                .putInt("flag",1)
+                .putSerializable(Constant.INTENT_FLAG_ITEM,item)
+                .putInt(Constant.INTENT_FLAG,1)
                 .launch();
     }
 }
