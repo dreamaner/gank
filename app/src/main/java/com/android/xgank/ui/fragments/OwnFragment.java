@@ -2,34 +2,26 @@ package com.android.xgank.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import com.android.kit.view.dialog.color.ColorChooserDialog;
 import com.android.kit.view.dialog.util.DialogUtils;
 import com.android.kit.view.image.CircleImageView;
 import com.android.kit.view.widget.MyToolbar;
-import com.android.mvp.event.BusProvider;
 import com.android.mvp.mvp.XFragment;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
-import com.android.xgank.bean.ThemeEvent;
-import com.android.xgank.config.ConfigManage;
 import com.android.xgank.presenter.OwnPresenter;
 import com.android.xgank.ui.activitys.FavActivity;
 import com.android.xgank.ui.activitys.MainActivity;
 import com.android.xgank.ui.activitys.SettingActivity;
-import io.reactivex.functions.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,7 +1,6 @@
 package com.android.xgank.ui.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 
 import android.support.v7.widget.GridLayoutManager;
@@ -16,16 +15,16 @@ import com.android.kit.view.recycleview.BaseQuickAdapter;
 import com.android.kit.view.recycleview.callback.ItemDragAndSwipeCallback;
 import com.android.kit.view.recycleview.listener.OnItemDragListener;
 import com.android.kit.view.widget.MyToolbar;
-import com.android.mvp.event.BusProvider;
 
+import com.android.mvp.event.BusProvider;
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XFragment;
 
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
 import com.android.xgank.bean.MoreEntity;
-import com.android.xgank.bean.ThemeEvent;
-import com.android.xgank.config.ConfigManage;
+import com.android.xgank.bean.ShowImgEvent;
 import com.android.xgank.listener.HomeFrgListener;
 import com.android.xgank.listener.RecyclerScrollListener;
 

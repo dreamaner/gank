@@ -11,6 +11,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,19 @@ import android.widget.TextView;
 import com.android.kit.utils.toast.ToastUtils;
 
 import com.android.mvp.event.BusProvider;
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XFragment;
 
+import com.android.mvp.net.ApiSubscriber;
+import com.android.mvp.net.NetError;
+import com.android.mvp.net.XApi;
 import com.android.mvp.recycleview.RecyclerItemCallback;
 import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
-import com.android.xgank.bean.ThemeEvent;
+import com.android.xgank.bean.ShowImgEvent;
 import com.android.xgank.kit.DisplayUtils;
 import com.android.xgank.kit.MDTintUtil;
 import com.android.xgank.bean.GankResults;
@@ -44,13 +49,17 @@ import com.android.xgank.ui.activitys.WebActivity;
 
 
 import com.android.xgank.ui.adapters.HomeAdapter;
+import com.android.xgank.ui.adapters.MainAdapter;
 import com.github.florent37.picassopalette.PicassoPalette;
+import com.google.common.eventbus.EventBus;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import java.util.ArrayList;
 
 public class HomeFragment extends XFragment<HomePresenter> {
@@ -77,7 +86,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
     private HomeFrgListener homeFrgListener;
     private boolean isBannerBig; // banner 是否是大图
     private boolean isBannerAniming; // banner 放大缩小的动画是否正在执行
-    private HomeAdapter adapter;
+    private MainAdapter adapter;
     private ObjectAnimator mAnimator;
     protected static final int MAX_PAGE = 10;
     private CollapsingToolbarLayoutState state; // CollapsingToolbarLayout 折叠状态
@@ -111,6 +120,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
             urls = new ArrayList<>();
         if (ids == null)
             ids = new ArrayList<>();
+
     }
 
     public void setToolbarHeight() {
@@ -122,6 +132,29 @@ public class HomeFragment extends XFragment<HomePresenter> {
             layoutParams.height = DisplayUtils.dp2px(80, getActivity());
             tlHomeToolbar.setLayoutParams(layoutParams);
         }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
+    public void bindEvent() {
+        BusProvider.getBus().toFlowable(ShowImgEvent.class)
+            .compose(XApi.<ShowImgEvent>getApiTransformer())
+            .compose(XApi.<ShowImgEvent>getScheduler())
+            .subscribe(new ApiSubscriber<ShowImgEvent>() {
+                @Override
+                protected void onFail(NetError error) {
+
+                }
+
+                @Override
+                public void onNext(ShowImgEvent showImgEvent) {
+                      adapter.notifyDataSetChanged();
+                }
+            });
     }
 
     @Override
@@ -227,20 +260,17 @@ public class HomeFragment extends XFragment<HomePresenter> {
         return "all";
     }
 
-    public HomeAdapter getAdapter() {
+    public MainAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new HomeAdapter(context);
-            adapter.setRecItemClick(new RecyclerItemCallback<GankResults.Item, HomeAdapter.ViewHolder>() {
+            adapter = new MainAdapter(context);
+            adapter.setRecItemClick(new RecyclerItemCallback<GankResults.Item, RecyclerView.ViewHolder>() {
                 @Override
-                public void onItemClick(int position, GankResults.Item model, int tag, HomeAdapter.ViewHolder holder) {
+                public void onItemClick(int position, GankResults.Item model, int tag, RecyclerView.ViewHolder holder) {
                     super.onItemClick(position, model, tag, holder);
-
                     switch (tag) {
                         case HomeAdapter.TAG_VIEW:
-                            if (model.getType().equals(Constant.PHOTO))
-                                goPhoto(model,position);
-                            else
-                                launch(context, model);
+                            if (model.getType().equals(Constant.PHOTO)) goPhoto(model, position);
+                            else launch(context, model);
                             break;
                     }
                 }
@@ -271,6 +301,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
                     return;
                 }
                 startBannerAnim();
+                BusProvider.getBus().post(new ShowImgEvent());
                 break;
         }
     }
@@ -328,7 +359,7 @@ public class HomeFragment extends XFragment<HomePresenter> {
                         PicassoPalette.with(imgUrl, ivHomeBanner)
                                 .intoCallBack(palette -> {
                                     getP().setThemeColor(palette);
-                                    BusProvider.getBus().post(new ThemeEvent());
+                                    BusProvider.getBus().post(new ShowImgEvent());
                                 }));
     }
 
@@ -416,4 +447,5 @@ public class HomeFragment extends XFragment<HomePresenter> {
 
         }
     };
+
 }

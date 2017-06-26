@@ -13,9 +13,13 @@ import android.widget.LinearLayout;
 import com.android.kit.utils.toast.Toasty;
 import com.android.kit.view.dialog.MaterialDialog;
 import com.android.kit.view.widget.MyToolbar;
+import com.android.mvp.event.BusProvider;
+import com.android.mvp.event.RxBusImpl;
+import com.android.mvp.log.XLog;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
+import com.android.xgank.bean.ShowImgEvent;
 import com.android.xgank.config.ConfigManage;
 import com.android.xgank.config.ThemeManage;
 import com.android.xgank.kit.AlipayZeroSdk;
@@ -90,15 +94,6 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //toolbar.setBackgroundColor(ConfigManage.INSTANCE.getThemeColor());
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getP().isThumbnailSettingChanged()) { // 显示缩略图设置项改变
-            setResult(RESULT_OK);
-        }
-        super.onBackPressed();
     }
 
     @Override
@@ -125,7 +120,9 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         switch (view.getId()) {
 
             case R.id.ll_is_show_list_img:
+
                 switchSetting.setChecked(!switchSetting.isChecked());
+
                 break;
 
             case R.id.ll_is_show_launcher_img:
@@ -138,11 +135,9 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         }
     }
 
-
     public void changeSwitchState(boolean isChecked) {
         switchSetting.setChecked(isChecked);
     }
-
 
     public void changeIsShowLauncherImgSwitchState(boolean isChecked) {
         showLauncherImg.setChecked(isChecked);
@@ -158,11 +153,9 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         MDTintUtil.setTint(alwaysShowLauncherImg, color);
     }
 
-
     public void setAppVersionNameInTv(String versionName) {
         tvSettingVersionName.setText(R.string.setting_version + versionName);
     }
-
 
     public void setImageQualityChooseUnEnable() {
         llSettingImageQuality.setClickable(false);
@@ -177,7 +170,6 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         tvSettingImageQualityTitle.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
         tvSettingImageQualityContent.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
     }
-
 
     public void setLauncherImgUnEnable() {
 
@@ -215,25 +207,20 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         tvSettingCleanCache.setText(cache);
     }
 
-
     public void showSuccessTip(String msg) {
         Toasty.success(this, msg).show();
     }
-
 
     public void showFailTip(String msg) {
         Toasty.error(this, msg).show();
     }
 
-
     public void setShowLauncherTip(String tip) {
         tvIsShowLauncherImgContent.setText(tip);
     }
 
-
     public void setAlwaysShowLauncherTip(String tip) {
-        tvIsAlwaysShowLauncherImgContent.setText(tip);
-    }
+        tvIsAlwaysShowLauncherImgContent.setText(tip);}
 
     @OnClick(R.id.ll_setting_image_quality)
     public void chooseThumbnailQuality() {
@@ -246,6 +233,7 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         getP().setThumbnailQuality(which);
+                        BusProvider.getBus().post(new ShowImgEvent());
                         dialog.dismiss();
                         return true;
                     }
@@ -260,6 +248,8 @@ public class SettingActivity extends XActivity<SettingPresenter> implements Comp
         switch (compoundButton.getId()) {
             case R.id.switch_setting:
                 getP().saveIsListShowImg(isChecked);
+                BusProvider.getBus().post(new ShowImgEvent());
+                XLog.i("---","已发送");
                 break;
             case R.id.switch_setting_show_launcher_img:
                 getP().saveIsLauncherShowImg(isChecked);

@@ -18,6 +18,7 @@ import com.android.kit.utils.operate.RandomUtils;
 import com.android.kit.utils.screen.ScreenUtils;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.imageloader.ILFactory;
+import com.android.mvp.imageloader.ILoader;
 import com.android.mvp.kit.KnifeKit;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
@@ -100,11 +101,11 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
                             break;
                     }
 //                    Picasso.with(mContext).setIndicatorsEnabled(true);//显示指示器
-                    ILFactory.getLoader().loadNet(holder.ivItemImg,item.getImages().get(0)+quality,null);
+                    ILFactory.getLoader().loadNet(holder.ivItemImg,item.getImages().get(0)+quality,new ILoader.Options(R.drawable.loading_img,R.drawable.noimage));
 
                 } else { // 图片 URL 不存在
 //                    holder.ivItemImg.setVisibility(View.GONE);
-                    ILFactory.getLoader().loadResource(holder.ivItemImg,R.drawable.noimage,null);
+                    ILFactory.getLoader().loadResource(holder.ivItemImg,R.drawable.noimage,new ILoader.Options(R.drawable.loading_img,R.drawable.noimage));
                 }
             } else { // 列表不显示图片
                 holder.ivItemImg.setVisibility(View.GONE);
@@ -171,7 +172,7 @@ public class HomeAdapter extends SimpleRecAdapter<GankResults.Item, HomeAdapter.
             layoutParams.height=height;
             photoIv.setLayoutParams(layoutParams);
         }
-        ILFactory.getLoader().loadNet(photoIv,item.getUrl(),null);
+        ILFactory.getLoader().loadNet(photoIv,item.getUrl(),new ILoader.Options(R.drawable.loading_img,R.drawable.noimage));
 
     }
 

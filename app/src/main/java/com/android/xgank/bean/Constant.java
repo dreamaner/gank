@@ -49,4 +49,10 @@ public class Constant {
     public static final String DISMISS_LANUCH_PHOTO_TIP = "可能是个假汉子";
     public static final String PROBABILITY_SHOW = "偶尔亮瞎一次眼O(∩_∩)O哈哈~";
     public static final String NOT_PROBABILITY_SHOW = "每次都要亮瞎眼(*^__^*) 嘻嘻……";
+
+    //适配器类型
+    public static final int CONTENT_IMG    = 1;
+    public static final int CONTENT_NO_IMG = 2;
+    public static final int CONTENT_VIDEO  = 3;
+    public static final int CONTENT_NORMAL = 4;
 }
