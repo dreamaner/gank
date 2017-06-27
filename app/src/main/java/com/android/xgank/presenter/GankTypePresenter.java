@@ -23,7 +23,7 @@ public class GankTypePresenter extends XPresent<GankTypeListActivity> {
                     .subscribe(new ApiSubscriber<GankResults>() {
                         @Override
                         protected void onFail(NetError error) {
-
+                             getV().showError(error);
                         }
 
                         @Override

@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.base.SimpleRecAdapter;
 import com.android.mvp.mvp.XActivity;
+import com.android.mvp.net.NetError;
 import com.android.mvp.recycleview.RecyclerItemCallback;
 import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
@@ -159,7 +160,9 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
         }
         return adapter;
     }
-
+    public void showError(NetError error){
+        showError(contentLayout,error);
+    }
     public static void launch(Activity activity, GankResults.Item item) {
         Router.newIntent(activity)
                 .to(WebActivity.class)

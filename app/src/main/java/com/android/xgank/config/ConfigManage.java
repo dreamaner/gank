@@ -30,7 +30,7 @@ public enum ConfigManage {
     public void initConfig(Context context) {
         PrefsUtils prefsUtils =  PrefsUtils.getInstance(context,spName);
         // 列表是否显示图片
-        isListShowImg = prefsUtils.getBoolean(key_isListShowImg, false);
+        isListShowImg = prefsUtils.getBoolean(key_isListShowImg, true);
         // 缩略图质量 0：原图 1：默认 2：省流
         thumbnailQuality = prefsUtils.getInt(key_thumbnailQuality, 1);
         // Banner URL 用于加载页显示

@@ -305,7 +305,9 @@ public class HomeFragment extends XFragment<HomePresenter> {
                 break;
         }
     }
-
+    public void showError(NetError error){
+        showError(contentLayout,error);
+    }
     public void goSearch() {
         Router.newIntent(getActivity())
                 .to(SearchActivity.class)

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 
+import com.android.kit.utils.network.NetworkService;
 import com.android.kit.view.immersion.ImmersionBar;
 import com.android.mvp.imageloader.ILFactory;
 import com.android.mvp.mvp.XActivity;
@@ -32,7 +33,6 @@ public class SplashActivity extends XActivity {
     public void initData(Bundle bundle) {
         ImmersionBar.with(this).transparentBar().init();
         imgInit();
-
     }
 
     public void imgInit(){

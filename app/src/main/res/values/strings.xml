@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">干货</string>
   <!--splash_activity_layout-->
-  <string name="welcome_gank"><![CDATA[>> 欢迎进入 Gank]]></string>
+  <string name="welcome_gank"><![CDATA[>> 欢迎进入 XGank <<]]></string>
 
   <!--main_activity-->
   <string name="exit_system">再按一次退出系统</string>

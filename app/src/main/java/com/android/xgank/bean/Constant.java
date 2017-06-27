@@ -5,7 +5,7 @@ package com.android.xgank.bean;
  */
 
 public class Constant {
-
+    public static final String EXIT_SYSTEM = "再按一次退出系统";
     //routerparms
     public static final String INTENT_FLAG = "flag";
     public static final String INTENT_FLAG_POSITION = "position";

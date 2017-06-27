@@ -19,6 +19,7 @@ import com.android.kit.utils.check.CheckUtils;
 import com.android.kit.utils.system.KeyboardUtils;
 import com.android.kit.utils.toast.Toasty;
 import com.android.mvp.mvp.XActivity;
+import com.android.mvp.net.NetError;
 import com.android.mvp.recycleview.RecyclerItemCallback;
 import com.android.mvp.recycleview.XRecyclerContentLayout;
 import com.android.mvp.recycleview.XRecyclerView;
@@ -204,7 +205,9 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         }
         return searchAdapter;
     }
-
+    public void showError(NetError error){
+        showError(contentLayout,error);
+    }
     public void goPhoto(List<SearchResult.Item> items,int position){
         urls.clear();
         for (SearchResult.Item item:items){

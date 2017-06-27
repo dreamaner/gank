@@ -38,7 +38,7 @@ public class SearchPresenter extends XPresent<SearchActivity> {
                 .subscribe(new ApiSubscriber<SearchResult>() {
                     @Override
                     protected void onFail(NetError error) {
-
+                          getV().showError(error);
                     }
 
                     @Override

@@ -18,7 +18,6 @@ import com.android.mvp.mvp.XFragment;
 import com.android.mvp.router.Router;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
-import com.android.xgank.presenter.OwnPresenter;
 import com.android.xgank.ui.activitys.FavActivity;
 import com.android.xgank.ui.activitys.MainActivity;
 import com.android.xgank.ui.activitys.SettingActivity;
@@ -26,7 +25,7 @@ import com.android.xgank.ui.activitys.SettingActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OwnFragment extends XFragment<OwnPresenter> {
+public class OwnFragment extends XFragment {
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
@@ -87,8 +86,8 @@ public class OwnFragment extends XFragment<OwnPresenter> {
     }
 
     @Override
-    public OwnPresenter newP() {
-        return new OwnPresenter();
+    public Object newP() {
+        return  null;
     }
 
     @OnClick({

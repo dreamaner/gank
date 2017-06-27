@@ -1,7 +1,6 @@
 package com.android.xgank.ui.activitys;
 import butterknife.BindView;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 
 import com.android.kit.view.tab.XTabLayout;
@@ -9,12 +8,10 @@ import com.android.kit.view.widget.MyToolbar;
 import com.android.mvp.mvp.XActivity;
 import com.android.xgank.R;
 import com.android.xgank.bean.Constant;
-import com.android.xgank.config.ConfigManage;
-import com.android.xgank.presenter.FavPresenter;
 import com.android.xgank.ui.adapters.CategoryViewPagerAdapter;
 import com.android.xgank.ui.fragments.CategoryFragment;
 
-public class FavActivity extends XActivity<FavPresenter> {
+public class FavActivity extends XActivity {
 
     @BindView(R.id.toolbar)
     MyToolbar toolbar;
@@ -80,8 +77,8 @@ public class FavActivity extends XActivity<FavPresenter> {
     }
 
     @Override
-    public FavPresenter newP() {
-        return new FavPresenter();
+    public Object newP() {
+        return null;
     }
 
     @Override

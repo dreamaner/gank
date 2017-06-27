@@ -32,7 +32,7 @@ public class HomePresenter extends XPresent<HomeFragment> {
                 .subscribe(new ApiSubscriber<GankResults>() {
                     @Override
                     protected void onFail(NetError error) {
-
+                        getV().showError(error);
                     }
 
                     @Override
