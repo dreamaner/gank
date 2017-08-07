@@ -135,29 +135,6 @@ public class HomeFragment extends XFragment<HomePresenter> {
     }
 
     @Override
-    public boolean useEventBus() {
-        return true;
-    }
-
-    @Override
-    public void bindEvent() {
-        BusProvider.getBus().toFlowable(ShowImgEvent.class)
-            .compose(XApi.<ShowImgEvent>getApiTransformer())
-            .compose(XApi.<ShowImgEvent>getScheduler())
-            .subscribe(new ApiSubscriber<ShowImgEvent>() {
-                @Override
-                protected void onFail(NetError error) {
-
-                }
-
-                @Override
-                public void onNext(ShowImgEvent showImgEvent) {
-                      adapter.notifyDataSetChanged();
-                }
-            });
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
     }
@@ -450,4 +427,10 @@ public class HomeFragment extends XFragment<HomePresenter> {
         }
     };
 
+    @Override
+    public void onStateViewClick() {
+        super.onStateViewClick();
+        contentLayout.showLoading();
+        getP().loadData(getType(), 1);
+    }
 }

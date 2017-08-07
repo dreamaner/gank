@@ -17,19 +17,19 @@ public class Constant {
     public static final String INTENT_FLAG_SEARCH = "search";
 
     //gank type
-    public static final String ANDROID="Android";
-    public static final String IOS="iOS";
-    public static final String WEB="前端";
-    public static final String PHOTO="福利";
-    public static final String VIDEO="休息视频";
-    public static final String EXPANDRES="拓展资源";
-    public static final String RECOMMEND="瞎推荐";
-    public static final String APP="App";
+    public static final String ANDROID = "Android";
+    public static final String IOS = "iOS";
+    public static final String WEB = "前端";
+    public static final String PHOTO ="福利";
+    public static final String VIDEO = "休息视频";
+    public static final String EXPANDRES = "拓展资源";
+    public static final String RECOMMEND = "瞎推荐";
+    public static final String APP = "App";
 
     //navigation
-    public static final String HOME="home";
-    public static final String MORE="more";
-    public static final String ME="me";
+    public static final String HOME = "home";
+    public static final String MORE = "more";
+    public static final String ME = "me";
 
     //toolbar title
     public static final String TOOLBAR_FAV_ACTIVITY = "我的收藏";

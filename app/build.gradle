@@ -33,7 +33,7 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.github.dreamaner.mvp:x-mvp:v1.1.0'
+  compile 'com.github.coeussy.mvp:x-mvp:V1.0.0'
   compile 'com.github.florent37:picassopalette:2.0.0'
   debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
   testCompile 'junit:junit:4.12'

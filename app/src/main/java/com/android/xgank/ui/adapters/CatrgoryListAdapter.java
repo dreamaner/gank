@@ -120,4 +120,5 @@ public class CatrgoryListAdapter extends SimpleRecAdapter<Favorite,CatrgoryListA
             KnifeKit.bind(this, itemView);
         }
     }
+
 }

@@ -308,4 +308,10 @@ public class SearchActivity extends XActivity<SearchPresenter> implements TextWa
         }
         return false;
     }
+    @Override
+    public void onStateViewClick() {
+        super.onStateViewClick();
+        contentLayout.showLoading();
+        getP().loadData(getKey(), 1);
+    }
 }

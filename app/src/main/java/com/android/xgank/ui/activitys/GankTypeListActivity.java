@@ -170,4 +170,10 @@ public class GankTypeListActivity extends XActivity<GankTypePresenter> {
                 .putInt(Constant.INTENT_FLAG,1)
                 .launch();
     }
+    @Override
+    public void onStateViewClick() {
+        super.onStateViewClick();
+        contentLayout.showLoading();
+        getP().loadData(type, 1);
+    }
 }

@@ -38,7 +38,7 @@ public class MoreAdapter extends BaseItemDraggableAdapter<MoreEntity,BaseViewHol
         float width = ScreenUtils.getScreenWidth(context);
         int halfW = (int) (width / 2);
         if (item.getType().equals(Constant.PHOTO)
-                &&!ConfigManage.INSTANCE.getPhotoHead().equals(""))
+                &&!("").equals(ConfigManage.INSTANCE.getPhotoHead()))
             Glide.with(context).load(ConfigManage.INSTANCE.getPhotoHead()).override(halfW, halfW).into(iv);
         else
             Glide.with(context).load(Integer.parseInt(item.getResId())).override(halfW, halfW).into(iv);

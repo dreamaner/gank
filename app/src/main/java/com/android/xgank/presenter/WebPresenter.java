@@ -21,13 +21,14 @@ public class WebPresenter extends XPresent<WebActivity> {
     public void init(){
 
         mFavoriteData = getV().getFavorite();
-
     }
 
     public void favoriteGank() {
-        if (mIsFavorite) { // 已经收藏
+        if (mIsFavorite) {
+            // 已经收藏
             unFavorite();
-        } else { // 未收藏
+        } else {
+            // 未收藏
             favorite();
         }
     }

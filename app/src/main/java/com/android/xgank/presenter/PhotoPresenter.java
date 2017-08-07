@@ -21,6 +21,7 @@ public class PhotoPresenter extends XPresent<PhotoActivity>{
 
         mFavoriteData = getV().getFavorite();
         XLog.i("---gank_id---",mFavoriteData.getGank_id());
+
     }
 
     public void favoriteGank() {
